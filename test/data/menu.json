@@ -1,0 +1,108 @@
+[
+  {
+    "location": "S-Bar",
+    "info": "",
+    "dates": [
+      {
+        "date": "2016-11-07-00-00-00",
+        "meals": [
+          {
+            "type": "Schwäbisch",
+            "meal": "Linsen mit Spätzle und Saiten ",
+            "price_stud": null,
+            "price": null
+          },
+          {
+            "type": "Sättigend",
+            "meal": "Linsen mit Spätzle ",
+            "price_stud": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "date": "2016-11-08-00-00-00",
+        "meals": [
+          {
+            "type": "Lecker",
+            "meal": "Nudeln mit Putenfleisch in Paprikasoße ",
+            "price_stud": null,
+            "price": null
+          },
+          {
+            "type": "Vegetarisch",
+            "meal": "Nudeln mit Grünkern-Bolognese ",
+            "price_stud": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "date": "2016-11-09-00-00-00",
+        "meals": [
+          {
+            "type": "Deftig",
+            "meal": "Schweinehaxe mit herbstlichem Gemüse, dazu Salzkartoffeln und Bratensoße ",
+            "price_stud": null,
+            "price": null
+          },
+          {
+            "type": "Für Gemüse-Fans",
+            "meal": "Gemüsefrikadelle mit herbstlichem Gemüse, dazu Salzkartoffeln und helle Soße ",
+            "price_stud": null,
+            "price": null
+          }
+        ]
+      },
+      {
+        "date": "2016-11-10-00-00-00",
+        "meals": [
+          {
+            "type": "Freitagsfisch",
+            "meal": "Panierter Fisch mit hausgemachter Remoulade und Beilagensalat ",
+            "price_stud": null,
+            "price": null
+          },
+          {
+            "type": "Toll",
+            "meal": "Schwarzwurzel-Knusperecke mit hausgemachter Remoulade und Beilagensalat ",
+            "price_stud": null,
+            "price": null
+          },
+          {
+            "type": "",
+            "meal": "Die aktuelle Speisekarten können Sie auch hier downloaden.",
+            "price_stud": null,
+            "price": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "location": "Mensa",
+    "info": "",
+    "dates": [
+      {
+        "meals": [],
+        "date": "2016-11-07-00-00-00"
+      },
+      {
+        "meals": [],
+        "date": "2016-11-08-00-00-00"
+      },
+      {
+        "meals": [],
+        "date": "2016-11-09-00-00-00"
+      },
+      {
+        "meals": [],
+        "date": "2016-11-10-00-00-00"
+      },
+      {
+        "meals": [],
+        "date": "2016-11-11-00-00-00"
+      }
+    ]
+  }
+]
