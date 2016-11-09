@@ -35,8 +35,16 @@ describe('menu', function () {
         var expected = 'Es gibt Schweinehaxe mit herbstlichem Gemüse, dazu Salzkartoffeln und Bratensoße und ' +
             'Gemüsefrikadelle mit herbstlichem Gemüse, dazu Salzkartoffeln und helle Soße ';
         testResponse('S-Bar', new Date('2016-11-09'), expected, done);
+    });
 
-    })
+    it('should provide error if client throws one', function (done) {
+        sandbox.stub(menu.__get__('client'), 'menu')
+            .callsArgWith(0, new Error('Test Message'), null);
+        menu('S-Bar', new Date('2016-11-08'), function (err) {
+            expect(err.message).to.equal('Test Message');
+            done();
+        })
+    });
 });
 
 function testResponse(place, date, expected, done) {
