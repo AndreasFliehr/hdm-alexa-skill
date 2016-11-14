@@ -21,6 +21,7 @@
     "sinon": "^1.17.6"
   },
   "dependencies": {
+    "alexa-response": "^4.0.3",
     "hdm-client": "^1.0.1",
     "moment": "^2.15.2"
   }
