@@ -1,0 +1,1 @@
+[![Build Status](http://ec2-35-156-28-255.eu-central-1.compute.amazonaws.com/jenkins/buildStatus/icon?job=chatbot/alexa-skill-tests)](http://ec2-35-156-28-255.eu-central-1.compute.amazonaws.com/jenkins/job/chatbot/job/alexa-skill-tests/)
