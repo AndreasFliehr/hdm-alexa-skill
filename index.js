@@ -11,8 +11,11 @@ function onLaunch(done) {
     done(res);
 }
 
-function onIntent() {
-    menu();
+function onIntent(intent) {
+    if (intent.type === 'MenuIntent') {
+        menu();
+    }
+
 }
 
 exports.handler = function(event, context) {
