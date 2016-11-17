@@ -32,7 +32,7 @@ describe('#onLaunch', function() {
             }
         };
 
-        onLaunch(function(err, response) {
+        onLaunch(function(response) {
             expect(response).to.eql(expected);
             done();
         });

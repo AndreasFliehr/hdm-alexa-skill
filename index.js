@@ -7,7 +7,7 @@ function onLaunch(done) {
         'Wie kann ich dir helfen?')
         .reprompt('Frag mich zum Beispiel: Was gibt es heute in der Mensa?')
         .build();
-    done(null, res);
+    done(res);
 }
 
 function onIntent() {

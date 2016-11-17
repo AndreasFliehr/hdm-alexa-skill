@@ -17,13 +17,6 @@ describe('event handler', function() {
         expect(handler).to.be.a('function');
     });
 
-    it('should call #context.succeed for launch request', function(done) {
-        var context = {
-            succeed: done
-        };
-        module.handler(createEvent('LaunchRequest'), context);
-    });
-
     it('should call #onLaunch if LaunchRequest', function() {
         testLaunchRequest(createEvent('LaunchRequest'), true);
     });
