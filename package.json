@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "xunit-test": "mocha --recursive -R xunit test/ > test-reports.xml"
+    "xunit-test": "mocha --recursive -R xunit test/ > test-reports.xml",
+    "lint": "jshint lib test index.js",
+    "jscs": "jscs lib test index.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +18,8 @@
   "homepage": "https://bitbucket.org/jscheffner/hdm-alexa-skill#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.4",
     "mocha": "^3.1.2",
     "nock": "^9.0.2",
     "rewire": "^2.5.2",
