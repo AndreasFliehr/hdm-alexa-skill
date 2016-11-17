@@ -7,7 +7,8 @@
     "test": "mocha",
     "xunit-test": "mocha --recursive -R xunit test/ > test-reports.xml",
     "lint": "jshint lib test index.js",
-    "jscs": "jscs lib test index.js"
+    "jscs": "jscs lib test index.js",
+    "code-check-windows": "npm test && npm run lint && npm run jscs"
   },
   "repository": {
     "type": "git",

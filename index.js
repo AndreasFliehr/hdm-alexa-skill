@@ -1,4 +1,5 @@
 var response = require('alexa-response');
+var menu = require('./lib/menu');
 
 function onLaunch(done) {
     var res = response.ask('Willkommen an der HdM. Ich dir hiflreiche ' +
@@ -11,6 +12,7 @@ function onLaunch(done) {
 }
 
 function onIntent() {
+    menu();
 }
 
 exports.handler = function(event, context) {
