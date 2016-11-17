@@ -1,9 +1,17 @@
 var expect = require('chai').expect;
 var rewire = require('rewire');
-var handler = rewire('../');
-var onLaunch = handler.__get__('onLaunch');
+var module = rewire('../');
+var onLaunch = module.__get__('onLaunch');
+var sinon = require('sinon');
+var sandbox = sinon.sandbox.create();
+var module_backup = module;         // is used to reset module after injecting test objects
 
 describe('Launch Request', function () {
+    beforeEach(function () {
+        sandbox.restore();
+        module = module_backup;
+    });
+
     it('has function #onLaunch', function () {
         expect(onLaunch).to.be.a('function');
     });
@@ -32,5 +40,46 @@ describe('Launch Request', function () {
             expect(response).to.eql(expected);
             done();
         })
+    });
+
+    it('should expose function #handler', function () {
+        var handler = module.handler;
+        expect(handler).to.be.a('function');
+    });
+
+    it('should call #context.succeed for launch request', function (done) {
+        var context = {
+            succeed: done
+        };
+        module.handler(createEvent('LaunchRequest'), context);
+    });
+
+    it('should call #onLaunch if LaunchRequest', function () {
+        testLaunchRequest(createEvent('LaunchRequest'), true)
+    });
+
+    it('should not call #onLaunch if no LaunchRequest', function () {
+        testLaunchRequest(createEvent('IntentRequest'), false);
     })
 });
+
+function createEvent(requestType) {
+    return {
+        version: "1.0",
+        "request": {
+            "type": requestType,
+            "requestId": "request.id.string",
+            "timestamp": "string"
+        }
+    }
+}
+
+function testLaunchRequest(event, onLaunchShouldBeCalled) {
+    var spy, context;
+    spy = sandbox.spy();
+    module.__set__('onLaunch', spy);
+    context = {};
+    context.succeed = function () {};
+    module.handler(event, context);
+    expect(spy.called).to.equal(onLaunchShouldBeCalled);
+}

@@ -8,3 +8,9 @@ function onLaunch(done) {
         .build();
     done(null, res);
 }
+
+exports.handler = function (event, context) {
+    if(event.request.type === 'LaunchRequest') {
+        onLaunch(context.succeed);
+    }
+};
