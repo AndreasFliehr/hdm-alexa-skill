@@ -12,10 +12,18 @@ function onLaunch(done) {
 }
 
 function onIntent(intent) {
-    if (intent.type === 'MenuIntent') {
-        menu();
+    var date;
+    if (intent.slots.hasOwnProperty('date')) {
+        date = new Date(intent.slots.date.value);
+    } else {
+        date = new Date().setHours(0,0,0,0);
     }
-
+    if (intent.name === 'MenuIntent') {
+        if (intent.slots.location) {
+            menu(intent.slots.location.value, date, function() {
+            });
+        }
+    }
 }
 
 exports.handler = function(event, context) {
