@@ -7,6 +7,8 @@ var sandbox = sinon.sandbox.create();
 var moduleBackup = module;
 
 describe('event handler', function() {
+    'use strict';
+
     beforeEach(function() {
         sandbox.restore();
         module = moduleBackup;
@@ -27,6 +29,8 @@ describe('event handler', function() {
 });
 
 function createEvent(requestType) {
+    'use strict';
+
     return {
         version: '1.0',
         request: {
@@ -38,6 +42,8 @@ function createEvent(requestType) {
 }
 
 function testLaunchRequest(event, onLaunchShouldBeCalled) {
+    'use strict';
+
     var spy, context;
     spy = sandbox.spy();
     module.__set__('onLaunch', spy);

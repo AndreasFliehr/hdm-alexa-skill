@@ -6,6 +6,8 @@ var sandbox = sinon.sandbox.create();
 var moduleBackup = module;
 
 describe('#onIntent', function() {
+    'use strict';
+
     beforeEach(function() {
         sandbox.restore();
         module = moduleBackup;
@@ -15,7 +17,7 @@ describe('#onIntent', function() {
     });
 
     it('should call #menu if intent is MenuIntent', function() {
-        var intent, spy, dateMatcher;
+        var intent, dateMatcher;
         intent = {
             name: 'MenuIntent',
             slots: {
@@ -74,6 +76,8 @@ describe('#onIntent', function() {
 });
 
 function testIfMenuIsCalled(intent, expected) {
+    'use strict';
+
     var spy = sandbox.spy();
     module.__set__('menu', spy);
     module.__get__('onIntent')(intent);
@@ -81,12 +85,16 @@ function testIfMenuIsCalled(intent, expected) {
 }
 
 function createDateMatcher(date) {
+    'use strict';
+
     return function(value) {
         return value.valueOf() === date.valueOf();
     };
 }
 
 function testIfMenuIsCalledWithArgs(intent, location, dateMatcher) {
+    'use strict';
+
     var spy = sandbox.spy();
     module.__set__('menu', spy);
     module.__get__('onIntent')(intent);

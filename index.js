@@ -2,6 +2,7 @@ var response = require('alexa-response');
 var menu = require('./lib/menu');
 
 function onLaunch(done) {
+    'use strict';
     var res = response.ask('Willkommen an der HdM. Ich dir hiflreiche ' +
         'Informationen geben. Du kannst mich zum Beispiel fragen, wo deine ' +
         'Vorlesung stattfindet oder was es heute in der Mensa zu essen gibt. ' +
@@ -12,12 +13,14 @@ function onLaunch(done) {
 }
 
 function onIntent(intent) {
+    'use strict';
     if (intent.name === 'MenuIntent') {
         onMenuIntent(intent);
     }
 }
 
 function onMenuIntent(intent) {
+    'use strict';
     var date;
     if (intent.slots.location) {
         if (intent.slots.hasOwnProperty('date')) {
@@ -31,6 +34,7 @@ function onMenuIntent(intent) {
 }
 
 exports.handler = function(event, context) {
+    'use strict';
     if (event.request.type === 'LaunchRequest') {
         onLaunch(context.succeed);
     }

@@ -7,6 +7,8 @@ var data = require('./data/menu');
 
 
 describe('menu', function() {
+    'use strict';
+
     afterEach(function() {
         sandbox.restore();
     });
@@ -50,6 +52,8 @@ describe('menu', function() {
 });
 
 function testResponse(place, date, expected, done) {
+    'use strict';
+
     sandbox.stub(menu.__get__('client'), 'menu')
         .callsArgWith(0, null, data);
 

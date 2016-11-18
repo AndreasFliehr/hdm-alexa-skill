@@ -4,6 +4,7 @@ var module = rewire('../');
 var onLaunch = module.__get__('onLaunch');
 
 describe('#onLaunch', function() {
+    'use strict';
 
     it('has function #onLaunch', function() {
         expect(onLaunch).to.be.a('function');
