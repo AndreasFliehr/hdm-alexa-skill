@@ -12,14 +12,14 @@ function onLaunch(done) {
     done(res);
 }
 
-function onIntent(intent) {
+function onIntent(intent, callback) {
     'use strict';
     if (intent.name === 'MenuIntent') {
-        onMenuIntent(intent);
+        onMenuIntent(intent, callback);
     }
 }
 
-function onMenuIntent(intent) {
+function onMenuIntent(intent, callback) {
     'use strict';
     var date;
     if (intent.slots.location) {
@@ -28,16 +28,15 @@ function onMenuIntent(intent) {
         } else {
             date = new Date().setHours(0,0,0,0);
         }
-        menu(intent.slots.location.value, date, function() {
-        });
+        menu(intent.slots.location.value, date, callback);
     }
 }
 
-exports.handler = function(event, context) {
+exports.handler = function(event, context, callback) {
     'use strict';
     if (event.request.type === 'LaunchRequest') {
-        onLaunch(context.succeed);
+        onLaunch(callback);
     } else if (event.request.type === 'IntentRequest') {
-        onIntent(event.request.intent);
+        onIntent(event.request.intent, callback);
     }
 };

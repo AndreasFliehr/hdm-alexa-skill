@@ -5,6 +5,7 @@ var onLaunch = module.__get__('onLaunch');
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var moduleBackup = module;
+var utils = require('./utils');
 
 describe('event handler', function() {
     'use strict';
@@ -28,10 +29,40 @@ describe('event handler', function() {
     });
 
     it('should call onIntent if IntentRequest', function() {
-        var spy = createRequestSpy('onIntent');
-        var event = createEvent('IntentRequest');
-        module.handler(event);
-        expect(spy.calledWithExactly(event.request.intent)).to.equal(true);
+        var spy, event, cb;
+        spy = createRequestSpy('onIntent');
+        event = createEvent('IntentRequest');
+        cb = function() {};
+        module.handler(event, {}, cb);
+        expect(spy.calledWithExactly(event.request.intent, cb))
+            .to.equal(true);
+    });
+
+    it('should forward the response of #onLaunch', function(done) {
+        var stub, event, callback;
+        stub = sandbox.stub().callsArgWith(0, null, 'Test response');
+        module.__set__('onLaunch', stub);
+        event = createEvent('LaunchRequest');
+        callback = utils.createTestCallback(null, 'Test response', done);
+        module.handler(event, null, callback);
+    });
+
+    it('should forward the error of #onLaunch', function(done) {
+        var stub, event, callback;
+        stub = sandbox.stub().callsArgWith(0, 'Test Error', null);
+        module.__set__('onLaunch', stub);
+        event = createEvent('LaunchRequest');
+        callback = utils.createTestCallback('Test Error', null, done);
+        module.handler(event, null, callback);
+    });
+
+    it('should forward the error of #onIntent', function(done) {
+        var stub, event, callback;
+        stub = sandbox.stub().callsArgWith(1, 'Test Error', null);
+        module.__set__('onIntent', stub);
+        event = createEvent('IntentRequest');
+        callback = utils.createTestCallback('Test Error', null, done);
+        module.handler(event, null, callback);
     });
 });
 
