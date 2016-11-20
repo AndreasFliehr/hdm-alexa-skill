@@ -37,5 +37,7 @@ exports.handler = function(event, context) {
     'use strict';
     if (event.request.type === 'LaunchRequest') {
         onLaunch(context.succeed);
+    } else if (event.request.type === 'IntentRequest') {
+        onIntent(event.request.intent);
     }
 };

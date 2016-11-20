@@ -26,12 +26,19 @@ describe('event handler', function() {
     it('should not call #onLaunch if no LaunchRequest', function() {
         testLaunchRequest(createEvent('IntentRequest'), false);
     });
+
+    it('should call onIntent if IntentRequest', function() {
+        var spy = createRequestSpy('onIntent');
+        var event = createEvent('IntentRequest');
+        module.handler(event);
+        expect(spy.calledWithExactly(event.request.intent)).to.equal(true);
+    });
 });
 
 function createEvent(requestType) {
     'use strict';
 
-    return {
+    var event = {
         version: '1.0',
         request: {
             type: requestType,
@@ -39,16 +46,28 @@ function createEvent(requestType) {
             timestamp: 'string'
         }
     };
+
+    if (requestType === 'IntentRequest') {
+        event.request.intent = {
+            name: 'Test Intent'
+        };
+    }
+
+    return event;
 }
 
-function testLaunchRequest(event, onLaunchShouldBeCalled) {
+function createRequestSpy(fn) {
     'use strict';
 
-    var spy, context;
-    spy = sandbox.spy();
-    module.__set__('onLaunch', spy);
-    context = {};
-    context.succeed = function() {};
+    var spy = sandbox.spy();
+    module.__set__(fn, spy);
+    return spy;
+
+}
+
+function testLaunchRequest(event, called) {
+    'use strict';
+    var spy = createRequestSpy('onLaunch');
     module.handler(event, context);
-    expect(spy.called).to.equal(onLaunchShouldBeCalled);
+    expect(spy.called).to.equal(called);
 }
