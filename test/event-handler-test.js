@@ -13,6 +13,8 @@ describe('event handler', function() {
     beforeEach(function() {
         sandbox.restore();
         module = moduleBackup;
+        process.env =
+            sandbox.stub().withArgs('ALEXA_APP_ID').returns('secretid');
     });
 
     it('should expose function #handler', function() {
@@ -64,17 +66,49 @@ describe('event handler', function() {
         callback = utils.createTestCallback('Test Error', null, done);
         module.handler(event, null, callback);
     });
+
+    it('should not call #onLaunch if app id is wrong', function() {
+        var spy = createRequestSpy('onLaunch');
+        var event = createEvent('LaunchRequest', 'wrongid');
+        module.handler(event, null, function() {});
+        expect(spy.called).to.equal(false);
+    });
+
+    it('should not call #onIntent if app id is wrong', function() {
+        var spy = createRequestSpy('onIntent');
+        var event = createEvent('IntentRequest', 'wrongid');
+        module.handler(event, null, function() {});
+        expect(spy.called).to.equal(false);
+    });
+
+    it('should provide error if appId is wrong', function(done) {
+        var msg = 'The request doesn\'t provide a valid application id';
+        var event = createEvent('LaunchRequest', 'wrongid');
+        module.handler(event, null, function(err, response) {
+            expect(err.message).to.equal(msg);
+            expect(response).to.equal(null);
+            done();
+        });
+    });
 });
 
-function createEvent(requestType) {
+function createEvent(requestType, appId) {
     'use strict';
 
-    var event = {
+    var event;
+    appId = appId || 'secretid';
+
+    event = {
         version: '1.0',
         request: {
             type: requestType,
             requestId: 'request.id.string',
             timestamp: 'string'
+        },
+        session: {
+            application: {
+                applicationId: appId
+            }
         }
     };
 

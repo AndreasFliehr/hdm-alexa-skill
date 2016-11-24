@@ -47,9 +47,20 @@ function onMenuIntent(intent, callback) {
 
 exports.handler = function(event, context, callback) {
     'use strict';
-    if (event.request.type === 'LaunchRequest') {
+    var msg;
+    if (!appIdIsValid(event)) {
+        msg = 'The request doesn\'t provide a valid application id';
+        callback(new Error(msg), null);
+    } else if (event.request.type === 'LaunchRequest') {
         onLaunch(callback);
     } else if (event.request.type === 'IntentRequest') {
         onIntent(event.request.intent, callback);
     }
 };
+
+function appIdIsValid(event) {
+    'use strict';
+    var reqAppId = event.session.application.applicationId;
+    var actualAppId = process.env('ALEXA_APP_ID');
+    return reqAppId === actualAppId;
+}
