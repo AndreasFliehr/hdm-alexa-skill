@@ -21,14 +21,19 @@ function onIntent(intent, callback) {
 
 function onMenuIntent(intent, callback) {
     'use strict';
-    var date;
+    var date, location;
     if (intent.slots.location) {
         if (intent.slots.hasOwnProperty('date')) {
             date = new Date(intent.slots.date.value);
         } else {
             date = new Date().setHours(0,0,0,0);
         }
-        menu(intent.slots.location.value, date, function(err, result) {
+        if (intent.slots.location.value === 'Essbar') {
+            location = 'S-Bar';
+        } else {
+            location = intent.slots.location.value;
+        }
+        menu(location, date, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
