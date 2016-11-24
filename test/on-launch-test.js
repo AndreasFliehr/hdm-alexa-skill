@@ -16,7 +16,7 @@ describe('#onLaunch', function() {
             response: {
                 outputSpeech: {
                     type: 'PlainText',
-                    text: 'Willkommen an der HdM. Ich dir hiflreiche ' +
+                    text: 'Willkommen an der HdM. Ich kann dir hilfreiche ' +
                           'Informationen geben. Du kannst mich zum Beispiel ' +
                           'fragen, wo deine Vorlesung stattfindet oder was ' +
                           'es heute in der Mensa zu essen gibt. Wie kann ' +

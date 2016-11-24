@@ -3,7 +3,7 @@ var menu = require('./lib/menu');
 
 function onLaunch(done) {
     'use strict';
-    var res = response.ask('Willkommen an der HdM. Ich dir hiflreiche ' +
+    var res = response.ask('Willkommen an der HdM. Ich kann dir hilfreiche ' +
         'Informationen geben. Du kannst mich zum Beispiel fragen, wo deine ' +
         'Vorlesung stattfindet oder was es heute in der Mensa zu essen gibt. ' +
         'Wie kann ich dir helfen?')
