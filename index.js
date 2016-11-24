@@ -28,7 +28,15 @@ function onMenuIntent(intent, callback) {
         } else {
             date = new Date().setHours(0,0,0,0);
         }
-        menu(intent.slots.location.value, date, callback);
+        menu(intent.slots.location.value, date, function(err, result) {
+            var res;
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            res = response.say(result).build();
+            callback(null, res);
+        });
     }
 }
 

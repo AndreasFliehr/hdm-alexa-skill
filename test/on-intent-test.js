@@ -49,11 +49,36 @@ describe('#onIntent', function() {
         });
 
         it('should forward error from menu intent', function(done) {
-            testIfResponseIsForwardedToCallback('Test Error', null, done);
+            var stub, callback, intent;
+            intent = utils.createMenuIntent(['location'], ['S-Bar']);
+            stub = sandbox.stub().callsArgWith(2, 'Test Error', null);
+            module.__set__('menu', stub);
+            callback = utils.createTestCallback('Test Error', null, done);
+            module.__get__('onIntent')(intent, callback);
         });
 
-        it('should call forward response from menu intent', function(done) {
-            testIfResponseIsForwardedToCallback(null, 'Test Response', done);
+        it('should call callback with useful response', function(done) {
+            var stub, callback, intent, expected;
+            intent = utils.createMenuIntent(['location'], ['S-Bar']);
+
+            expected = {
+                version: '1.0',
+                response: {
+                    outputSpeech: {
+                        type: 'PlainText',
+                        text: 'Test Response'
+                    },
+                    shouldEndSession: true
+                }
+            };
+            stub = sandbox.stub().callsArgWith(2, null, 'Test Response');
+            module.__set__('menu', stub);
+            callback = function(err, res) {
+                expect(err).to.equal(null);
+                expect(res).to.eql(expected);
+                done();
+            };
+            module.__get__('onIntent')(intent, callback);
         });
     });
 
@@ -78,15 +103,5 @@ describe('#onIntent', function() {
         expect(spy.calledWith(
             location, sinon.match(dateMatcher), sinon.match.typeOf('function'))
         ).to.equal(true);
-    }
-
-    function testIfResponseIsForwardedToCallback(error, response, done) {
-        var stub, callback, intent;
-        intent = utils.createMenuIntent(['location'], ['S-Bar']);
-
-        stub = sandbox.stub().callsArgWith(2, error, response);
-        module.__set__('menu', stub);
-        callback = utils.createTestCallback(error, response, done);
-        module.__get__('onIntent')(intent, callback);
     }
 });
