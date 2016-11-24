@@ -33,7 +33,8 @@ describe('#onLaunch', function() {
             }
         };
 
-        onLaunch(function(response) {
+        onLaunch(function(err, response) {
+            expect(err).to.equal(null);
             expect(response).to.eql(expected);
             done();
         });
