@@ -42,13 +42,19 @@ describe('menu', function() {
     });
 
     it('should return answer for day without menu', function(done) {
-        var expected = 'Für diesen Tag habe ich leider keine Informationen.';
+        var expected = 'Für diesen Tag hab ich leider keine Informationen.';
         testResponse('S-Bar', new Date('2015-11-09'), expected, done);
     });
 
     it('should return answer for menu without meals', function(done) {
-        var expected = 'Für diesen Tag habe ich leider keine Informationen.';
+        var expected = 'Für diesen Tag hab ich leider keine Informationen.';
         testResponse('Mensa', new Date('2016-11-09'), expected, done);
+    });
+
+    it('should return answer for invalid locations', function(done) {
+        var expected = 'Ich weiß leider nur, was es in der Mensa oder der ' +
+            'Essbar gibt.';
+        testResponse('McDonalds', new Date('2016-11-09'), expected, done);
     });
 
     it('should provide error if client throws one', function(done) {
