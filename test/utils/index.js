@@ -13,11 +13,11 @@ exports.createTestCallback = function(error, response, done) {
     };
 };
 
-exports.createMenuIntent = function(slots, values) {
+exports.createIntent = function(name, slots, values) {
     'use strict';
     var intent, i;
     intent = {
-        name: 'MenuIntent',
+        name: name,
         slots: {}
     };
     for (i = 0; i < slots.length; i++) {

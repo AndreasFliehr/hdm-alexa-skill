@@ -1,5 +1,6 @@
 var response = require('alexa-response');
 var menu = require('./lib/menu');
+var office = require('./lib/office');
 
 function onLaunch(done) {
     'use strict';
@@ -16,6 +17,23 @@ function onIntent(intent, callback) {
     'use strict';
     if (intent.name === 'MenuIntent') {
         onMenuIntent(intent, callback);
+    } else if (intent.name === 'OfficeIntent') {
+        onOfficeIntent(intent, callback);
+    }
+}
+
+function onOfficeIntent(intent, callback) {
+    'use strict';
+    if (intent.slots.hasOwnProperty('query')) {
+        office(intent.slots.query.value, function(err, result) {
+            var res;
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            res = response.say(result).build();
+            callback(null, res);
+        });
     }
 }
 
