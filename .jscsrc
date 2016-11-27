@@ -2,5 +2,6 @@
   "preset": "node-style-guide",
   "validateIndentation" : 4,
   "requireTrailingComma": false,
-  "requireVarDeclFirst": true
+  "requireVarDeclFirst": true,
+  "requireSpaceBeforeKeywords": true
 }
