@@ -27,8 +27,8 @@
     "sinon": "^1.17.6"
   },
   "dependencies": {
-    "alexa-response": "git+ssh//git@bitbucket.org:jscheffner/hdm-node-client.git#master",
-    "hdm-client": "^1.0.1",
+    "alexa-response": "^4.0.3",
+    "hdm-client": "git+ssh//git@bitbucket.org:jscheffner/hdm-node-client.git#master",
     "moment": "^2.15.2"
   }
 }
