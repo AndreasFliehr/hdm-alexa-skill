@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var data = require('./data/office');
+var dataNoRoom = require('./data/officeNoRoom');
 
 describe ('office', function() {
     'use strict';
@@ -25,7 +26,12 @@ describe ('office', function() {
 
     it('should return answer for lecturer Walter Kriha', function(done) {
         var expected = 'Das Büro von Walter Kriha befindet sich in Raum 322';
-        testResponse('person', 'Walter Kriha', expected, done);
+        testResponse('person', 'Walter Kriha', expected, data, done);
+    });
+
+    it('should return answer for lecturer Thomas Pohl', function(done) {
+        var expected = 'Es existiert kein Büro für Thomas Pohl';
+        testResponse('person', 'Thomas Pohl', expected, dataNoRoom, done);
     });
 
     it('should provide error if client throws one', function(done) {
@@ -38,11 +44,11 @@ describe ('office', function() {
     });
 });
 
-function testResponse(type, name, expected, done) {
+function testResponse(type, name, expected, dataMock, done) {
     'use strict';
 
     sandbox.stub(office.__get__('client'), 'searchDetails')
-        .callsArgWith(0, null, data);
+        .callsArgWith(0, null, dataMock);
 
     office(type, name, function(err, response) {
         expect(response).to.equal(expected);
