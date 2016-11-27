@@ -61,6 +61,6 @@ exports.handler = function(event, context, callback) {
 function appIdIsValid(event) {
     'use strict';
     var reqAppId = event.session.application.applicationId;
-    var actualAppId = process.env('ALEXA_APP_ID');
+    var actualAppId = process.env.ALEXA_APP_ID;
     return reqAppId === actualAppId;
 }

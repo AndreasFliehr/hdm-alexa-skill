@@ -13,8 +13,7 @@ describe('event handler', function() {
     beforeEach(function() {
         sandbox.restore();
         module = moduleBackup;
-        process.env =
-            sandbox.stub().withArgs('ALEXA_APP_ID').returns('secretid');
+        process.env.ALEXA_APP_ID = 'secretid';
     });
 
     it('should expose function #handler', function() {
