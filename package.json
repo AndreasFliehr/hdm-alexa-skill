@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "alexa-response": "^4.0.3",
-    "hdm-client": "https://jscheffner@bitbucket.org/jscheffner/hdm-alexa-skill.git",
+    "hdm-client": "https://jscheffner@bitbucket.org/jscheffner/hdm-node-client.git",
     "moment": "^2.15.2"
   }
 }
