@@ -27,6 +27,15 @@ describe ('office', function() {
         var expected = 'Das Büro von Walter Kriha befindet sich in Raum 322';
         testResponse('person', 'Walter Kriha', expected, done);
     });
+
+    it('should provide error if client throws one', function(done) {
+        sandbox.stub(office.__get__('client'), 'searchDetails')
+            .callsArgWith(0, new Error('Test Message'), null);
+        office('person', 'Walter Kriha', function(err) {
+            expect(err.message).to.equal('Test Message');
+            done();
+        });
+    });
 });
 
 function testResponse(type, name, expected, done) {
