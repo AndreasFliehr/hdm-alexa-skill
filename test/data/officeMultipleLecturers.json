@@ -1,0 +1,42 @@
+[
+  {
+    "personID": 400019,
+    "name": "Walter Kriha",
+    "prefix": " ",
+    "firstname": "Walter",
+    "lastname": "Kriha",
+    "url": "",
+    "initial": "kriha",
+    "job": "Professor",
+    "department": "Fakultät Druck und Medien",
+    "course": null,
+    "email": "kriha@hdm-stuttgart.de",
+    "officehours": null,
+    "phone": "0711 8923-2220",
+    "roomID": 49,
+    "room": "322",
+    "picture": "VXfGyPP98.jpg",
+    "ist_mitarbeiter": 1,
+    "ist_student": 0
+  },
+  {
+    "personID": 6368845,
+    "name": "Thomas Pohl",
+    "prefix": "",
+    "firstname": "Thomas",
+    "lastname": "Pohl",
+    "url": "",
+    "initial": "pohlt",
+    "job": "Lehrbeauftragter",
+    "department": "Fakultät Druck und Medien",
+    "course": null,
+    "email": "pohlt@hdm-stuttgart.de",
+    "officehours": null,
+    "phone": null,
+    "roomID": null,
+    "room": null,
+    "picture": null,
+    "ist_mitarbeiter": 1,
+    "ist_student": 0
+  }
+]
