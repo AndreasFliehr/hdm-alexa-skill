@@ -41,6 +41,16 @@ describe('menu', function() {
         testResponse('S-Bar', new Date('2016-11-09'), expected, done);
     });
 
+    it('should return answer for day without menu', function(done) {
+        var expected = 'Für diesen Tag habe ich leider keine Informationen.';
+        testResponse('S-Bar', new Date('2015-11-09'), expected, done);
+    });
+
+    it('should return answer for menu without meals', function(done) {
+        var expected = 'Für diesen Tag habe ich leider keine Informationen.';
+        testResponse('Mensa', new Date('2016-11-09'), expected, done);
+    });
+
     it('should provide error if client throws one', function(done) {
         sandbox.stub(menu.__get__('client'), 'menu')
             .callsArgWith(0, new Error('Test Message'), null);
