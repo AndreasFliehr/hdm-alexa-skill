@@ -1,10 +1,10 @@
 var rewire = require('rewire');
-var module = rewire('../');
+var module = rewire('../../');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var moduleBackup = module;
-var utils = require('./utils');
+var utils = require('../utils/index');
 
 describe('#onIntent', function() {
     'use strict';

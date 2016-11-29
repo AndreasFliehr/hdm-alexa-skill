@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var rewire = require('rewire');
-var module = rewire('../');
+var module = rewire('../../');
 var onLaunch = module.__get__('onLaunch');
 
 describe('#onLaunch', function() {

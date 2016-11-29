@@ -1,7 +1,3 @@
-/**
- * Created by Jonas on 20.11.2016.
- *
- */
 var expect = require('chai').expect;
 
 exports.createTestCallback = function(error, response, done) {
@@ -27,4 +23,14 @@ exports.createIntent = function(name, slots, values) {
         };
     }
     return intent;
+};
+
+exports.testIntegration = function(event, error, response, done) {
+    'use strict';
+    var handler = require('../').handler;
+    handler(event, null, function(err, res) {
+        expect(err).to.eql(error);
+        expect(res).to.eql(response);
+        done();
+    });
 };

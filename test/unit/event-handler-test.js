@@ -1,11 +1,11 @@
 var expect = require('chai').expect;
 var rewire = require('rewire');
-var module = rewire('../');
+var module = rewire('../../');
 var onLaunch = module.__get__('onLaunch');
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var moduleBackup = module;
-var utils = require('./utils');
+var utils = require('../utils/index');
 
 describe('event handler', function() {
     'use strict';

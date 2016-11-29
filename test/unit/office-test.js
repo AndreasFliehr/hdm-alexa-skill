@@ -1,5 +1,5 @@
 var rewire = require('rewire');
-var office = rewire('../lib/office');
+var office = rewire('../../lib/office');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
