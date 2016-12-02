@@ -13,10 +13,10 @@ function onLaunch(done) {
     done(null, res);
 }
 
-function onIntent(intent, callback) {
+function onIntent(intent, attributes, callback) {
     'use strict';
     if (intent.name === 'MenuIntent') {
-        onMenuIntent(intent, callback);
+        onMenuIntent(intent, attributes, callback);
     } else if (intent.name === 'OfficeIntent') {
         onOfficeIntent(intent, callback);
     }
@@ -37,19 +37,20 @@ function onOfficeIntent(intent, callback) {
     }
 }
 
-function onMenuIntent(intent, callback) {
+function onMenuIntent(intent, attributes, callback) {
     'use strict';
     var date, location;
     if (intent.slots.location) {
-        if (intent.slots.hasOwnProperty('date')) {
+        location = intent.slots.location.value;
+        if (intent.slots.location.value === 'Essbar') {
+            location = 'S-Bar';
+        }
+        if (attributes.date) {
+            date = new Date(attributes.date);
+        } else if (intent.slots.date) {
             date = new Date(intent.slots.date.value);
         } else {
             date = new Date().setHours(0,0,0,0);
-        }
-        if (intent.slots.location.value === 'Essbar') {
-            location = 'S-Bar';
-        } else {
-            location = intent.slots.location.value;
         }
         menu(location, date, function(err, result) {
             var res;
@@ -72,7 +73,7 @@ exports.handler = function(event, context, callback) {
     } else if (event.request.type === 'LaunchRequest') {
         onLaunch(callback);
     } else if (event.request.type === 'IntentRequest') {
-        onIntent(event.request.intent, callback);
+        onIntent(event.request.intent, event.session.attributes, callback);
     }
 };
 

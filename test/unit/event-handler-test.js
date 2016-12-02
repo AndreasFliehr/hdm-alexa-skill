@@ -33,9 +33,10 @@ describe('event handler', function() {
         var spy, event, cb;
         spy = createRequestSpy('onIntent');
         event = createEvent('IntentRequest');
+        event.session.attributes = 'Test';
         cb = function() {};
         module.handler(event, {}, cb);
-        expect(spy.calledWithExactly(event.request.intent, cb))
+        expect(spy.calledWithExactly(event.request.intent, 'Test', cb))
             .to.equal(true);
     });
 
@@ -59,7 +60,7 @@ describe('event handler', function() {
 
     it('should forward the error of #onIntent', function(done) {
         var stub, event, callback;
-        stub = sandbox.stub().callsArgWith(1, 'Test Error', null);
+        stub = sandbox.stub().callsArgWith(2, 'Test Error', null);
         module.__set__('onIntent', stub);
         event = createEvent('IntentRequest');
         callback = utils.createTestCallback('Test Error', null, done);
