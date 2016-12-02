@@ -129,7 +129,6 @@ describe('#onIntent', function() {
         var spy = sandbox.spy();
         module.__set__('menu', spy);
         module.__get__('onIntent')(intent, attr, function() {});
-        console.log(location);
         expect(spy.calledWithExactly(
             location, sinon.match(dateMatcher), sinon.match.typeOf('function'))
         ).to.equal(true);
