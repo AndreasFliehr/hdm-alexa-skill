@@ -44,7 +44,7 @@ function onMenuIntent(intent, attributes, callback) {
 
     if (attributes.date) {
         date = attributes.date;
-    } else if (intent.slots.date) {
+    } else if (intent.slots.date && intent.slots.date.value) {
         date = new Date(intent.slots.date.value);
     } else {
         date = new Date().setHours(0,0,0,0);

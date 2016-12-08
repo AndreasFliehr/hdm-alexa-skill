@@ -69,9 +69,18 @@ describe('#onIntent', function() {
                 .to.equal(true);
         });
 
-        it('should fallback to today\'s date', function() {
+        it('should fallback to today\'s date if no date slot', function() {
             var intent, dateMatcher;
             intent = utils.createIntent('MenuIntent', ['location'], ['S-Bar']);
+
+            dateMatcher = createDateMatcher(new Date().setHours(0, 0, 0, 0));
+            testIfMenuIsCalledWithArgs(intent, {}, 'S-Bar', dateMatcher);
+        });
+
+        it('should fallback to today\'s date if no date value', function() {
+            var intent, dateMatcher;
+            intent = utils.createIntent(
+                'MenuIntent', ['location', 'date'], ['S-Bar', null]);
 
             dateMatcher = createDateMatcher(new Date().setHours(0, 0, 0, 0));
             testIfMenuIsCalledWithArgs(intent, {}, 'S-Bar', dateMatcher);
@@ -89,7 +98,7 @@ describe('#onIntent', function() {
             testResponse(intent, 'menu', 2, done);
         });
 
-        it('should as for location if none is provided', function(done) {
+        it('should ask for location if none is provided', function(done) {
             var intent, question, attributes, expected;
 
             question = 'Willst du in der Mensa oder in der Essbar essen?';
