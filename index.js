@@ -1,6 +1,7 @@
 var response = require('alexa-response');
 var menu = require('./lib/menu');
 var office = require('./lib/office');
+var util = require('util');
 
 function onLaunch(done) {
     'use strict';
@@ -39,18 +40,20 @@ function onOfficeIntent(intent, callback) {
 
 function onMenuIntent(intent, attributes, callback) {
     'use strict';
-    var date, location;
+    var date, location, res;
+
+    if (attributes.date) {
+        date = attributes.date;
+    } else if (intent.slots.date) {
+        date = new Date(intent.slots.date.value);
+    } else {
+        date = new Date().setHours(0,0,0,0);
+    }
+
     if (intent.slots.location) {
         location = intent.slots.location.value;
         if (intent.slots.location.value === 'Essbar') {
             location = 'S-Bar';
-        }
-        if (attributes.date) {
-            date = new Date(attributes.date);
-        } else if (intent.slots.date) {
-            date = new Date(intent.slots.date.value);
-        } else {
-            date = new Date().setHours(0,0,0,0);
         }
         menu(location, date, function(err, result) {
             var res;
@@ -61,6 +64,12 @@ function onMenuIntent(intent, attributes, callback) {
             res = response.say(result).build();
             callback(null, res);
         });
+    } else {
+        res = response
+            .ask('Willst du in der Mensa oder in der Essbar essen?')
+            .attributes({date: date})
+            .build();
+        callback(null, res);
     }
 }
 

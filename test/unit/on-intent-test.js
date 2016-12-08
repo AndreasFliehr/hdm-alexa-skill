@@ -51,14 +51,14 @@ describe('#onIntent', function() {
         });
 
         it('should use date from attributes if present', function() {
-            var spy, attributes, intent, dateMatcher;
+            var spy, attributes, intent, date;
             spy = sandbox.spy();
             intent = utils.createIntent('MenuIntent', ['location'], ['Mensa']);
-            attributes = {date: '2016-11-18'};
-            dateMatcher = createDateMatcher(new Date('2016-11-18'));
+            date = new Date('2016-11-18');
+            attributes = {date: date};
             module.__set__('menu', spy);
             module.__get__('onIntent')(intent, attributes);
-            expect(spy.calledWith(sinon.match.any, sinon.match(dateMatcher)))
+            expect(spy.calledWith(sinon.match.any, date))
                 .to.equal(true);
         });
 
@@ -80,6 +80,22 @@ describe('#onIntent', function() {
             var intent = utils.createIntent(
                 'MenuIntent', ['location'], ['S-Bar']);
             testResponse(intent, 'menu', 2, done);
+        });
+
+        it('should as for location if none is provided', function(done) {
+            var intent, question, attributes, expected;
+
+            question = 'Willst du in der Mensa oder in der Essbar essen?';
+            attributes = {date: new Date('2016-11-18')};
+            expected = createResponse(question, false, attributes);
+            intent = utils.createIntent(
+                'MenuIntent', ['date'], ['2016-11-18']);
+
+            module.__get__('onIntent')(intent, {}, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res).to.eql(expected);
+                done();
+            });
         });
     });
 
@@ -115,7 +131,7 @@ describe('#onIntent', function() {
     function testIfFnIsCalled(fn, intent, attributes, expected) {
         var spy = sandbox.spy();
         module.__set__(fn, spy);
-        module.__get__('onIntent')(intent, attributes);
+        module.__get__('onIntent')(intent, attributes, function() {});
         expect(spy.called).to.equal(expected);
     }
 
@@ -153,16 +169,7 @@ describe('#onIntent', function() {
     function testResponse(intent, fn, argPos, done) {
         var stub, callback, expected;
 
-        expected = {
-            version: '1.0',
-            response: {
-                outputSpeech: {
-                    type: 'PlainText',
-                    text: 'Test Response'
-                },
-                shouldEndSession: true
-            }
-        };
+        expected = createResponse('Test Response', true, null);
         stub = sandbox.stub().callsArgWith(argPos, null, 'Test Response');
         module.__set__(fn, stub);
         callback = function(err, res) {
@@ -172,4 +179,22 @@ describe('#onIntent', function() {
         };
         module.__get__('onIntent')(intent, {}, callback);
     }
+
+    function createResponse(text, shouldEndSession, attributes) {
+        var res = {
+            version: '1.0',
+            response: {
+                outputSpeech: {
+                    type: 'PlainText',
+                    text: text
+                },
+                shouldEndSession: shouldEndSession
+            }
+        };
+        if (attributes) {
+            res.sessionAttributes = attributes;
+        }
+        return res;
+    }
 });
+
