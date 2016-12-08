@@ -25,19 +25,19 @@ describe ('office', function() {
     });
 
     it('should return answer for lecturer', function(done) {
-        var expected = 'Das Büro von Walter Kriha befindet sich in Raum 322.';
+        var expected = 'Das Büro von Walter Kriha ist in Raum 322';
         testResponse('Walter Kriha', expected, data, done);
     });
 
     it('should return answer for lecturer with no room', function(done) {
-        var expected = 'Es existiert kein Büro für Thomas Pohl.';
+        var expected = 'Thomas Pohl hat kein Büro';
         testResponse('Thomas Pohl', expected, dataNoRoom, done);
     });
 
     it('should return answer for multiple lectures', function(done) {
-        var expected = 'Es wurden 2 Personen gefunden:' +
-            ' Das Büro von Walter Kriha befindet sich in Raum 322.' +
-            ' Es existiert kein Büro für Thomas Pohl.';
+        var expected = 'Ich habe 2 Personen gefunden:' +
+            ' Das Büro von Walter Kriha ist in Raum 322,' +
+            ' Thomas Pohl hat kein Büro';
         testResponse('Thomas', expected, dataMultipleLecturers, done);
     });
 
