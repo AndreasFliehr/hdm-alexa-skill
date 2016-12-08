@@ -50,6 +50,13 @@ describe('#onIntent', function() {
             testIfFnIsCalled('menu', intent, {}, false);
         });
 
+        it('should not call #menu if location slot is empty', function() {
+            var intent = utils.createIntent(
+                'MenuIntent', ['date', 'location'], ['2016-11-18', null]);
+
+            testIfFnIsCalled('menu', intent, {}, false);
+        });
+
         it('should use date from attributes if present', function() {
             var spy, attributes, intent, date;
             spy = sandbox.spy();

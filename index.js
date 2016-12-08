@@ -50,7 +50,7 @@ function onMenuIntent(intent, attributes, callback) {
         date = new Date().setHours(0,0,0,0);
     }
 
-    if (intent.slots.location) {
+    if (intent.slots.location && intent.slots.location.value) {
         location = intent.slots.location.value;
         if (intent.slots.location.value === 'Essbar') {
             location = 'S-Bar';

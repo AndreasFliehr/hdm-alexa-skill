@@ -17,20 +17,10 @@ exports.createIntent = function(name, slots, values) {
         slots: {}
     };
     for (i = 0; i < slots.length; i++) {
-        intent.slots[slots[i]] = {
-            name: slots[i],
-            value: values[i]
-        };
+        intent.slots[slots[i]] = {name: slots[i]};
+        if (values[i]) {
+            intent.slots[slots[i]].value = values[i];
+        }
     }
     return intent;
-};
-
-exports.testIntegration = function(event, error, response, done) {
-    'use strict';
-    var handler = require('../').handler;
-    handler(event, null, function(err, res) {
-        expect(err).to.eql(error);
-        expect(res).to.eql(response);
-        done();
-    });
 };
