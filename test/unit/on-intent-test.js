@@ -1,18 +1,17 @@
 var rewire = require('rewire');
-var module = rewire('../../');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
-var moduleBackup = module;
 var utils = require('../utils/index');
 var response = require('alexa-response');
+var module;
 
 describe('#onIntent', function() {
     'use strict';
 
     beforeEach(function() {
         sandbox.restore();
-        module = moduleBackup;
+        module = rewire('../../');
     });
 
     it('should expose function #onIntent', function() {

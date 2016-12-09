@@ -1,13 +1,17 @@
 var rewire = require('rewire');
-var menu = rewire('../../lib/menu');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var data = require('./data/menu');
+var menu;
 
 
 describe('menu', function() {
     'use strict';
+
+    beforeEach(function() {
+        menu = rewire('../../lib/menu');
+    });
 
     afterEach(function() {
         sandbox.restore();
@@ -17,15 +21,11 @@ describe('menu', function() {
         expect(menu).to.be.a('function');
     });
 
-    it('should call client', function(done) {
-        var mock = sandbox.mock(menu.__get__('client'))
-            .expects('menu')
-            .once()
-            .callsArgWith(0, null, data);
-        menu('S-Bar', new Date('2016-11-08'), function() {
-            mock.verify();
-            done();
-        });
+    it('should call client', function() {
+        var menuSpy = sandbox.spy();
+        menu.__set__('client', {menu: menuSpy});
+        menu('S-Bar', new Date('2016-11-08'), function() {});
+        expect(menuSpy.calledOnce).to.equal(true);
     });
 
     it('should return answer for menu at 2016-11-08', function(done) {

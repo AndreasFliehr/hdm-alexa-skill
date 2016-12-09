@@ -1,18 +1,18 @@
 var expect = require('chai').expect;
 var rewire = require('rewire');
-var module = rewire('../../');
-var onLaunch = module.__get__('onLaunch');
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
-var moduleBackup = module;
 var utils = require('../utils/index');
+var module;
+var onLaunch;
 
 describe('event handler', function() {
     'use strict';
 
     beforeEach(function() {
         sandbox.restore();
-        module = moduleBackup;
+        module = rewire('../../');
+        onLaunch = module.__get__('onLaunch');
         process.env.ALEXA_APP_ID = 'secretid';
     });
 

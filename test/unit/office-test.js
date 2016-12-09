@@ -1,14 +1,18 @@
 var rewire = require('rewire');
-var office = rewire('../../lib/office');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var data = require('./data/office');
 var dataNoRoom = require('./data/officeNoRoom');
 var dataMultipleLecturers = require('./data/officeMultipleLecturers');
+var office;
 
 describe ('office', function() {
     'use strict';
+
+    beforeEach(function() {
+        office = rewire('../../lib/office');
+    });
 
     afterEach(function() {
         sandbox.restore();
@@ -19,8 +23,8 @@ describe ('office', function() {
     });
 
     it('should call client', function(done) {
-        var searchDetailsSpy = sandbox.spy(office.__get__('client'),
-            'searchDetails');
+        var searchDetailsSpy = sandbox.spy();
+        office.__set__('client', {searchDetails: searchDetailsSpy});
         expect(searchDetailsSpy.calledWithExactly('Walter Kriha', done()));
     });
 
