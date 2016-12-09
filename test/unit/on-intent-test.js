@@ -1,7 +1,6 @@
 var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var sandbox = sinon.sandbox.create();
 var utils = require('../utils/index');
 var response = require('alexa-response');
 var module;
@@ -10,7 +9,6 @@ describe('#onIntent', function() {
     'use strict';
 
     beforeEach(function() {
-        sandbox.restore();
         module = rewire('../../');
     });
 
@@ -59,7 +57,7 @@ describe('#onIntent', function() {
 
         it('should use date from attributes if present', function() {
             var spy, attributes, intent, date;
-            spy = sandbox.spy();
+            spy = sinon.spy();
             intent = utils.createIntent('MenuIntent', ['location'], ['Mensa']);
             date = new Date('2016-11-18');
             attributes = {date: date};
@@ -145,7 +143,7 @@ describe('#onIntent', function() {
     });
 
     function testIfFnIsCalled(fn, intent, attributes, expected) {
-        var spy = sandbox.spy();
+        var spy = sinon.spy();
         module.__set__(fn, spy);
         module.__get__('onIntent')(intent, attributes, function() {});
         expect(spy.called).to.equal(expected);
@@ -158,7 +156,7 @@ describe('#onIntent', function() {
     }
 
     function testIfMenuIsCalledWithArgs(intent, attr, location, dateMatcher) {
-        var spy = sandbox.spy();
+        var spy = sinon.spy();
         module.__set__('menu', spy);
         module.__get__('onIntent')(intent, attr, function() {});
         expect(spy.calledWithExactly(
@@ -167,7 +165,7 @@ describe('#onIntent', function() {
     }
 
     function testIfOfficeIsCalledWithArgs(intent, query) {
-        var spy = sandbox.spy();
+        var spy = sinon.spy();
         module.__set__('office', spy);
         module.__get__('onIntent')(intent, function() {});
         expect(spy.calledWith(query, sinon.match.typeOf('function')))
@@ -176,7 +174,7 @@ describe('#onIntent', function() {
 
     function testIfErrorIsForwarded(intent, fn, argPos, done) {
         var stub, callback;
-        stub = sandbox.stub().callsArgWith(argPos, 'Test Error', null);
+        stub = sinon.stub().callsArgWith(argPos, 'Test Error', null);
         module.__set__(fn, stub);
         callback = utils.createTestCallback('Test Error', null, done);
         module.__get__('onIntent')(intent, {}, callback);
@@ -185,7 +183,7 @@ describe('#onIntent', function() {
     function testResponse(intent, fn, argPos, done) {
         var stub, callback, expected;
         expected = response.say('Test Response').build();
-        stub = sandbox.stub().callsArgWith(argPos, null, 'Test Response');
+        stub = sinon.stub().callsArgWith(argPos, null, 'Test Response');
         module.__set__(fn, stub);
         callback = function(err, res) {
             expect(err).to.equal(null);

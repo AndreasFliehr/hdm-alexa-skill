@@ -1,18 +1,14 @@
 var expect = require('chai').expect;
 var rewire = require('rewire');
 var sinon = require('sinon');
-var sandbox = sinon.sandbox.create();
 var utils = require('../utils/index');
 var module;
-var onLaunch;
 
 describe('event handler', function() {
     'use strict';
 
     beforeEach(function() {
-        sandbox.restore();
         module = rewire('../../');
-        onLaunch = module.__get__('onLaunch');
         process.env.ALEXA_APP_ID = 'secretid';
     });
 
@@ -42,7 +38,7 @@ describe('event handler', function() {
 
     it('should forward the response of #onLaunch', function(done) {
         var stub, event, callback;
-        stub = sandbox.stub().callsArgWith(0, null, 'Test response');
+        stub = sinon.stub().callsArgWith(0, null, 'Test response');
         module.__set__('onLaunch', stub);
         event = createEvent('LaunchRequest');
         callback = utils.createTestCallback(null, 'Test response', done);
@@ -51,7 +47,7 @@ describe('event handler', function() {
 
     it('should forward the error of #onLaunch', function(done) {
         var stub, event, callback;
-        stub = sandbox.stub().callsArgWith(0, 'Test Error', null);
+        stub = sinon.stub().callsArgWith(0, 'Test Error', null);
         module.__set__('onLaunch', stub);
         event = createEvent('LaunchRequest');
         callback = utils.createTestCallback('Test Error', null, done);
@@ -60,7 +56,7 @@ describe('event handler', function() {
 
     it('should forward the error of #onIntent', function(done) {
         var stub, event, callback;
-        stub = sandbox.stub().callsArgWith(2, 'Test Error', null);
+        stub = sinon.stub().callsArgWith(2, 'Test Error', null);
         module.__set__('onIntent', stub);
         event = createEvent('IntentRequest');
         callback = utils.createTestCallback('Test Error', null, done);
@@ -124,7 +120,7 @@ function createEvent(requestType, appId) {
 function createRequestSpy(fn) {
     'use strict';
 
-    var spy = sandbox.spy();
+    var spy = sinon.spy();
     module.__set__(fn, spy);
     return spy;
 
