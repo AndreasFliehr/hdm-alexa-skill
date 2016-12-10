@@ -19,4 +19,10 @@ describe ('ects', function() {
         expect(ects).to.be.a('function');
     });
 
+    it('should call client', function(done) {
+        var searchDetailsSpy = sandbox.spy();
+        ects.__set__('client', {searchDetails: searchDetailsSpy});
+        expect(searchDetailsSpy.calledWithExactly(
+            'Machine-Learning', done()));
+    });
 });
