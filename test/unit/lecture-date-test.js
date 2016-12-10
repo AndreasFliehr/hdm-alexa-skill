@@ -4,6 +4,9 @@ var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var lectureDate;
 
+var lectureDateNoData = [
+];
+
 var lectureDateSingleData = [
     {
         date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
@@ -50,6 +53,11 @@ describe ('lectureDate', function() {
         lectureDate.__set__('client', {searchDetails: searchDetailsSpy});
         expect(searchDetailsSpy.calledWithExactly(
             'Ultra Large Scale System', done()));
+    });
+
+    it('should return answer if no lecture was found', function(done) {
+        var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
+        testResponse('invalid lecture', expected, lectureDateNoData, done);
     });
 
     it('should return answer for single lecture', function(done) {
