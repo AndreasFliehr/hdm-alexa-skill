@@ -7,6 +7,14 @@ var ects;
 var ectsNoData = [
 ];
 
+var ectsSingleData = [
+    {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
+        name: 'Machine-Learning',
+        ects: 6
+    }
+];
+
 describe ('ects', function() {
     'use strict';
 
@@ -32,6 +40,11 @@ describe ('ects', function() {
     it('should return answer if no lecture was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
         testResponse('invalid lecture', expected, ectsNoData, done);
+    });
+
+    it('should return answer for single lecture', function(done) {
+        var expected = 'Machine-Learning hat 6 ECTS';
+        testResponse('Machine-Learning', expected, ectsSingleData, done);
     });
 });
 
