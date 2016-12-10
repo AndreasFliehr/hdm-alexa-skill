@@ -76,6 +76,15 @@ describe ('lectureDate', function() {
         testResponse('Machine-Learning', expected,
             lectureDateMultipleDataWithEmptyDate, done);
     });
+
+    it('should provide error if client throws one', function(done) {
+        sandbox.stub(lectureDate.__get__('client'), 'searchDetails')
+            .callsArgWith(2, new Error('Test Message'), null);
+        lectureDate('Machine-Learning', function(err) {
+            expect(err.message).to.equal('Test Message');
+            done();
+        });
+    });
 });
 
 function testResponse(lecture, expected, dataMock, done) {
