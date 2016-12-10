@@ -78,6 +78,15 @@ describe ('ects', function() {
         testResponse('Machine-Learning', expected,
             ectsMultipleDataWithEmptyDate, done);
     });
+
+    it('should provide error if client throws one', function(done) {
+        sandbox.stub(ects.__get__('client'), 'searchDetails')
+            .callsArgWith(2, new Error('Test Message'), null);
+        ects('Machine-Learning', function(err) {
+            expect(err.message).to.equal('Test Message');
+            done();
+        });
+    });
 });
 
 function testResponse(lecture, expected, dataMock, done) {
