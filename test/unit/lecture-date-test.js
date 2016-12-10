@@ -4,7 +4,14 @@ var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var lectureDate;
 
-describe ('office', function() {
+var lectureDateSingleData = [
+    {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
+        name: 'Machine-Learning'
+    }
+];
+
+describe ('lectureDate', function() {
     'use strict';
 
     beforeEach(function() {
@@ -25,4 +32,22 @@ describe ('office', function() {
         expect(searchDetailsSpy.calledWithExactly(
             'Ultra Large Scale System', done()));
     });
+
+    it('should return answer for single lecture', function(done) {
+        var expected = 'Machine-Learning findet am Montag von 11:45-13:15 ' +
+            'und Montag von 11:45-13:15 statt';
+        testResponse('Machine-Learning', expected, lectureDateSingleData, done);
+    });
 });
+
+function testResponse(lecture, expected, dataMock, done) {
+    'use strict';
+
+    sandbox.stub(lectureDate.__get__('client'), 'searchDetails')
+        .callsArgWith(2, null, dataMock);
+
+    lectureDate(lecture, function(err, response) {
+        expect(response).to.equal(expected);
+        done();
+    });
+}
