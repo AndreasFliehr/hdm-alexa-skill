@@ -4,9 +4,6 @@ var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var ects;
 
-var ectsNoData = [
-];
-
 var ectsSingleData = [
     {
         date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
@@ -62,7 +59,7 @@ describe ('ects', function() {
 
     it('should return answer if no lecture was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        testResponse('invalid lecture', expected, ectsNoData, done);
+        testResponse('invalid lecture', expected, [], done);
     });
 
     it('should return answer for single lecture', function(done) {
