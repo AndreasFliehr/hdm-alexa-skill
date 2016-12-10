@@ -15,6 +15,29 @@ var ectsSingleData = [
     }
 ];
 
+var ectsMultipleDataWithEmptyDate = [
+    {
+        date: null,
+        ects: 5,
+        name: 'Machine-Learning'
+    },
+    {
+        date: null,
+        ects: 4,
+        name: 'Machine-Learning'
+    },
+    {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
+        ects: 6,
+        name: 'Machine-Learning'
+    },
+    {
+        date: 'Do 11:45-13:15 \nDi 14:15-15:45',
+        ects: 7,
+        name: 'Machine-Learning 2'
+    }
+];
+
 describe ('ects', function() {
     'use strict';
 
@@ -45,6 +68,15 @@ describe ('ects', function() {
     it('should return answer for single lecture', function(done) {
         var expected = 'Machine-Learning hat 6 ECTS';
         testResponse('Machine-Learning', expected, ectsSingleData, done);
+    });
+
+    it('should return answer for multiple lecture ' +
+        'with empty date entries', function(done) {
+        var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
+            'Machine-Learning hat 6 ECTS, Machine-Learning 2' +
+            ' hat 7 ECTS';
+        testResponse('Machine-Learning', expected,
+            ectsMultipleDataWithEmptyDate, done);
     });
 });
 
