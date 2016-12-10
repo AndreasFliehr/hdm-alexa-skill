@@ -19,4 +19,10 @@ describe ('office', function() {
         expect(lectureDate).to.be.a('function');
     });
 
+    it('should call client', function(done) {
+        var searchDetailsSpy = sandbox.spy();
+        lectureDate.__set__('client', {searchDetails: searchDetailsSpy});
+        expect(searchDetailsSpy.calledWithExactly(
+            'Ultra Large Scale System', done()));
+    });
 });
