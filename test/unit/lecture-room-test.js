@@ -11,6 +11,12 @@ var lectureRoomSingleData = [
     }
 ];
 
+var lectureRoomSingleDataMultipleRooms = [
+    {
+        name: 'Ultra Large Scale Systems',
+        room: 'U31/U32'
+    }
+];
 
 describe('lectureRoom', function() {
     'use strict';
@@ -34,13 +40,21 @@ describe('lectureRoom', function() {
             'System Engineering', done()));
     });
 
-    it('should return answer for single lecture', function(done) {
+    it('should return answer for single lecture and single room',
+        function(done) {
         var expected = 'System Engineering und Management findet ' +
             'in Raum 141 statt.';
         testResponse('System Engineering', expected,
             lectureRoomSingleData, done);
     });
 
+    it('should return answer for single lecture and multiple rooms',
+        function(done) {
+        var expected = 'Ultra Large Scale Systems findet in Raum U31 ' +
+            'und in Raum U32 statt.';
+        testResponse('Ultra Large', expected,
+            lectureRoomSingleDataMultipleRooms, done);
+    });
 });
 
 function testResponse(lecture, expected, dataMock, done) {
