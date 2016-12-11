@@ -42,7 +42,7 @@ function onMenuIntent(intent, attributes, callback) {
     'use strict';
     var date, location, res;
 
-    if (attributes.date) {
+    if (attributes && attributes.date) {
         date = attributes.date;
     } else if (intent.slots.date && intent.slots.date.value) {
         date = new Date(intent.slots.date.value);

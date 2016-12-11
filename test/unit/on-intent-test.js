@@ -76,6 +76,15 @@ describe('#onIntent', function() {
                 .to.equal(true);
         });
 
+        it('should not throw any error if attributes is null', function(done) {
+            var intent;
+            intent = utils.createIntent('MenuIntent', ['location'], ['Mensa']);
+            module.__set__('menu', sinon.stub().callsArg(2));
+            module.__get__('onIntent')(intent, null, function() {
+                done();
+            });
+        });
+
         it('should fallback to today\'s date if no date slot', function() {
             var intent, dateMatcher;
             intent = utils.createIntent('MenuIntent', ['location'], ['S-Bar']);
