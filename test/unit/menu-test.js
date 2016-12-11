@@ -51,6 +51,11 @@ describe('menu', function() {
         testResponse('Mensa', new Date('2016-11-09'), expected, done);
     });
 
+    it('should return answer for lower case location', function(done) {
+        var expected = 'Für diesen Tag hab ich leider keine Informationen.';
+        testResponse('mensa', new Date('2016-11-09'), expected, done);
+    });
+
     it('should return answer for invalid locations', function(done) {
         var expected = 'Ich weiß leider nur, was es in der Mensa oder der ' +
             'Essbar gibt.';

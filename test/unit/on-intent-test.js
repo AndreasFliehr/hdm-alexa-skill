@@ -36,6 +36,15 @@ describe('#onIntent', function() {
             testIfMenuIsCalledWithArgs(intent, {}, 'S-Bar', dateMatcher);
         });
 
+        it('should parse location if location is essbar', function() {
+            var intent, dateMatcher;
+            intent = utils.createIntent(
+                'MenuIntent', ['date', 'location'], ['2016-11-18', 'essbar']);
+
+            dateMatcher = createDateMatcher(new Date('2016-11-18'));
+            testIfMenuIsCalledWithArgs(intent, {}, 'S-Bar', dateMatcher);
+        });
+
         it('should not call #menu if intent is not MenuIntent', function() {
             var intent = utils.createIntent([], []);
             testIfFnIsCalled('menu', intent, {}, false);

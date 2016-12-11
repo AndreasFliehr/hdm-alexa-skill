@@ -52,7 +52,7 @@ function onMenuIntent(intent, attributes, callback) {
 
     if (intent.slots.location && intent.slots.location.value) {
         location = intent.slots.location.value;
-        if (intent.slots.location.value === 'Essbar') {
+        if (intent.slots.location.value.toLowerCase() === 'essbar') {
             location = 'S-Bar';
         }
         menu(location, date, function(err, result) {
