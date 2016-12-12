@@ -83,6 +83,20 @@ describe('lectureRoom', function() {
         testResponse('Mediengestaltung', expected,
             lectureRoomMultipleDatawithEmptyAndMultipleRooms, done);
     });
+
+    it('should return answer if no lecture was found', function(done) {
+        var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
+        testResponse('invalid lecture', expected, [], done);
+    });
+
+    it('should provide error if client throws one', function(done) {
+        sandbox.stub(lectureRoom.__get__('client'), 'searchDetails')
+            .callsArgWith(2, new Error('Test Message'), null);
+        lectureRoom('ULS', function(err) {
+            expect(err.message).to.equal('Test Message');
+            done();
+        });
+    });
 });
 
 function testResponse(lecture, expected, dataMock, done) {
