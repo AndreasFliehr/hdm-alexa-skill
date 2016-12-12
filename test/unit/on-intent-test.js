@@ -45,6 +45,16 @@ describe('#onIntent', function() {
             testIfMenuIsCalledWithArgs(intent, {}, 'S-Bar', dateMatcher);
         });
 
+        it('should parse location if location is hochschule', function() {
+            var intent, dateMatcher;
+            intent = utils.createIntent(
+                'MenuIntent', ['date', 'location'], ['2016-11-18', 'hochschule']
+            );
+
+            dateMatcher = createDateMatcher(new Date('2016-11-18'));
+            testIfMenuIsCalledWithArgs(intent, {}, 'S-Bar', dateMatcher);
+        });
+
         it('should not call #menu if intent is not MenuIntent', function() {
             var intent = utils.createIntent([], []);
             testIfFnIsCalled('menu', intent, {}, false);
@@ -154,6 +164,7 @@ describe('#onIntent', function() {
             var intent = utils.createIntent('OfficeIntent', ['query'], ['Tom']);
             testIfErrorIsForwarded(intent, 'office', 1, done);
         });
+
         it('should call callback with response object', function(done) {
             var intent = utils.createIntent('OfficeIntent', ['query'], ['Tom']);
             testResponse(intent, 'office', 1, done);

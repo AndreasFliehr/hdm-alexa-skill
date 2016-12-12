@@ -2,6 +2,7 @@ var response = require('alexa-response');
 var menu = require('./lib/menu');
 var office = require('./lib/office');
 var util = require('util');
+var _ = require('underscore');
 
 function onLaunch(done) {
     'use strict';
@@ -40,7 +41,7 @@ function onOfficeIntent(intent, callback) {
 
 function onMenuIntent(intent, attributes, callback) {
     'use strict';
-    var date, location, res;
+    var date, location, res, sbarNames;
 
     if (attributes && attributes.date) {
         date = attributes.date;
@@ -52,7 +53,8 @@ function onMenuIntent(intent, attributes, callback) {
 
     if (intent.slots.location && intent.slots.location.value) {
         location = intent.slots.location.value;
-        if (intent.slots.location.value.toLowerCase() === 'essbar') {
+        sbarNames = ['essbar', 'hochschule'];
+        if (_.contains(sbarNames, location.toLowerCase())) {
             location = 'S-Bar';
         }
         menu(location, date, function(err, result) {
