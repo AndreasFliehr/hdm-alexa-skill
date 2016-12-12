@@ -11,10 +11,29 @@ var lectureRoomSingleData = [
     }
 ];
 
-var lectureRoomSingleDataMultipleRooms = [
+var lectureRoomSingleDatawithMultipleRooms = [
     {
         name: 'Ultra Large Scale Systems',
         room: 'U31/U32'
+    }
+];
+
+var lectureRoomMultipleDatawithEmptyAndMultipleRooms = [
+    {
+        name: 'Mediengestaltung I',
+        room: null
+    },
+    {
+        name: 'Mediengestaltung II',
+        room: null
+    },
+    {
+        name: 'Mediengestaltung I',
+        room: 'U31/U32'
+    },
+    {
+        name: 'Mediengestaltung II',
+        room: '214'
     }
 ];
 
@@ -40,20 +59,29 @@ describe('lectureRoom', function() {
             'System Engineering', done()));
     });
 
-    it('should return answer for single lecture and single room',
+    it('should return answer for single lecture with single room',
         function(done) {
         var expected = 'System Engineering und Management findet ' +
-            'in Raum 141 statt.';
+            'in Raum 141 statt';
         testResponse('System Engineering', expected,
             lectureRoomSingleData, done);
     });
 
-    it('should return answer for single lecture and multiple rooms',
+    it('should return answer for single lecture with multiple rooms',
         function(done) {
         var expected = 'Ultra Large Scale Systems findet in Raum U31 ' +
-            'und in Raum U32 statt.';
+            'und in Raum U32 statt';
         testResponse('Ultra Large', expected,
-            lectureRoomSingleDataMultipleRooms, done);
+            lectureRoomSingleDatawithMultipleRooms, done);
+    });
+
+    it('should return answer for multiple lectures with single, multiple ' +
+        'and empty rooms', function(done) {
+        var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
+            'Mediengestaltung I findet in Raum U31 und ' +
+            'in Raum U32 statt, Mediengestaltung II findet in Raum 214 statt';
+        testResponse('Mediengestaltung', expected,
+            lectureRoomMultipleDatawithEmptyAndMultipleRooms, done);
     });
 });
 
