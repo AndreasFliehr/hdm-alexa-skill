@@ -68,7 +68,7 @@ function onMenuIntent(intent, attributes, callback) {
         });
     } else {
         res = response
-            .ask('Willst du in der Mensa oder in der Essbar essen?')
+            .ask('Willst du in der Mensa oder in der Hochschule essen?')
             .attributes({date: date})
             .build();
         callback(null, res);
