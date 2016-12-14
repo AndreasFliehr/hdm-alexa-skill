@@ -175,14 +175,14 @@ describe('#onIntent', function() {
         it('should call #lectureDate if intent is LectureDateIntent',
             function() {
             var intent = utils.createIntent(
-                'LectureDateIntent', ['query'], ['Machine-Learning']);
+                'LectureDateIntent', ['lectureName'], ['Machine-Learning']);
             testIfLectureDateIsCalledWithArgs(intent, 'Machine-Learning');
         });
 
         it('should not call #lectureDate if intent is not LectureDateIntent',
             function() {
                 var intent = utils.createIntent(
-                    'OtherIntent', ['query'], ['Machine-Learning']);
+                    'OtherIntent', ['lectureName'], ['Machine-Learning']);
                 testIfFnIsCalled('lectureDate', intent, null, false);
             });
         it('should not call #lectureDate if query slot is not present',
@@ -195,13 +195,13 @@ describe('#onIntent', function() {
         it('should forward error from #lectureDate intent to cb',
             function(done) {
             var intent = utils.createIntent(
-                'LectureDateIntent', ['query'], ['Machine-Learning']);
+                'LectureDateIntent', ['lectureName'], ['Machine-Learning']);
             testIfErrorIsForwarded(intent, 'lectureDate', 1, done);
         });
 
         it('should call callback with response object', function(done) {
             var intent = utils.createIntent(
-                'LectureDateIntent', ['query'], ['Machine-Learning']);
+                'LectureDateIntent', ['lectureName'], ['Machine-Learning']);
             testResponse(intent, 'lectureDate', 1, done);
         });
     });
@@ -210,14 +210,14 @@ describe('#onIntent', function() {
         it('should call #lectureRoom if intent is LectureRoomIntent',
             function() {
                 var intent = utils.createIntent(
-                    'LectureRoomIntent', ['query'], ['Machine-Learning']);
+                    'LectureRoomIntent', ['lectureName'], ['Machine-Learning']);
                 testIfLectureRoomIsCalledWithArgs(intent, 'Machine-Learning');
             });
 
         it('should not call #lectureRoom if intent is not LectureRoomIntent',
             function() {
             var intent = utils.createIntent(
-                'OtherIntent', ['query'], ['Machine-Learning']);
+                'OtherIntent', ['lectureName'], ['Machine-Learning']);
             testIfFnIsCalled('lectureRoom', intent, null, false);
         });
 
@@ -231,13 +231,13 @@ describe('#onIntent', function() {
         it('should forward error from #lectureRoom intent to cb',
             function(done) {
                 var intent = utils.createIntent(
-                    'LectureRoomIntent', ['query'], ['Machine-Learning']);
+                    'LectureRoomIntent', ['lectureName'], ['Machine-Learning']);
                 testIfErrorIsForwarded(intent, 'lectureRoom', 1, done);
             });
 
         it('should call callback with response object', function(done) {
             var intent = utils.createIntent(
-                'LectureRoomIntent', ['query'], ['Machine-Learning']);
+                'LectureRoomIntent', ['lectureName'], ['Machine-Learning']);
             testResponse(intent, 'lectureRoom', 1, done);
         });
     });

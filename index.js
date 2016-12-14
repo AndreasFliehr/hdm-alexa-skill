@@ -32,8 +32,8 @@ function onIntent(intent, attributes, callback) {
 
 function onLectureRoomIntent(intent, callback) {
     'use strict';
-    if (intent.slots.hasOwnProperty('query')) {
-        lectureRoom(intent.slots.query.value, function(err, result) {
+    if (intent.slots.hasOwnProperty('lectureName')) {
+        lectureRoom(intent.slots.lectureName.value, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
@@ -47,8 +47,8 @@ function onLectureRoomIntent(intent, callback) {
 
 function onLectureDateIntent(intent, callback) {
     'use strict';
-    if (intent.slots.hasOwnProperty('query')) {
-        lectureDate(intent.slots.query.value, function(err, result) {
+    if (intent.slots.hasOwnProperty('lectureName')) {
+        lectureDate(intent.slots.lectureName.value, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
