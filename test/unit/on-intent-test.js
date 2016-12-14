@@ -198,6 +198,12 @@ describe('#onIntent', function() {
                 'LectureDateIntent', ['query'], ['Machine-Learning']);
             testIfErrorIsForwarded(intent, 'lectureDate', 1, done);
         });
+
+        it('should call callback with response object', function(done) {
+            var intent = utils.createIntent(
+                'LectureDateIntent', ['query'], ['Machine-Learning']);
+            testResponse(intent, 'lectureDate', 1, done);
+        });
     });
 
     function testIfLectureDateIsCalledWithArgs(intent, query) {
