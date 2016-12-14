@@ -191,6 +191,13 @@ describe('#onIntent', function() {
                 'LectureDateIntent', [], []);
             testIfFnIsCalled('lectureDate', intent, null, false);
         });
+
+        it('should forward error from #lectureDate intent to cb',
+            function(done) {
+            var intent = utils.createIntent(
+                'LectureDateIntent', ['query'], ['Machine-Learning']);
+            testIfErrorIsForwarded(intent, 'lectureDate', 1, done);
+        });
     });
 
     function testIfLectureDateIsCalledWithArgs(intent, query) {

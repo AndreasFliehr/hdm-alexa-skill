@@ -32,6 +32,10 @@ function onLectureDateIntent(intent, callback) {
     if (intent.slots.hasOwnProperty('query')) {
         lectureDate(intent.slots.query.value, function(err, result) {
             var res;
+            if (err) {
+                callback(err, null);
+                return;
+            }
             res = response.say(result).build();
             callback(null, res);
         });
