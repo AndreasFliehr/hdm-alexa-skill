@@ -2,6 +2,7 @@ var response = require('alexa-response');
 var menu = require('./lib/menu');
 var office = require('./lib/office');
 var lectureDate = require('./lib/lectureDate');
+var lectureRoom = require('./lib/lectureRoom');
 var util = require('util');
 var _ = require('underscore');
 
@@ -24,7 +25,16 @@ function onIntent(intent, attributes, callback) {
         onOfficeIntent(intent, callback);
     } else if (intent.name === 'LectureDateIntent') {
         onLectureDateIntent(intent, callback);
+    } else if (intent.name === 'LectureRoomIntent') {
+        onLectureRoomIntent(intent, callback);
     }
+}
+
+function onLectureRoomIntent(intent, callback) {
+    'use strict';
+    lectureRoom(intent.slots.query.value, function() {
+        callback();
+    });
 }
 
 function onLectureDateIntent(intent, callback) {

@@ -206,6 +206,23 @@ describe('#onIntent', function() {
         });
     });
 
+    describe('LectureRoomIntent', function() {
+        it('should call #lectureRoom if intent is LectureRoomIntent',
+            function() {
+                var intent = utils.createIntent(
+                    'LectureRoomIntent', ['query'], ['Machine-Learning']);
+                testIfLectureRoomIsCalledWithArgs(intent, 'Machine-Learning');
+            });
+    });
+
+    function testIfLectureRoomIsCalledWithArgs(intent, query) {
+        var spy = sinon.spy();
+        module.__set__('lectureRoom', spy);
+        module.__get__('onIntent')(intent, function() {});
+        expect(spy.calledWith(query, sinon.match.typeOf('function')))
+            .to.equal(true);
+    }
+
     function testIfLectureDateIsCalledWithArgs(intent, query) {
         var spy = sinon.spy();
         module.__set__('lectureDate', spy);
