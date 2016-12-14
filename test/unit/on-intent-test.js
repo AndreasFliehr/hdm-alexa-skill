@@ -178,6 +178,13 @@ describe('#onIntent', function() {
                 'LectureDateIntent', ['query'], ['Machine-Learning']);
             testIfLectureDateIsCalledWithArgs(intent, 'Machine-Learning');
         });
+
+        it('should not call #lectureDate if intent is not LectureDateIntent',
+            function() {
+                var intent = utils.createIntent(
+                    'OtherIntent', ['query'], ['Machine-Learning']);
+                testIfFnIsCalled('lectureDate', intent, null, false);
+            });
     });
 
     function testIfLectureDateIsCalledWithArgs(intent, query) {
