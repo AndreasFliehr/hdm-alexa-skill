@@ -221,6 +221,13 @@ describe('#onIntent', function() {
             testIfFnIsCalled('lectureRoom', intent, null, false);
         });
 
+        it('should not call #lectureRoom if query slot is not present',
+            function() {
+                var intent = utils.createIntent(
+                    'LectureRoomIntent', [], []);
+                testIfFnIsCalled('lectureRoom', intent, null, false);
+            });
+
     });
 
     function testIfLectureRoomIsCalledWithArgs(intent, query) {
