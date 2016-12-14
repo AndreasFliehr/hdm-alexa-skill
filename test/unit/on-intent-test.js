@@ -235,6 +235,11 @@ describe('#onIntent', function() {
                 testIfErrorIsForwarded(intent, 'lectureRoom', 1, done);
             });
 
+        it('should call callback with response object', function(done) {
+            var intent = utils.createIntent(
+                'LectureRoomIntent', ['query'], ['Machine-Learning']);
+            testResponse(intent, 'lectureRoom', 1, done);
+        });
     });
 
     function testIfLectureRoomIsCalledWithArgs(intent, query) {
