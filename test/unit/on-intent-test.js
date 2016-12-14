@@ -228,6 +228,13 @@ describe('#onIntent', function() {
                 testIfFnIsCalled('lectureRoom', intent, null, false);
             });
 
+        it('should forward error from #lectureRoom intent to cb',
+            function(done) {
+                var intent = utils.createIntent(
+                    'LectureRoomIntent', ['query'], ['Machine-Learning']);
+                testIfErrorIsForwarded(intent, 'lectureRoom', 1, done);
+            });
+
     });
 
     function testIfLectureRoomIsCalledWithArgs(intent, query) {
