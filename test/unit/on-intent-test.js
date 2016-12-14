@@ -213,6 +213,14 @@ describe('#onIntent', function() {
                     'LectureRoomIntent', ['query'], ['Machine-Learning']);
                 testIfLectureRoomIsCalledWithArgs(intent, 'Machine-Learning');
             });
+
+        it('should not call #lectureRoom if intent is not LectureRoomIntent',
+            function() {
+            var intent = utils.createIntent(
+                'OtherIntent', ['query'], ['Machine-Learning']);
+            testIfFnIsCalled('lectureRoom', intent, null, false);
+        });
+
     });
 
     function testIfLectureRoomIsCalledWithArgs(intent, query) {
