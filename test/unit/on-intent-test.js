@@ -185,6 +185,12 @@ describe('#onIntent', function() {
                     'OtherIntent', ['query'], ['Machine-Learning']);
                 testIfFnIsCalled('lectureDate', intent, null, false);
             });
+        it('should not call #lectureDate if query slot is not present',
+            function() {
+            var intent = utils.createIntent(
+                'LectureDateIntent', [], []);
+            testIfFnIsCalled('lectureDate', intent, null, false);
+        });
     });
 
     function testIfLectureDateIsCalledWithArgs(intent, query) {

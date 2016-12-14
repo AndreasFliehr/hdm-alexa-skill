@@ -29,10 +29,13 @@ function onIntent(intent, attributes, callback) {
 
 function onLectureDateIntent(intent, callback) {
     'use strict';
-    lectureDate(intent.slots.query.value, function(err, result) {
-        var res;
-        callback(null, res);
-    });
+    if (intent.slots.hasOwnProperty('query')) {
+        lectureDate(intent.slots.query.value, function(err, result) {
+            var res;
+            res = response.say(result).build();
+            callback(null, res);
+        });
+    }
 }
 
 function onOfficeIntent(intent, callback) {
