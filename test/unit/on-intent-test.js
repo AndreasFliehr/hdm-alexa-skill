@@ -171,6 +171,23 @@ describe('#onIntent', function() {
         });
     });
 
+    describe('LectureDateIntent', function() {
+        it('should call #lectureDate if intent is LectureDateIntent',
+            function() {
+            var intent = utils.createIntent(
+                'LectureDateIntent', ['query'], ['Machine-Learning']);
+            testIfLectureDateIsCalledWithArgs(intent, 'Machine-Learning');
+        });
+    });
+
+    function testIfLectureDateIsCalledWithArgs(intent, query) {
+        var spy = sinon.spy();
+        module.__set__('lectureDate', spy);
+        module.__get__('onIntent')(intent, function() {});
+        expect(spy.calledWith(query, sinon.match.typeOf('function')))
+            .to.equal(true);
+    }
+
     function testIfFnIsCalled(fn, intent, attributes, expected) {
         var spy = sinon.spy();
         module.__set__(fn, spy);
