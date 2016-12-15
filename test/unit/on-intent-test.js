@@ -127,7 +127,7 @@ describe('#onIntent', function() {
         it('should ask for location if none is provided', function(done) {
             var intent, question, attributes, expected;
 
-            question = 'Willst du in der Mensa oder in der Hochschule essen?';
+            question = 'Willst du in der Mensa oder an der Hochschule essen?';
             attributes = {date: new Date('2016-11-18')};
             expected = response.ask(question).attributes(attributes).build();
             intent = utils.createIntent(

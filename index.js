@@ -1,8 +1,8 @@
 var response = require('alexa-response');
 var menu = require('./lib/menu');
 var office = require('./lib/office');
-var lectureDate = require('./lib/lectureDate');
-var lectureRoom = require('./lib/lectureRoom');
+var lectureDate = require('./lib/lecture').date;
+var lectureRoom = require('./lib/lecture').room;
 var util = require('util');
 var _ = require('underscore');
 
@@ -104,7 +104,7 @@ function onMenuIntent(intent, attributes, callback) {
         });
     } else {
         res = response
-            .ask('Willst du in der Mensa oder in der Hochschule essen?')
+            .ask('Willst du in der Mensa oder an der Hochschule essen?')
             .attributes({date: date})
             .build();
         callback(null, res);

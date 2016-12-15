@@ -2,36 +2,42 @@ var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
-var lectureRoom;
+var lecture;
 
 var lectureRoomSingleData = [
     {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
         name: 'System Engineering und Management',
         room: '141'
     }
 ];
 
-var lectureRoomSingleDatawithMultipleRooms = [
+var lectureRoomSingleDataWithMultipleRooms = [
     {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
         name: 'Ultra Large Scale Systems',
         room: 'U31/U32'
     }
 ];
 
-var lectureRoomMultipleDatawithEmptyAndMultipleRooms = [
+var lectureRoomMultipleDataWithEmptyAndMultipleRooms = [
     {
-        name: 'Mediengestaltung I',
-        room: null
-    },
-    {
-        name: 'Mediengestaltung II',
-        room: null
-    },
-    {
+        date: null,
         name: 'Mediengestaltung I',
         room: 'U31/U32'
     },
     {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
+        name: 'Mediengestaltung II',
+        room: null
+    },
+    {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
+        name: 'Mediengestaltung I',
+        room: 'U31/U32'
+    },
+    {
+        date: 'Mi 11:45-13:15 \nMi 14:15-15:45',
         name: 'Mediengestaltung II',
         room: '214'
     }
@@ -41,7 +47,7 @@ describe('lectureRoom', function() {
     'use strict';
 
     beforeEach(function() {
-        lectureRoom = rewire('../../lib/lectureRoom');
+        lecture = rewire('../../lib/lecture');
     });
 
     afterEach(function() {
@@ -49,17 +55,21 @@ describe('lectureRoom', function() {
     });
 
     it('should be a function #lectureRoom', function() {
-        expect(lectureRoom).to.be.a('function');
+        expect(lecture.room).to.be.a('function');
     });
 
-    it('should call client', function(done) {
-        var searchDetailsSpy = sandbox.spy();
-        lectureRoom.__set__('client', {searchDetails: searchDetailsSpy});
-        expect(searchDetailsSpy.calledWithExactly(
-            'System Engineering', done()));
+    it('should call client', function() {
+        var searchDetailsSpy, fnMatcher, expectation;
+        searchDetailsSpy = sandbox.spy();
+        fnMatcher = sinon.match.typeOf('function');
+        lecture.__set__('client', {searchDetails: searchDetailsSpy});
+        lecture.room('Machine-Learning', function() {});
+        expectation = searchDetailsSpy
+            .calledWithExactly('lecture', 'Machine-Learning', fnMatcher);
+        expect(expectation).to.equal(true);
     });
 
-    it('should return answer for single lecture with single room',
+    it('should return answer for single main with single room',
         function(done) {
         var expected = 'System Engineering und Management findet ' +
             'in Raum 141 statt';
@@ -67,12 +77,12 @@ describe('lectureRoom', function() {
             lectureRoomSingleData, done);
     });
 
-    it('should return answer for single lecture with multiple rooms',
+    it('should return answer for single main with multiple rooms',
         function(done) {
         var expected = 'Ultra Large Scale Systems findet in Raum U31 ' +
             'und in Raum U32 statt';
         testResponse('Ultra Large', expected,
-            lectureRoomSingleDatawithMultipleRooms, done);
+            lectureRoomSingleDataWithMultipleRooms, done);
     });
 
     it('should return answer for multiple lectures with single, multiple ' +
@@ -81,31 +91,31 @@ describe('lectureRoom', function() {
             'Mediengestaltung I findet in Raum U31 und ' +
             'in Raum U32 statt, Mediengestaltung II findet in Raum 214 statt';
         testResponse('Mediengestaltung', expected,
-            lectureRoomMultipleDatawithEmptyAndMultipleRooms, done);
+            lectureRoomMultipleDataWithEmptyAndMultipleRooms, done);
     });
 
-    it('should return answer if no lecture was found', function(done) {
+    it('should return answer if no main was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        testResponse('invalid lecture', expected, [], done);
+        testResponse('invalid main', expected, [], done);
     });
 
     it('should provide error if client throws one', function(done) {
-        sandbox.stub(lectureRoom.__get__('client'), 'searchDetails')
+        sandbox.stub(lecture.__get__('client'), 'searchDetails')
             .callsArgWith(2, new Error('Test Message'), null);
-        lectureRoom('ULS', function(err) {
+        lecture.room('ULS', function(err) {
             expect(err.message).to.equal('Test Message');
             done();
         });
     });
 });
 
-function testResponse(lecture, expected, dataMock, done) {
+function testResponse(query, expected, dataMock, done) {
     'use strict';
 
-    sandbox.stub(lectureRoom.__get__('client'), 'searchDetails')
+    sandbox.stub(lecture.__get__('client'), 'searchDetails')
         .callsArgWith(2, null, dataMock);
 
-    lectureRoom(lecture, function(err, response) {
+    lecture.room(query, function(err, response) {
         expect(response).to.equal(expected);
         done();
     });

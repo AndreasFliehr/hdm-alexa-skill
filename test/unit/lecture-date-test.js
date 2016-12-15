@@ -2,7 +2,7 @@ var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
-var lectureDate;
+var lecture;
 
 var lectureDateSingleData = [
     {
@@ -34,7 +34,7 @@ describe ('lectureDate', function() {
     'use strict';
 
     beforeEach(function() {
-        lectureDate = rewire('../../lib/lectureDate');
+        lecture = rewire('../../lib/lecture');
     });
 
     afterEach(function() {
@@ -42,28 +42,32 @@ describe ('lectureDate', function() {
     });
 
     it('should be a function #lectureDate', function() {
-        expect(lectureDate).to.be.a('function');
+        expect(lecture.date).to.be.a('function');
     });
 
-    it('should call client', function(done) {
-        var searchDetailsSpy = sandbox.spy();
-        lectureDate.__set__('client', {searchDetails: searchDetailsSpy});
-        expect(searchDetailsSpy.calledWithExactly(
-            'Ultra Large Scale System', done()));
+    it('should call client', function() {
+        var searchDetailsSpy, fnMatcher, expectation;
+        searchDetailsSpy = sandbox.spy();
+        fnMatcher = sinon.match.typeOf('function');
+        lecture.__set__('client', {searchDetails: searchDetailsSpy});
+        lecture.date('Machine-Learning', function() {});
+        expectation = searchDetailsSpy
+            .calledWithExactly('lecture', 'Machine-Learning', fnMatcher);
+        expect(expectation).to.equal(true);
     });
 
-    it('should return answer if no lecture was found', function(done) {
+    it('should return answer if no main was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        testResponse('invalid lecture', expected, [], done);
+        testResponse('invalid main', expected, [], done);
     });
 
-    it('should return answer for single lecture', function(done) {
+    it('should return answer for single main', function(done) {
         var expected = 'Machine-Learning findet am Mittwoch von 11:45-13:15 ' +
             'und Mittwoch von 14:15-15:45 statt';
         testResponse('Machine-Learning', expected, lectureDateSingleData, done);
     });
 
-    it('should return answer for multiple lecture ' +
+    it('should return answer for multiple main ' +
         'with empty date entries', function(done) {
         var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
             'Machine-Learning findet am Mittwoch von 11:45-13:15' +
@@ -75,22 +79,22 @@ describe ('lectureDate', function() {
     });
 
     it('should provide error if client throws one', function(done) {
-        sandbox.stub(lectureDate.__get__('client'), 'searchDetails')
+        sandbox.stub(lecture.__get__('client'), 'searchDetails')
             .callsArgWith(2, new Error('Test Message'), null);
-        lectureDate('Machine-Learning', function(err) {
+        lecture.date('Machine-Learning', function(err) {
             expect(err.message).to.equal('Test Message');
             done();
         });
     });
 });
 
-function testResponse(lecture, expected, dataMock, done) {
+function testResponse(query, expected, dataMock, done) {
     'use strict';
 
-    sandbox.stub(lectureDate.__get__('client'), 'searchDetails')
+    sandbox.stub(lecture.__get__('client'), 'searchDetails')
         .callsArgWith(2, null, dataMock);
 
-    lectureDate(lecture, function(err, response) {
+    lecture.date(query, function(err, response) {
         expect(response).to.equal(expected);
         done();
     });
