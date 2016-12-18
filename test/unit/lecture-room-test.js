@@ -99,11 +99,6 @@ describe('lectureRoom', function() {
     });
 
     it('should provide error if client throws one', function(done) {
-        sandbox.stub(lecture.__get__('client'), 'searchDetails')
-            .callsArgWith(2, new Error('Test Message'), null);
-        lecture.room('ULS', function(err) {
-            expect(err.message).to.equal('Test Message');
-            done();
-        });
+        utils.shouldProvideLectureError(sandbox, lecture.room, done);
     });
 });

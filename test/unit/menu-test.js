@@ -1,18 +1,13 @@
-var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var utils = require('../utils/unitTest');
 var sandbox = sinon.sandbox.create();
 var data = require('./data/menu');
 
-var menu;
+var menu = require('../../lib/menu');
 
 describe('menu', function() {
     'use strict';
-
-    beforeEach(function() {
-        menu = rewire('../../lib/menu');
-    });
 
     afterEach(function() {
         sandbox.restore();
@@ -23,10 +18,7 @@ describe('menu', function() {
     });
 
     it('should call client', function() {
-        var menuSpy = sandbox.spy();
-        menu.__set__('client', {menu: menuSpy});
-        menu('S-Bar', new Date('2016-11-08'), function() {});
-        expect(menuSpy.calledOnce).to.equal(true);
+        utils.shouldCallMenuClient(sandbox, menu);
     });
 
     it('should return answer for menu at 2016-11-08', function(done) {
@@ -70,11 +62,6 @@ describe('menu', function() {
     });
 
     it('should provide error if client throws one', function(done) {
-        sandbox.stub(menu.__get__('client'), 'menu')
-            .callsArgWith(0, new Error('Test Message'), null);
-        menu('S-Bar', new Date('2016-11-08'), function(err) {
-            expect(err.message).to.equal('Test Message');
-            done();
-        });
+        utils.shouldProvideMenuError(sandbox, menu, done);
     });
 });

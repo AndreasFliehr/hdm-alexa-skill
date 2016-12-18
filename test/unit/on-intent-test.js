@@ -5,6 +5,9 @@ var utils = require('../utils/index');
 var response = require('alexa-response');
 var module;
 
+var Client = require('hdm-client');
+var client = new Client();
+
 describe('#onIntent', function() {
     'use strict';
 
@@ -82,14 +85,14 @@ describe('#onIntent', function() {
             attributes = {date: date};
             module.__set__('menu', spy);
             module.__get__('onIntent')(intent, attributes);
-            expect(spy.calledWith(sinon.match.any, date))
+            expect(spy.calledWith(client, sinon.match.any, date))
                 .to.equal(true);
         });
 
         it('should not throw any error if attributes is null', function(done) {
             var intent;
             intent = utils.createIntent('MenuIntent', ['location'], ['Mensa']);
-            module.__set__('menu', sinon.stub().callsArg(2));
+            module.__set__('menu', sinon.stub().callsArg(3));
             module.__get__('onIntent')(intent, null, function() {
                 done();
             });
@@ -115,13 +118,13 @@ describe('#onIntent', function() {
         it('should forward error from menu intent', function(done) {
             var intent = utils.createIntent(
                 'MenuIntent', ['location'], ['S-Bar']);
-            testIfErrorIsForwarded(intent, 'menu', 2, done);
+            testIfErrorIsForwarded(intent, 'menu', 3, done);
         });
 
         it('should call callback with response', function(done) {
             var intent = utils.createIntent(
                 'MenuIntent', ['location'], ['S-Bar']);
-            testResponse(intent, 'menu', 2, done);
+            testResponse(intent, 'menu', 3, done);
         });
 
         it('should ask for location if none is provided', function(done) {
@@ -162,12 +165,12 @@ describe('#onIntent', function() {
 
         it('should forward error from office intent to cb', function(done) {
             var intent = utils.createIntent('OfficeIntent', ['query'], ['Tom']);
-            testIfErrorIsForwarded(intent, 'office', 1, done);
+            testIfErrorIsForwarded(intent, 'office', 2, done);
         });
 
         it('should call callback with response object', function(done) {
             var intent = utils.createIntent('OfficeIntent', ['query'], ['Tom']);
-            testResponse(intent, 'office', 1, done);
+            testResponse(intent, 'office', 2, done);
         });
     });
 
@@ -196,13 +199,13 @@ describe('#onIntent', function() {
             function(done) {
             var intent = utils.createIntent(
                 'LectureDateIntent', ['lectureName'], ['Machine-Learning']);
-            testIfErrorIsForwarded(intent, 'lectureDate', 1, done);
+            testIfErrorIsForwarded(intent, 'lectureDate', 2, done);
         });
 
         it('should call callback with response object', function(done) {
             var intent = utils.createIntent(
                 'LectureDateIntent', ['lectureName'], ['Machine-Learning']);
-            testResponse(intent, 'lectureDate', 1, done);
+            testResponse(intent, 'lectureDate', 2, done);
         });
     });
 
@@ -232,13 +235,13 @@ describe('#onIntent', function() {
             function(done) {
                 var intent = utils.createIntent(
                     'LectureRoomIntent', ['lectureName'], ['Machine-Learning']);
-                testIfErrorIsForwarded(intent, 'lectureRoom', 1, done);
+                testIfErrorIsForwarded(intent, 'lectureRoom', 2, done);
             });
 
         it('should call callback with response object', function(done) {
             var intent = utils.createIntent(
                 'LectureRoomIntent', ['lectureName'], ['Machine-Learning']);
-            testResponse(intent, 'lectureRoom', 1, done);
+            testResponse(intent, 'lectureRoom', 2, done);
         });
     });
 
@@ -246,7 +249,7 @@ describe('#onIntent', function() {
         var spy = sinon.spy();
         module.__set__('lectureRoom', spy);
         module.__get__('onIntent')(intent, function() {});
-        expect(spy.calledWith(query, sinon.match.typeOf('function')))
+        expect(spy.calledWith(client, query, sinon.match.typeOf('function')))
             .to.equal(true);
     }
 
@@ -254,7 +257,7 @@ describe('#onIntent', function() {
         var spy = sinon.spy();
         module.__set__('lectureDate', spy);
         module.__get__('onIntent')(intent, function() {});
-        expect(spy.calledWith(query, sinon.match.typeOf('function')))
+        expect(spy.calledWith(client, query, sinon.match.typeOf('function')))
             .to.equal(true);
     }
 
@@ -275,7 +278,7 @@ describe('#onIntent', function() {
         var spy = sinon.spy();
         module.__set__('menu', spy);
         module.__get__('onIntent')(intent, attr, function() {});
-        expect(spy.calledWithExactly(
+        expect(spy.calledWithExactly(client,
             location, sinon.match(dateMatcher), sinon.match.typeOf('function'))
         ).to.equal(true);
     }
@@ -284,7 +287,7 @@ describe('#onIntent', function() {
         var spy = sinon.spy();
         module.__set__('office', spy);
         module.__get__('onIntent')(intent, function() {});
-        expect(spy.calledWith(query, sinon.match.typeOf('function')))
+        expect(spy.calledWith(client, query, sinon.match.typeOf('function')))
             .to.equal(true);
     }
 

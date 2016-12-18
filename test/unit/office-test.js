@@ -1,4 +1,3 @@
-var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
@@ -6,15 +5,10 @@ var data = require('./data/office');
 var utils = require('../utils/unitTest');
 var dataNoRoom = require('./data/officeNoRoom');
 var dataMultipleLecturers = require('./data/officeMultipleLecturers');
-
-var office;
+var office = require('../../lib/office');
 
 describe ('office', function() {
     'use strict';
-
-    beforeEach(function() {
-        office = rewire('../../lib/office');
-    });
 
     afterEach(function() {
         sandbox.restore();
@@ -49,11 +43,6 @@ describe ('office', function() {
     });
 
     it('should provide error if client throws one', function(done) {
-        sandbox.stub(office.__get__('client'), 'searchDetails')
-            .callsArgWith(2, new Error('Test Message'), null);
-        office('Walter Kriha', function(err) {
-            expect(err.message).to.equal('Test Message');
-            done();
-        });
+        utils.shouldProvideOfficeError(sandbox, office, done);
     });
 });

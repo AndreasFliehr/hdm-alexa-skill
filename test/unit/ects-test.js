@@ -1,10 +1,8 @@
-var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var utils = require('../utils/unitTest');
 var sandbox = sinon.sandbox.create();
-
-var lecture;
+var lecture = require('../../lib/lecture');
 
 var ectsSingleData = [
     {
@@ -40,10 +38,6 @@ var ectsMultipleDataWithEmptyDate = [
 describe ('ects', function() {
     'use strict';
 
-    beforeEach(function() {
-        lecture = rewire('../../lib/lecture');
-    });
-
     afterEach(function() {
         sandbox.restore();
     });
@@ -77,13 +71,7 @@ describe ('ects', function() {
             ectsMultipleDataWithEmptyDate, sandbox,
             lecture, lecture.ects, done);
     });
-
     it('should provide error if client throws one', function(done) {
-        sandbox.stub(lecture.__get__('client'), 'searchDetails')
-            .callsArgWith(2, new Error('Test Message'), null);
-        lecture.ects('Machine-Learning', function(err) {
-            expect(err.message).to.equal('Test Message');
-            done();
-        });
+        utils.shouldProvideLectureError(sandbox, lecture.ects, done);
     });
 });

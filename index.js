@@ -6,6 +6,9 @@ var lectureRoom = require('./lib/lecture').room;
 var util = require('util');
 var _ = require('underscore');
 
+var Client = require('hdm-client');
+var client = new Client();
+
 function onLaunch(done) {
     'use strict';
     var res = response.ask('Willkommen an der HdM. Ich kann dir hilfreiche ' +
@@ -33,7 +36,8 @@ function onIntent(intent, attributes, callback) {
 function onLectureRoomIntent(intent, callback) {
     'use strict';
     if (intent.slots.hasOwnProperty('lectureName')) {
-        lectureRoom(intent.slots.lectureName.value, function(err, result) {
+        lectureRoom(client,
+            intent.slots.lectureName.value, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
@@ -48,7 +52,8 @@ function onLectureRoomIntent(intent, callback) {
 function onLectureDateIntent(intent, callback) {
     'use strict';
     if (intent.slots.hasOwnProperty('lectureName')) {
-        lectureDate(intent.slots.lectureName.value, function(err, result) {
+        lectureDate(client,
+            intent.slots.lectureName.value, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
@@ -63,7 +68,7 @@ function onLectureDateIntent(intent, callback) {
 function onOfficeIntent(intent, callback) {
     'use strict';
     if (intent.slots.hasOwnProperty('query')) {
-        office(intent.slots.query.value, function(err, result) {
+        office(client, intent.slots.query.value, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
@@ -93,7 +98,7 @@ function onMenuIntent(intent, attributes, callback) {
         if (_.contains(sbarNames, location.toLowerCase())) {
             location = 'S-Bar';
         }
-        menu(location, date, function(err, result) {
+        menu(client, location, date, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
