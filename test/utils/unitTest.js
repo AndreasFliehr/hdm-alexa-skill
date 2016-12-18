@@ -26,6 +26,18 @@ exports.shouldCallLectureClient = function(sandbox, lecture) {
     expect(expectation).to.equal(true);
 };
 
+exports.shouldCallOfficeClient = function(sandbox, office) {
+    'use strict';
+    var searchDetailsSpy, fnMatcher, expectation;
+    searchDetailsSpy = sandbox.spy();
+    fnMatcher = sinon.match.typeOf('function');
+    office.__set__('client', {searchDetails: searchDetailsSpy});
+    office('Walter Kriha', function() {});
+    expectation = searchDetailsSpy
+        .calledWithExactly('person', 'Walter Kriha', fnMatcher);
+    expect(expectation).to.equal(true);
+};
+
 exports.testMenuResponse = function
     (place, date, expected, dataMock, sandbox, menu, done) {
     'use strict';

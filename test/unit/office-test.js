@@ -24,10 +24,8 @@ describe ('office', function() {
         expect(office).to.be.a('function');
     });
 
-    it('should call client', function(done) {
-        var searchDetailsSpy = sandbox.spy();
-        office.__set__('client', {searchDetails: searchDetailsSpy});
-        expect(searchDetailsSpy.calledWithExactly('Walter Kriha', done()));
+    it('should call client', function() {
+        utils.shouldCallOfficeClient(sandbox, office);
     });
 
     it('should return answer for lecturer', function(done) {
