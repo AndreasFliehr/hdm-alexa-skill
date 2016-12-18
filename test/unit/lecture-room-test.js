@@ -61,14 +61,7 @@ describe('lectureRoom', function() {
     });
 
     it('should call client', function() {
-        var searchDetailsSpy, fnMatcher, expectation;
-        searchDetailsSpy = sandbox.spy();
-        fnMatcher = sinon.match.typeOf('function');
-        lecture.__set__('client', {searchDetails: searchDetailsSpy});
-        lecture.room('Machine-Learning', function() {});
-        expectation = searchDetailsSpy
-            .calledWithExactly('lecture', 'Machine-Learning', fnMatcher);
-        expect(expectation).to.equal(true);
+        utils.shouldCallLectureClient(sandbox, lecture);
     });
 
     it('should return answer for single main with single room',

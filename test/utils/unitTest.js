@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var sinon = require('sinon');
 
 exports.testLectureResponse = function
     (query, expected, dataMock, sandbox, lecture, lectureFn, done) {
@@ -11,6 +12,18 @@ exports.testLectureResponse = function
         expect(response).to.equal(expected);
         done();
     });
+};
+
+exports.shouldCallLectureClient = function(sandbox, lecture) {
+    'use strict';
+    var searchDetailsSpy, fnMatcher, expectation;
+    searchDetailsSpy = sandbox.spy();
+    fnMatcher = sinon.match.typeOf('function');
+    lecture.__set__('client', {searchDetails: searchDetailsSpy});
+    lecture.ects('Machine-Learning', function() {});
+    expectation = searchDetailsSpy
+        .calledWithExactly('lecture', 'Machine-Learning', fnMatcher);
+    expect(expectation).to.equal(true);
 };
 
 exports.testMenuResponse = function
