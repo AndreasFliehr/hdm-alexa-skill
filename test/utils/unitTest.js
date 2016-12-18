@@ -30,19 +30,6 @@ exports.testOfficeResponse = function
     });
 };
 
-exports.testMenuResponse = function
-    (place, date, expected, dataMock, sandbox, menu, done) {
-    'use strict';
-
-    sandbox.stub(client, 'menu')
-        .callsArgWith(0, null, dataMock);
-
-    menu(client, place, date, function(err, response) {
-        expect(response).to.equal(expected);
-        done();
-    });
-};
-
 exports.shouldCallOfficeClient = function(sandbox, office) {
     'use strict';
     var searchDetailsSpy, fnMatcher, expectation;
@@ -65,31 +52,11 @@ exports.shouldCallLectureClient = function(sandbox, lecture) {
     expect(expectation).to.equal(true);
 };
 
-exports.shouldCallMenuClient = function(sandbox, menu) {
-    'use strict';
-    var menuSpy, fnMatcher, expectation;
-    fnMatcher = sinon.match.typeOf('function');
-    menuSpy = sandbox.spy(client, 'menu');
-    menu(client, 'S-Bar', new Date('2016-11-08'), function() {});
-    expectation = menuSpy.calledWithExactly(fnMatcher);
-    expect(expectation).to.equal(true);
-};
-
 exports.shouldProvideOfficeError = function(sandbox, office, done) {
     'use strict';
     sandbox.stub(client, 'searchDetails')
         .callsArgWith(2, new Error('Test Message'), null);
     office(client, 'Walter Kriha', function(err) {
-        expect(err.message).to.equal('Test Message');
-        done();
-    });
-};
-
-exports.shouldProvideMenuError = function(sandbox, menu, done) {
-    'use strict';
-    sandbox.stub(client, 'menu')
-        .callsArgWith(0, new Error('Test Message'), null);
-    menu(client, 'S-Bar', new Date('2016-11-08'), function(err) {
         expect(err.message).to.equal('Test Message');
         done();
     });
