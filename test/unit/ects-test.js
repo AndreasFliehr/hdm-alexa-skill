@@ -1,7 +1,9 @@
 var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var utils = require('../utils/unitTest');
 var sandbox = sinon.sandbox.create();
+
 var lecture;
 
 var ectsSingleData = [
@@ -63,12 +65,14 @@ describe ('ects', function() {
 
     it('should return answer if no main was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        testResponse('invalid main', expected, [], done);
+        utils.testLectureResponse('invalid main', expected, [],
+            sandbox, lecture, lecture.ects, done);
     });
 
     it('should return answer for single main', function(done) {
         var expected = 'Machine-Learning hat 6 ECTS';
-        testResponse('Machine-Learning', expected, ectsSingleData, done);
+        utils.testLectureResponse('Machine-Learning', expected, ectsSingleData,
+            sandbox, lecture, lecture.ects, done);
     });
 
     it('should return answer for multiple main ' +
@@ -76,8 +80,9 @@ describe ('ects', function() {
         var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
             'Machine-Learning hat 6 ECTS, Machine-Learning 2' +
             ' hat 7 ECTS';
-        testResponse('Machine-Learning', expected,
-            ectsMultipleDataWithEmptyDate, done);
+        utils.testLectureResponse('Machine-Learning', expected,
+            ectsMultipleDataWithEmptyDate, sandbox,
+            lecture, lecture.ects, done);
     });
 
     it('should provide error if client throws one', function(done) {
@@ -89,15 +94,3 @@ describe ('ects', function() {
         });
     });
 });
-
-function testResponse(query, expected, dataMock, done) {
-    'use strict';
-
-    sandbox.stub(lecture.__get__('client'), 'searchDetails')
-        .callsArgWith(2, null, dataMock);
-
-    lecture.ects(query, function(err, response) {
-        expect(response).to.equal(expected);
-        done();
-    });
-}

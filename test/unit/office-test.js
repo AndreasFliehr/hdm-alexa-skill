@@ -3,8 +3,10 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 var data = require('./data/office');
+var utils = require('../utils/unitTest');
 var dataNoRoom = require('./data/officeNoRoom');
 var dataMultipleLecturers = require('./data/officeMultipleLecturers');
+
 var office;
 
 describe ('office', function() {
@@ -30,19 +32,22 @@ describe ('office', function() {
 
     it('should return answer for lecturer', function(done) {
         var expected = 'Das Büro von Walter Kriha ist in Raum 322';
-        testResponse('Walter Kriha', expected, data, done);
+        utils.testOfficeResponse('Walter Kriha', expected, data,
+            sandbox, office, done);
     });
 
     it('should return answer for lecturer with no room', function(done) {
         var expected = 'Thomas Pohl hat kein Büro';
-        testResponse('Thomas Pohl', expected, dataNoRoom, done);
+        utils.testOfficeResponse('Thomas Pohl', expected, dataNoRoom,
+            sandbox, office, done);
     });
 
     it('should return answer for multiple lectures', function(done) {
         var expected = 'Ich habe 2 Personen gefunden:' +
             ' Das Büro von Walter Kriha ist in Raum 322,' +
             ' Thomas Pohl hat kein Büro';
-        testResponse('Thomas', expected, dataMultipleLecturers, done);
+        utils.testOfficeResponse('Thomas', expected, dataMultipleLecturers,
+            sandbox, office, done);
     });
 
     it('should provide error if client throws one', function(done) {
@@ -54,15 +59,3 @@ describe ('office', function() {
         });
     });
 });
-
-function testResponse(lecturer, expected, dataMock, done) {
-    'use strict';
-
-    sandbox.stub(office.__get__('client'), 'searchDetails')
-        .callsArgWith(2, null, dataMock);
-
-    office(lecturer, function(err, response) {
-        expect(response).to.equal(expected);
-        done();
-    });
-}

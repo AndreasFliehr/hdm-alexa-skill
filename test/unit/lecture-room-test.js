@@ -1,7 +1,9 @@
 var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var utils = require('../utils/unitTest');
 var sandbox = sinon.sandbox.create();
+
 var lecture;
 
 var lectureRoomSingleData = [
@@ -73,16 +75,18 @@ describe('lectureRoom', function() {
         function(done) {
         var expected = 'System Engineering und Management findet ' +
             'in Raum 141 statt';
-        testResponse('System Engineering', expected,
-            lectureRoomSingleData, done);
+        utils.testLectureResponse('System Engineering', expected,
+            lectureRoomSingleData, sandbox, lecture, lecture.room,
+            done);
     });
 
     it('should return answer for single main with multiple rooms',
         function(done) {
         var expected = 'Ultra Large Scale Systems findet in Raum U31 ' +
             'und in Raum U32 statt';
-        testResponse('Ultra Large', expected,
-            lectureRoomSingleDataWithMultipleRooms, done);
+        utils.testLectureResponse('Ultra Large', expected,
+            lectureRoomSingleDataWithMultipleRooms,
+            sandbox, lecture, lecture.room, done);
     });
 
     it('should return answer for multiple lectures with single, multiple ' +
@@ -90,13 +94,15 @@ describe('lectureRoom', function() {
         var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
             'Mediengestaltung I findet in Raum U31 und ' +
             'in Raum U32 statt, Mediengestaltung II findet in Raum 214 statt';
-        testResponse('Mediengestaltung', expected,
-            lectureRoomMultipleDataWithEmptyAndMultipleRooms, done);
+        utils.testLectureResponse('Mediengestaltung', expected,
+            lectureRoomMultipleDataWithEmptyAndMultipleRooms,
+            sandbox, lecture, lecture.room, done);
     });
 
     it('should return answer if no main was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        testResponse('invalid main', expected, [], done);
+        utils.testLectureResponse('invalid main', expected, [],
+            sandbox, lecture, lecture.room, done);
     });
 
     it('should provide error if client throws one', function(done) {
@@ -108,15 +114,3 @@ describe('lectureRoom', function() {
         });
     });
 });
-
-function testResponse(query, expected, dataMock, done) {
-    'use strict';
-
-    sandbox.stub(lecture.__get__('client'), 'searchDetails')
-        .callsArgWith(2, null, dataMock);
-
-    lecture.room(query, function(err, response) {
-        expect(response).to.equal(expected);
-        done();
-    });
-}

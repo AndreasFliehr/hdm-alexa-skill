@@ -1,7 +1,9 @@
 var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
+var utils = require('../utils/unitTest');
 var sandbox = sinon.sandbox.create();
+
 var lecture;
 
 var lectureDateSingleData = [
@@ -58,13 +60,15 @@ describe ('lectureDate', function() {
 
     it('should return answer if no main was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        testResponse('invalid main', expected, [], done);
+        utils.testLectureResponse('invalid main', expected, [],
+            sandbox, lecture, lecture.date, done);
     });
 
     it('should return answer for single main', function(done) {
         var expected = 'Machine-Learning findet am Mittwoch von 11:45-13:15 ' +
             'und Mittwoch von 14:15-15:45 statt';
-        testResponse('Machine-Learning', expected, lectureDateSingleData, done);
+        utils.testLectureResponse('Machine-Learning', expected,
+            lectureDateSingleData, sandbox, lecture, lecture.date, done);
     });
 
     it('should return answer for multiple main ' +
@@ -74,8 +78,9 @@ describe ('lectureDate', function() {
             ' und Mittwoch von 14:15-15:45 statt, Machine-Learning 2' +
             ' findet am Donnerstag von 11:45-13:15 und Dienstag' +
             ' von 14:15-15:45 statt';
-        testResponse('Machine-Learning', expected,
-            lectureDateMultipleDataWithEmptyDate, done);
+        utils.testLectureResponse('Machine-Learning', expected,
+            lectureDateMultipleDataWithEmptyDate, sandbox,
+            lecture, lecture.date, done);
     });
 
     it('should provide error if client throws one', function(done) {
@@ -87,15 +92,3 @@ describe ('lectureDate', function() {
         });
     });
 });
-
-function testResponse(query, expected, dataMock, done) {
-    'use strict';
-
-    sandbox.stub(lecture.__get__('client'), 'searchDetails')
-        .callsArgWith(2, null, dataMock);
-
-    lecture.date(query, function(err, response) {
-        expect(response).to.equal(expected);
-        done();
-    });
-}
