@@ -3,13 +3,16 @@ var rewire = require('rewire');
 var sinon = require('sinon');
 var utils = require('../utils/index');
 var module;
+var skillClient = require('alexa-skills-kit-client');
+var validId = 'secret:id';
+var invalidId = 'wrong:id';
 
 describe('event handler', function() {
     'use strict';
 
     beforeEach(function() {
         module = rewire('../../');
-        process.env.ALEXA_APP_ID = 'secretid';
+        process.env.ALEXA_APP_ID = validId;
     });
 
     it('should expose function #handler', function() {
@@ -18,69 +21,62 @@ describe('event handler', function() {
     });
 
     it('should call #onLaunch if LaunchRequest', function() {
-        testLaunchRequest(createEvent('LaunchRequest'), true);
+        testLaunchRequest(createLaunchRequest(), true);
     });
 
     it('should not call #onLaunch if no LaunchRequest', function() {
-        testLaunchRequest(createEvent('IntentRequest'), false);
+        testLaunchRequest(createIntentRequest(), false);
     });
 
     it('should call onIntent if IntentRequest', function() {
-        var spy, event, cb;
+        var spy, request, cb;
         spy = createRequestSpy('onIntent');
-        event = createEvent('IntentRequest');
-        event.session.attributes = 'Test';
+        request = createIntentRequest();
+        request.session.attributes = 'Test';
         cb = function() {};
-        module.handler(event, {}, cb);
-        expect(spy.calledWithExactly(event.request.intent, 'Test', cb))
+        module.handler(request, {}, cb);
+        expect(spy.calledWithExactly(request.request.intent, 'Test', cb))
             .to.equal(true);
     });
 
     it('should forward the response of #onLaunch', function(done) {
-        var stub, event, callback;
+        var stub, request, callback;
         stub = sinon.stub().callsArgWith(0, null, 'Test response');
         module.__set__('onLaunch', stub);
-        event = createEvent('LaunchRequest');
+        request = createLaunchRequest();
         callback = utils.createTestCallback(null, 'Test response', done);
-        module.handler(event, null, callback);
+        module.handler(request, null, callback);
     });
 
     it('should forward the error of #onLaunch', function(done) {
-        var stub, event, callback;
+        var stub, request, callback;
         stub = sinon.stub().callsArgWith(0, 'Test Error', null);
         module.__set__('onLaunch', stub);
-        event = createEvent('LaunchRequest');
+        request = createLaunchRequest();
         callback = utils.createTestCallback('Test Error', null, done);
-        module.handler(event, null, callback);
+        module.handler(request, null, callback);
     });
 
     it('should forward the error of #onIntent', function(done) {
-        var stub, event, callback;
+        var stub, request, callback;
         stub = sinon.stub().callsArgWith(2, 'Test Error', null);
         module.__set__('onIntent', stub);
-        event = createEvent('IntentRequest');
+        request = createIntentRequest();
         callback = utils.createTestCallback('Test Error', null, done);
-        module.handler(event, null, callback);
-    });
-
-    it('should not call #onLaunch if app id is wrong', function() {
-        var spy = createRequestSpy('onLaunch');
-        var event = createEvent('LaunchRequest', 'wrongid');
-        module.handler(event, null, function() {});
-        expect(spy.called).to.equal(false);
+        module.handler(request, null, callback);
     });
 
     it('should not call #onIntent if app id is wrong', function() {
         var spy = createRequestSpy('onIntent');
-        var event = createEvent('IntentRequest', 'wrongid');
-        module.handler(event, null, function() {});
+        var request = createLaunchRequest(invalidId);
+        module.handler(request, null, function() {});
         expect(spy.called).to.equal(false);
     });
 
     it('should provide error if appId is wrong', function(done) {
         var msg = 'The request doesn\'t provide a valid application id';
-        var event = createEvent('LaunchRequest', 'wrongid');
-        module.handler(event, null, function(err, response) {
+        var request = createLaunchRequest(invalidId);
+        module.handler(request, null, function(err, response) {
             expect(err.message).to.equal(msg);
             expect(response).to.equal(null);
             done();
@@ -88,33 +84,20 @@ describe('event handler', function() {
     });
 });
 
-function createEvent(requestType, appId) {
+function createIntentRequest(appId) {
     'use strict';
 
-    var event;
-    appId = appId || 'secretid';
+    var request = skillClient.intent('MenuIntent', {});
+    request.session.application.applicationId = appId || validId;
+    return request;
+}
 
-    event = {
-        version: '1.0',
-        request: {
-            type: requestType,
-            requestId: 'request.id.string',
-            timestamp: 'string'
-        },
-        session: {
-            application: {
-                applicationId: appId
-            }
-        }
-    };
+function createLaunchRequest(appId) {
+    'use strict';
 
-    if (requestType === 'IntentRequest') {
-        event.request.intent = {
-            name: 'Test Intent'
-        };
-    }
-
-    return event;
+    var request = skillClient.launch();
+    request.session.application.applicationId = appId || validId;
+    return request;
 }
 
 function createRequestSpy(fn) {
@@ -126,9 +109,9 @@ function createRequestSpy(fn) {
 
 }
 
-function testLaunchRequest(event, called) {
+function testLaunchRequest(request, called) {
     'use strict';
     var spy = createRequestSpy('onLaunch');
-    module.handler(event, context);
+    module.handler(request, context);
     expect(spy.called).to.equal(called);
 }
