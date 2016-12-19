@@ -1,6 +1,6 @@
 var response = require('alexa-response');
 var menu = require('./lib/menu');
-var office = require('./lib/office');
+var office = require('./lib/lecturer').office;
 var lectureDate = require('./lib/lecture').date;
 var lectureRoom = require('./lib/lecture').room;
 var util = require('util');

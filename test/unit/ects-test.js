@@ -1,7 +1,6 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var utils = require('../utils');
-var sandbox = sinon.sandbox.create();
 var lecture = require('../../lib/lecture');
 
 var ectsSingleData = [
@@ -37,10 +36,6 @@ var ectsMultipleDataWithEmptyDate = [
 
 describe ('ects', function() {
     'use strict';
-
-    afterEach(function() {
-        sandbox.restore();
-    });
 
     it('should be a function #lectureDate', function() {
         expect(lecture.ects).to.be.a('function');

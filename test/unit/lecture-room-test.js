@@ -1,10 +1,7 @@
-var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var utils = require('../utils');
-var sandbox = sinon.sandbox.create();
-
-var lecture;
+var lecture = require('../../lib/lecture');
 
 var lectureRoomSingleDataOneRoomAndOneDate = [
     {
@@ -56,14 +53,6 @@ var lectureRoomMultipleDataWithEmptyAndMultipleRooms = [
 describe('lectureRoom', function() {
     'use strict';
 
-    beforeEach(function() {
-        lecture = rewire('../../lib/lecture');
-    });
-
-    afterEach(function() {
-        sandbox.restore();
-    });
-
     it('should be a function #lectureRoom', function() {
         expect(lecture.room).to.be.a('function');
     });
@@ -74,56 +63,57 @@ describe('lectureRoom', function() {
 
     it('should answer for one lecture with one room and one date',
         function(done) {
-        var stub, client, expected;
-        expected = 'Agiles Projekt-Management findet am Montag ' +
-            'von 08:15-09:45 in Raum 204 statt';
-        stub = sinon.stub().callsArgWith(2, null,
-            lectureRoomSingleDataOneRoomAndOneDate);
-        client = { searchDetails: stub};
-        lecture.room(
-            client, 'ML', utils.createTestCallback(null, expected, done));
-    });
+            var stub, client, expected;
+            expected = 'Agiles Projekt-Management findet am Montag ' +
+                'von 08:15-09:45 in Raum 204 statt';
+            stub = sinon.stub().callsArgWith(2, null,
+                lectureRoomSingleDataOneRoomAndOneDate);
+            client = { searchDetails: stub};
+            lecture.room(
+                client, 'ML', utils.createTestCallback(null, expected, done));
+        });
 
     it('should answer for one lecture with one room and multiple dates',
         function(done) {
-        var stub, client, expected;
-        expected = 'System Engineering und Management findet am Donnerstag ' +
-            'von 16:00-17:30 und Donnerstag von 17:45-19:15 in Raum 141 statt';
-        stub = sinon.stub().callsArgWith(2, null,
-            lectureRoomSingleDataOneRoomAndMultipleDates);
-        client = { searchDetails: stub};
-        lecture.room(
-            client, 'ML', utils.createTestCallback(null, expected, done));
-    });
+            var stub, client, expected;
+            expected = 'System Engineering und Management findet am ' +
+                'Donnerstag von 16:00-17:30 und Donnerstag von 17:45-19:15 ' +
+                'in Raum 141 statt';
+            stub = sinon.stub().callsArgWith(2, null,
+                lectureRoomSingleDataOneRoomAndMultipleDates);
+            client = { searchDetails: stub};
+            lecture.room(
+                client, 'ML', utils.createTestCallback(null, expected, done));
+        });
 
     it('should answer for one lecture with multiple rooms ' +
         'and multiple dates', function(done) {
-        var client, expected, stub, apiResponse;
-        expected = 'Ultra Large Scale Systems findet am Donnerstag ' +
-            'von 14:15-15:45 in Raum U31 und Freitag von ' +
-            '08:15-09:45 in Raum U32 statt';
-        apiResponse = lectureRoomSingleDataMultipleRoomsAndMultipleDates;
-        stub = sinon.stub()
-            .callsArgWith(2, null, apiResponse);
-        client = { searchDetails: stub};
-        lecture.room(
-            client, 'ML', utils.createTestCallback(null, expected, done));
-    });
+            var client, expected, stub, apiResponse;
+            expected = 'Ultra Large Scale Systems findet am Donnerstag ' +
+                'von 14:15-15:45 in Raum U31 und Freitag von ' +
+                '08:15-09:45 in Raum U32 statt';
+            apiResponse = lectureRoomSingleDataMultipleRoomsAndMultipleDates;
+            stub = sinon.stub()
+                .callsArgWith(2, null, apiResponse);
+            client = { searchDetails: stub};
+            lecture.room(
+                client, 'ML', utils.createTestCallback(null, expected, done));
+        });
 
     it('should return answer for multiple lectures with single, multiple ' +
         'and empty rooms connected to dates', function(done) {
-        var client, stub, expected, apiResponse;
-        expected = 'Ich habe 2 Vorlesungen gefunden: ' +
-            'Mediengestaltung I findet am Mittwoch von 11:45-13:15 ' +
-            'in Raum U31 und Mittwoch von 14:15-15:45 in Raum U32 statt, ' +
-            'Mediengestaltung II findet am Mittwoch von 11:45-13:15 ' +
-            'in Raum 214 statt';
-        apiResponse = lectureRoomMultipleDataWithEmptyAndMultipleRooms;
-        stub = sinon.stub().callsArgWith(2, null, apiResponse);
-        client = { searchDetails: stub};
-        lecture.room(
-            client, 'ML', utils.createTestCallback(null, expected, done));
-    });
+            var client, stub, expected, apiResponse;
+            expected = 'Ich habe 2 Vorlesungen gefunden: ' +
+                'Mediengestaltung I findet am Mittwoch von 11:45-13:15 ' +
+                'in Raum U31 und Mittwoch von 14:15-15:45 in Raum U32 statt, ' +
+                'Mediengestaltung II findet am Mittwoch von 11:45-13:15 ' +
+                'in Raum 214 statt';
+            apiResponse = lectureRoomMultipleDataWithEmptyAndMultipleRooms;
+            stub = sinon.stub().callsArgWith(2, null, apiResponse);
+            client = { searchDetails: stub};
+            lecture.room(
+                client, 'ML', utils.createTestCallback(null, expected, done));
+        });
 
     it('should return answer if no lecture was found', function(done) {
         var expected, stub, client;

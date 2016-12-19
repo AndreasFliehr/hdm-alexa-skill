@@ -1,27 +1,22 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var sandbox = sinon.sandbox.create();
 var data = require('./data/office');
 var dataNoRoom = require('./data/officeNoRoom');
 var dataMultipleLecturers = require('./data/officeMultipleLecturers');
-var office = require('../../lib/office');
+var lecturer = require('../../lib/lecturer');
 
 describe ('office', function() {
     'use strict';
 
-    afterEach(function() {
-        sandbox.restore();
-    });
-
     it('should be a function #office', function() {
-        expect(office).to.be.a('function');
+        expect(lecturer.office).to.be.a('function');
     });
 
     it('should call client', function() {
         var client, fnMatcher, expectation;
         fnMatcher = sinon.match.typeOf('function');
         client = { searchDetails: sinon.spy() };
-        office(client, 'Walter Kriha', function() {});
+        lecturer.office(client, 'Walter Kriha', function() {});
         expectation = client.searchDetails
             .calledWithExactly('person', 'Walter Kriha', fnMatcher);
         expect(expectation).to.equal(true);
@@ -49,21 +44,21 @@ describe ('office', function() {
         stub = sinon.stub().callsArgWith(2, new Error('Test Message'), null);
         client = { searchDetails: stub };
 
-        office(client, 'Walter Kriha', function(err) {
+        lecturer.office(client, 'Walter Kriha', function(err) {
             expect(err.message).to.equal('Test Message');
             done();
         });
     });
 });
 
-function testOfficeResponse(lecturer, expected, lecturerData, done) {
+function testOfficeResponse(name, expected, lecturerData, done) {
     'use strict';
 
     var client, stub;
     stub = sinon.stub().callsArgWith(2, null, lecturerData);
     client = { searchDetails: stub };
 
-    office(client, lecturer, function(err, response) {
+    lecturer.office(client, name, function(err, response) {
         expect(response).to.equal(expected);
         done();
     });

@@ -1,17 +1,12 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var utils = require('../utils');
-var sandbox = sinon.sandbox.create();
 var data = require('./data/menu');
 
 var menu = require('../../lib/menu');
 
 describe('menu', function() {
     'use strict';
-
-    afterEach(function() {
-        sandbox.restore();
-    });
 
     it('should be a function #menu', function() {
         expect(menu).to.be.a('function');
@@ -20,7 +15,7 @@ describe('menu', function() {
     it('should call client', function() {
         var fnMatcher, expectation, client;
         fnMatcher = sinon.match.typeOf('function');
-        client = { menu: sandbox.spy() };
+        client = { menu: sinon.spy() };
         menu(client, 'S-Bar', new Date('2016-11-08'), function() {});
         expectation = client.menu.calledWithExactly(fnMatcher);
         expect(expectation).to.equal(true);
@@ -64,7 +59,7 @@ describe('menu', function() {
 
     it('should provide error if client throws one', function(done) {
         var client, stub;
-        stub = sandbox.stub().callsArgWith(0, new Error('Test Message'), null);
+        stub = sinon.stub().callsArgWith(0, new Error('Test Message'), null);
         client = { menu: stub };
         menu(client, 'S-Bar', new Date('2016-11-08'), function(err) {
             expect(err.message).to.equal('Test Message');
