@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var sinon = require('sinon');
 
 exports.createTestCallback = function(error, response, done) {
     'use strict';
@@ -23,4 +24,26 @@ exports.createIntent = function(name, slots, values) {
         }
     }
     return intent;
+};
+
+exports.testThatFunctionCallsSearchDetails = function(fnUnderTest) {
+    'use strict';
+    var client, fnMatcher, expectation;
+    fnMatcher = sinon.match.typeOf('function');
+    client = { searchDetails: sinon.spy() };
+    fnUnderTest(client, 'Machine-Learning', function() {});
+    expectation = client.searchDetails
+        .calledWithExactly('lecture', 'Machine-Learning', fnMatcher);
+    expect(expectation).to.equal(true);
+};
+
+exports.testIfFunctionForwardsSearchDetailsError = function(fnUnderTest, done) {
+    'use strict';
+    var client, stub;
+    stub = sinon.stub().callsArgWith(2, new Error('Test Message'), null);
+    client = { searchDetails: stub };
+    fnUnderTest(client, 'Machine-Learning', function(err) {
+        expect(err.message).to.equal('Test Message');
+        done();
+    });
 };

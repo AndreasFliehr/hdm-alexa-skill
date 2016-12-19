@@ -1,7 +1,7 @@
 var rewire = require('rewire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var utils = require('../utils/unitTest');
+var utils = require('../utils');
 var sandbox = sinon.sandbox.create();
 
 var lecture;
@@ -61,44 +61,53 @@ describe('lectureRoom', function() {
     });
 
     it('should call client', function() {
-        utils.shouldCallLectureClient(sandbox, lecture);
+        utils.testThatFunctionCallsSearchDetails(lecture.room);
     });
 
-    it('should return answer for single main with single room',
-        function(done) {
-        var expected = 'System Engineering und Management findet ' +
+    it('should  answer for one lecture with one room',function(done) {
+        var stub, client, expected;
+        expected = 'System Engineering und Management findet ' +
             'in Raum 141 statt';
-        utils.testLectureResponse('System Engineering', expected,
-            lectureRoomSingleData, sandbox, lecture, lecture.room,
-            done);
+        stub = sinon.stub().callsArgWith(2, null, lectureRoomSingleData);
+        client = { searchDetails: stub};
+        lecture.room(
+            client, 'ML', utils.createTestCallback(null, expected, done));
     });
 
-    it('should return answer for single main with multiple rooms',
-        function(done) {
-        var expected = 'Ultra Large Scale Systems findet in Raum U31 ' +
+    it('should answer for one lecture with multiple rooms', function(done) {
+        var client, expected, stub;
+        expected = 'Ultra Large Scale Systems findet in Raum U31 ' +
             'und in Raum U32 statt';
-        utils.testLectureResponse('Ultra Large', expected,
-            lectureRoomSingleDataWithMultipleRooms,
-            sandbox, lecture, lecture.room, done);
+        stub = sinon.stub()
+            .callsArgWith(2, null, lectureRoomSingleDataWithMultipleRooms);
+        client = { searchDetails: stub};
+        lecture.room(
+            client, 'ML', utils.createTestCallback(null, expected, done));
     });
 
     it('should return answer for multiple lectures with single, multiple ' +
         'and empty rooms', function(done) {
-        var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
+        var client, stub, expected, apiResponse;
+        expected = 'Ich habe 2 Vorlesungen gefunden: ' +
             'Mediengestaltung I findet in Raum U31 und ' +
             'in Raum U32 statt, Mediengestaltung II findet in Raum 214 statt';
-        utils.testLectureResponse('Mediengestaltung', expected,
-            lectureRoomMultipleDataWithEmptyAndMultipleRooms,
-            sandbox, lecture, lecture.room, done);
+        apiResponse = lectureRoomMultipleDataWithEmptyAndMultipleRooms;
+        stub = sinon.stub().callsArgWith(2, null, apiResponse);
+        client = { searchDetails: stub};
+        lecture.room(
+            client, 'ML', utils.createTestCallback(null, expected, done));
     });
 
-    it('should return answer if no main was found', function(done) {
-        var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        utils.testLectureResponse('invalid main', expected, [],
-            sandbox, lecture, lecture.room, done);
+    it('should return answer if no lecture was found', function(done) {
+        var expected, stub, client;
+        expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
+        stub = sinon.stub().callsArgWith(2, null, []);
+        client = { searchDetails: stub};
+        lecture.room(
+            client, 'ML', utils.createTestCallback(null, expected, done));
     });
 
     it('should provide error if client throws one', function(done) {
-        utils.shouldProvideLectureError(sandbox, lecture.room, done);
+        utils.testIfFunctionForwardsSearchDetailsError(lecture.room, done);
     });
 });

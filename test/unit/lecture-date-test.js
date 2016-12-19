@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var utils = require('../utils/unitTest');
+var utils = require('../utils');
 var sandbox = sinon.sandbox.create();
 var lecture = require('../../lib/lecture');
 
@@ -42,35 +42,43 @@ describe ('lectureDate', function() {
     });
 
     it('should call client', function() {
-        utils.shouldCallLectureClient(sandbox, lecture);
+        utils.testThatFunctionCallsSearchDetails(lecture.date);
     });
 
-    it('should return answer if no main was found', function(done) {
+    it('should return answer if no lecture was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        utils.testLectureResponse('invalid main', expected, [],
-            sandbox, lecture, lecture.date, done);
+        var client = { searchDetails: sinon.stub().callsArgWith(2, null, []) };
+
+        lecture.date(
+            client, 'ML', utils.createTestCallback(null, expected, done));
     });
 
-    it('should return answer for single main', function(done) {
-        var expected = 'Machine-Learning findet am Mittwoch von 11:45-13:15 ' +
+    it('should return answer for single lecture', function(done) {
+        var client, expected, stub;
+        expected = 'Machine-Learning findet am Mittwoch von 11:45-13:15 ' +
             'und Mittwoch von 14:15-15:45 statt';
-        utils.testLectureResponse('Machine-Learning', expected,
-            lectureDateSingleData, sandbox, lecture, lecture.date, done);
+        stub = sinon.stub().callsArgWith(2, null, lectureDateSingleData);
+        client = { searchDetails: stub};
+        lecture.date(
+            client, 'ML', utils.createTestCallback(null, expected, done));
     });
 
-    it('should return answer for multiple main ' +
-        'with empty date entries', function(done) {
-        var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
-            'Machine-Learning findet am Mittwoch von 11:45-13:15' +
-            ' und Mittwoch von 14:15-15:45 statt, Machine-Learning 2' +
-            ' findet am Donnerstag von 11:45-13:15 und Dienstag' +
-            ' von 14:15-15:45 statt';
-        utils.testLectureResponse('Machine-Learning', expected,
-            lectureDateMultipleDataWithEmptyDate, sandbox,
-            lecture, lecture.date, done);
-    });
+    it('should return answer for multiple lectures with empty date entries',
+        function(done) {
+            var expected, stub, client;
+            expected = 'Ich habe 2 Vorlesungen gefunden: ' +
+                'Machine-Learning findet am Mittwoch von 11:45-13:15' +
+                ' und Mittwoch von 14:15-15:45 statt, Machine-Learning 2' +
+                ' findet am Donnerstag von 11:45-13:15 und Dienstag' +
+                ' von 14:15-15:45 statt';
+            stub = sinon.stub()
+                .callsArgWith(2, null, lectureDateMultipleDataWithEmptyDate);
+            client = { searchDetails:  stub};
+            lecture.date(
+                client, 'ML', utils.createTestCallback(null, expected, done));
+        });
 
     it('should provide error if client throws one', function(done) {
-        utils.shouldProvideLectureError(sandbox, lecture.date, done);
+        utils.testIfFunctionForwardsSearchDetailsError(lecture.date, done);
     });
 });
