@@ -8,7 +8,8 @@
     "xunit-test": "mocha --recursive -R xunit test/ > test-reports.xml",
     "lint": "jshint lib test index.js",
     "jscs": "jscs lib test index.js",
-    "code-check": "npm test && npm run lint && npm run jscs"
+    "code-check": "npm run lint && npm run jscs && npm test && npm run integration-tests",
+    "integration-tests": "mocha test/integration/"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,7 @@
   },
   "dependencies": {
     "alexa-response": "^4.0.3",
-    "hdm-client": "~1.1.0",
+    "hdm-client": "~2.0.2",
     "moment": "^2.15.2",
     "underscore": "^1.8.3"
   }
