@@ -12,17 +12,9 @@ describe('officeHours', function() {
     });
 
     it('should get a response', function(done) {
-        var data = {
-            name: 'Sabine Ghellal',
-            officehours: 'Do 14:15-16:15'
-        };
-
-        sandbox.stub(officeHours.__get__('client'), 'searchDetails')
-         .callsArgWith(3, null, data);
 
         officeHours('Sabine Ghellal', function(err, response) {
                 expect(err).to.equal(null);
-                expect(response).to.equal('123');
                 done();
             });
     });
