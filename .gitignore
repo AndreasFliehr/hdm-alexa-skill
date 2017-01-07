@@ -1,5 +1,5 @@
 # IntelliJ project files
 .idea
-/*.log/
+/*.log
 node_modules
 .DS_Store
