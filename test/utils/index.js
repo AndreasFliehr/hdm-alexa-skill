@@ -33,14 +33,14 @@ exports.testThatFunctionCallsSearchDetails = function(fnUnderTest) {
     client = { searchDetails: sinon.spy() };
     fnUnderTest(client, 'Machine-Learning', function() {});
     expectation = client.searchDetails
-        .calledWithExactly('lecture', 'Machine-Learning', fnMatcher);
+        .calledWithExactly('lecture', 'Machine-Learning', {}, fnMatcher);
     expect(expectation).to.equal(true);
 };
 
 exports.testIfFunctionForwardsSearchDetailsError = function(fnUnderTest, done) {
     'use strict';
     var client, stub;
-    stub = sinon.stub().callsArgWith(2, new Error('Test Message'), null);
+    stub = sinon.stub().callsArgWith(3, new Error('Test Message'), null);
     client = { searchDetails: stub };
     fnUnderTest(client, 'Machine-Learning', function(err) {
         expect(err.message).to.equal('Test Message');

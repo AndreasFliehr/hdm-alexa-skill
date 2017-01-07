@@ -66,7 +66,7 @@ describe('lectureRoom', function() {
             var stub, client, expected;
             expected = 'Agiles Projekt-Management findet am Montag ' +
                 'von 08:15-09:45 in Raum 204 statt';
-            stub = sinon.stub().callsArgWith(2, null,
+            stub = sinon.stub().callsArgWith(3, null,
                 lectureRoomSingleDataOneRoomAndOneDate);
             client = { searchDetails: stub};
             lecture.room(
@@ -79,7 +79,7 @@ describe('lectureRoom', function() {
             expected = 'System Engineering und Management findet am ' +
                 'Donnerstag von 16:00-17:30 und Donnerstag von 17:45-19:15 ' +
                 'in Raum 141 statt';
-            stub = sinon.stub().callsArgWith(2, null,
+            stub = sinon.stub().callsArgWith(3, null,
                 lectureRoomSingleDataOneRoomAndMultipleDates);
             client = { searchDetails: stub};
             lecture.room(
@@ -94,7 +94,7 @@ describe('lectureRoom', function() {
                 '08:15-09:45 in Raum U32 statt';
             apiResponse = lectureRoomSingleDataMultipleRoomsAndMultipleDates;
             stub = sinon.stub()
-                .callsArgWith(2, null, apiResponse);
+                .callsArgWith(3, null, apiResponse);
             client = { searchDetails: stub};
             lecture.room(
                 client, 'ML', utils.createTestCallback(null, expected, done));
@@ -109,7 +109,7 @@ describe('lectureRoom', function() {
                 'Mediengestaltung II findet am Mittwoch von 11:45-13:15 ' +
                 'in Raum 214 statt';
             apiResponse = lectureRoomMultipleDataWithEmptyAndMultipleRooms;
-            stub = sinon.stub().callsArgWith(2, null, apiResponse);
+            stub = sinon.stub().callsArgWith(3, null, apiResponse);
             client = { searchDetails: stub};
             lecture.room(
                 client, 'ML', utils.createTestCallback(null, expected, done));
@@ -118,7 +118,7 @@ describe('lectureRoom', function() {
     it('should return answer if no lecture was found', function(done) {
         var expected, stub, client;
         expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        stub = sinon.stub().callsArgWith(2, null, []);
+        stub = sinon.stub().callsArgWith(3, null, []);
         client = { searchDetails: stub};
         lecture.room(
             client, 'ML', utils.createTestCallback(null, expected, done));

@@ -42,7 +42,7 @@ describe ('lectureDate', function() {
 
     it('should return answer if no lecture was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
-        var client = { searchDetails: sinon.stub().callsArgWith(2, null, []) };
+        var client = { searchDetails: sinon.stub().callsArgWith(3, null, []) };
 
         lecture.date(
             client, 'ML', utils.createTestCallback(null, expected, done));
@@ -52,7 +52,7 @@ describe ('lectureDate', function() {
         var client, expected, stub;
         expected = 'Machine-Learning findet am Mittwoch von 11:45-13:15 ' +
             'und Mittwoch von 14:15-15:45 statt';
-        stub = sinon.stub().callsArgWith(2, null, lectureDateSingleData);
+        stub = sinon.stub().callsArgWith(3, null, lectureDateSingleData);
         client = { searchDetails: stub};
         lecture.date(
             client, 'ML', utils.createTestCallback(null, expected, done));
@@ -67,7 +67,7 @@ describe ('lectureDate', function() {
                 ' findet am Donnerstag von 11:45-13:15 und Dienstag' +
                 ' von 14:15-15:45 statt';
             stub = sinon.stub()
-                .callsArgWith(2, null, lectureDateMultipleDataWithEmptyDate);
+                .callsArgWith(3, null, lectureDateMultipleDataWithEmptyDate);
             client = { searchDetails:  stub};
             lecture.date(
                 client, 'ML', utils.createTestCallback(null, expected, done));

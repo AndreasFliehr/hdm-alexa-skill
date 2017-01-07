@@ -48,7 +48,7 @@ describe ('ects', function() {
     it('should return answer if no main was found', function(done) {
         var expected = 'Ich habe keine Vorlesung mit diesem Namen gefunden.';
 
-        var client = { searchDetails: sinon.stub().callsArgWith(2, null, []) };
+        var client = { searchDetails: sinon.stub().callsArgWith(3, null, []) };
 
         lecture.ects(
             client, 'Baking', utils.createTestCallback(null, expected, done));
@@ -56,7 +56,7 @@ describe ('ects', function() {
 
     it('should return answer for single main', function(done) {
         var expected = 'Machine-Learning hat 6 ECTS';
-        var stub = sinon.stub().callsArgWith(2, null, ectsSingleData);
+        var stub = sinon.stub().callsArgWith(3, null, ectsSingleData);
         var client = { searchDetails: stub };
 
         lecture.ects(
@@ -69,7 +69,7 @@ describe ('ects', function() {
             'Machine-Learning hat 6 ECTS, Machine-Learning 2' +
             ' hat 7 ECTS';
         var stub = sinon.stub()
-            .callsArgWith(2, null, ectsMultipleDataWithEmptyDate);
+            .callsArgWith(3, null, ectsMultipleDataWithEmptyDate);
         var client = { searchDetails: stub };
 
         lecture.ects(
