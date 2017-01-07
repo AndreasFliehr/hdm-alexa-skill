@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var sandbox = sinon.sandbox.create();
 
-describe('officeHours', function() {
+describe('officeHours integration test', function() {
     'use strict';
 
     it('should be a function #officeHours', function() {

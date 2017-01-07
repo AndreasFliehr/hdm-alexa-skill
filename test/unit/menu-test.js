@@ -16,8 +16,8 @@ describe('menu', function() {
         var fnMatcher, expectation, client;
         fnMatcher = sinon.match.typeOf('function');
         client = { menu: sinon.spy() };
-        menu(client, 'S-Bar', new Date('2016-11-08'), function() {});
-        expectation = client.menu.calledWithExactly(fnMatcher);
+        menu(client, 'S-Bar', new Date('2016-11-08'), {}, function() {});
+        expectation = client.menu.calledWithExactly({}, fnMatcher);
         expect(expectation).to.equal(true);
     });
 
@@ -59,7 +59,7 @@ describe('menu', function() {
 
     it('should provide error if client throws one', function(done) {
         var client, stub;
-        stub = sinon.stub().callsArgWith(0, new Error('Test Message'), null);
+        stub = sinon.stub().callsArgWith(1, new Error('Test Message'), null);
         client = { menu: stub };
         menu(client, 'S-Bar', new Date('2016-11-08'), function(err) {
             expect(err.message).to.equal('Test Message');
@@ -71,7 +71,6 @@ describe('menu', function() {
 function testMenuResponse(place, date, expected, menuData, done) {
     'use strict';
 
-    var client = {menu: sinon.stub().callsArgWith(0, null, menuData)};
+    var client = {menu: sinon.stub().callsArgWith(1, null, menuData)};
     menu(client, place, date, utils.createTestCallback(null, expected, done));
 }
-
