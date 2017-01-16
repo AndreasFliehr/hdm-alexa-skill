@@ -14,7 +14,7 @@ describe('lecture module', function() {
         };
 
         lecture.date(client, query, function(err, res) {
-            expect(err).to.not.equal(null);
+            expect(err).to.equal(null);
             done();
         });
 
@@ -29,7 +29,7 @@ describe('lecture module', function() {
         };
 
         lecture.room(client, query, function(err, res) {
-            expect(err).to.not.equal(null);
+            expect(err).to.equal(null);
             done();
         });
 
@@ -44,7 +44,7 @@ describe('lecture module', function() {
         };
 
         lecture.ects(client, query, function(err, res) {
-            expect(err).to.not.equal(null);
+            expect(err).to.equal(null);
             done();
         });
 
