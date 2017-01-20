@@ -13,9 +13,10 @@ function onLaunch(done) {
     'use strict';
     var res = response.ask('Willkommen an der HdM. Ich kann dir hilfreiche ' +
         'Informationen geben. Du kannst mich zum Beispiel fragen, wo deine ' +
-        'Vorlesung stattfindet oder was es heute in der Mensa zu essen gibt. ' +
-        'Wie kann ich dir helfen?')
-        .reprompt('Frag mich zum Beispiel: Was gibt es heute in der Mensa?')
+        'Vorlesung stattfindet oder was es heute in der Hochschule zu essen ' +
+        'gibt. Wie kann ich dir helfen?')
+        .reprompt('Frag mich zum Beispiel: Was gibt es heute in ' +
+            'der Hochschule zu essen?')
         .build();
     done(null, res);
 }
