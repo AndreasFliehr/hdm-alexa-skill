@@ -174,6 +174,43 @@ describe('#onIntent', function() {
         });
     });
 
+    describe('OfficeHoursIntent', function() {
+        it('should call #officeHours if intent is OfficeHoursIntent',
+            function() {
+                var intent = utils.createIntent(
+                    'OfficeHoursIntent', ['query'], ['thomas']);
+                testIfOfficeHoursIsCalledWithArgs(intent, 'thomas');
+            });
+
+        it('should not call officeHours if intent is not OfficeHoursIntent',
+            function() {
+                var intent = utils.createIntent(
+                    'OtherHoursIntent', ['date', 'location'],
+                    ['2016-11-18', 'S-Bar']);
+                testIfFnIsCalled('officeHours', intent, null, false);
+            });
+
+        it('should not call officeHours if query slot is not present',
+            function() {
+                var intent = utils.createIntent(
+                    'OfficeHoursIntent', [], []);
+                testIfFnIsCalled('officeHours', intent, null, false);
+            });
+
+        it('should forward error from officeHours intent to cb',
+            function(done) {
+                var intent = utils.createIntent('OfficeHoursIntent',
+                    ['query'], ['Tom']);
+                testIfErrorIsForwarded(intent, 'officeHours', 2, done);
+            });
+
+        it('should call callback with response object', function(done) {
+            var intent = utils.createIntent('OfficeHoursIntent',
+                ['query'], ['Tom']);
+            testResponse(intent, 'officeHours', 2, done);
+        });
+    });
+
     describe('LectureDateIntent', function() {
         it('should call #lectureDate if intent is LectureDateIntent',
             function() {
@@ -245,6 +282,42 @@ describe('#onIntent', function() {
         });
     });
 
+    describe('EctsIntent', function() {
+        it('should call #ects if intent is EctsIntent',
+            function() {
+                var intent = utils.createIntent(
+                    'EctsIntent', ['lectureName'], ['Machine-Learning']);
+                testIfEctsIsCalledWithArgs(intent, 'Machine-Learning');
+            });
+
+        it('should not call #ects if intent is not EctsIntent',
+            function() {
+                var intent = utils.createIntent(
+                    'OtherIntent', ['lectureName'], ['Machine-Learning']);
+                testIfFnIsCalled('ects', intent, null, false);
+            });
+
+        it('should not call #ects if query slot is not present',
+            function() {
+                var intent = utils.createIntent(
+                    'EctsIntent', [], []);
+                testIfFnIsCalled('ects', intent, null, false);
+            });
+
+        it('should forward error from #ects intent to cb',
+            function(done) {
+                var intent = utils.createIntent(
+                    'EctsIntent', ['lectureName'], ['Machine-Learning']);
+                testIfErrorIsForwarded(intent, 'ects', 2, done);
+            });
+
+        it('should call callback with response object', function(done) {
+            var intent = utils.createIntent(
+                'EctsIntent', ['lectureName'], ['Machine-Learning']);
+            testResponse(intent, 'ects', 2, done);
+        });
+    });
+
     function testIfLectureRoomIsCalledWithArgs(intent, query) {
         var spy = sinon.spy();
         module.__set__('lectureRoom', spy);
@@ -256,6 +329,14 @@ describe('#onIntent', function() {
     function testIfLectureDateIsCalledWithArgs(intent, query) {
         var spy = sinon.spy();
         module.__set__('lectureDate', spy);
+        module.__get__('onIntent')(intent, function() {});
+        expect(spy.calledWith(client, query, sinon.match.typeOf('function')))
+            .to.equal(true);
+    }
+
+    function testIfEctsIsCalledWithArgs(intent, query) {
+        var spy = sinon.spy();
+        module.__set__('ects', spy);
         module.__get__('onIntent')(intent, function() {});
         expect(spy.calledWith(client, query, sinon.match.typeOf('function')))
             .to.equal(true);
@@ -291,6 +372,14 @@ describe('#onIntent', function() {
             .to.equal(true);
     }
 
+    function testIfOfficeHoursIsCalledWithArgs(intent, query) {
+        var spy = sinon.spy();
+        module.__set__('officeHours', spy);
+        module.__get__('onIntent')(intent, function() {});
+        expect(spy.calledWith(client, query, sinon.match.typeOf('function')))
+            .to.equal(true);
+    }
+
     function testIfErrorIsForwarded(intent, fn, argPos, done) {
         var stub, callback;
         stub = sinon.stub().callsArgWith(argPos, 'Test Error', null);
@@ -312,4 +401,3 @@ describe('#onIntent', function() {
         module.__get__('onIntent')(intent, {}, callback);
     }
 });
-

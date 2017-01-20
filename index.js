@@ -1,8 +1,10 @@
 var response = require('alexa-response');
 var menu = require('./lib/menu');
 var office = require('./lib/lecturer').office;
+var officeHours = require('./lib/lecturer').officeHours;
 var lectureDate = require('./lib/lecture').date;
 var lectureRoom = require('./lib/lecture').room;
+var ects = require('./lib/lecture').ects;
 var util = require('util');
 var _ = require('underscore');
 
@@ -27,10 +29,14 @@ function onIntent(intent, attributes, callback) {
         onMenuIntent(intent, attributes, callback);
     } else if (intent.name === 'OfficeIntent') {
         onOfficeIntent(intent, callback);
+    } else if (intent.name === 'OfficeHoursIntent') {
+        onOfficeHoursIntent(intent, callback);
     } else if (intent.name === 'LectureDateIntent') {
         onLectureDateIntent(intent, callback);
     } else if (intent.name === 'LectureRoomIntent') {
         onLectureRoomIntent(intent, callback);
+    } else if (intent.name === 'EctsIntent') {
+        onEctsIntent(intent, callback);
     }
 }
 
@@ -66,10 +72,41 @@ function onLectureDateIntent(intent, callback) {
     }
 }
 
+function onEctsIntent(intent, callback) {
+    'use strict';
+    if (intent.slots.hasOwnProperty('lectureName')) {
+        ects(client,
+            intent.slots.lectureName.value, function(err, result) {
+                var res;
+                if (err) {
+                    callback(err, null);
+                    return;
+                }
+                res = response.say(result).build();
+                callback(null, res);
+            });
+    }
+}
+
 function onOfficeIntent(intent, callback) {
     'use strict';
     if (intent.slots.hasOwnProperty('query')) {
         office(client, intent.slots.query.value, function(err, result) {
+            var res;
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            res = response.say(result).build();
+            callback(null, res);
+        });
+    }
+}
+
+function onOfficeHoursIntent(intent, callback) {
+    'use strict';
+    if (intent.slots.hasOwnProperty('query')) {
+        officeHours(client, intent.slots.query.value, function(err, result) {
             var res;
             if (err) {
                 callback(err, null);
