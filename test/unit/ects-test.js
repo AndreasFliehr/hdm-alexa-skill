@@ -55,7 +55,7 @@ describe ('ects', function() {
     });
 
     it('should return answer for single main', function(done) {
-        var expected = 'Machine-Learning hat 6 ECTS';
+        var expected = 'Für Machine-Learning gibt es 6 E.C.T.S Punkte';
         var stub = sinon.stub().callsArgWith(3, null, ectsSingleData);
         var client = { searchDetails: stub };
 
@@ -66,8 +66,8 @@ describe ('ects', function() {
     it('should return answer for multiple main ' +
         'with empty date entries', function(done) {
         var expected = 'Ich habe 2 Vorlesungen gefunden: ' +
-            'Machine-Learning hat 6 ECTS, Machine-Learning 2' +
-            ' hat 7 ECTS';
+            'Für Machine-Learning gibt es 6 E.C.T.S Punkte, ' +
+            'Für Machine-Learning 2 gibt es 7 E.C.T.S Punkte';
         var stub = sinon.stub()
             .callsArgWith(3, null, ectsMultipleDataWithEmptyDate);
         var client = { searchDetails: stub };
