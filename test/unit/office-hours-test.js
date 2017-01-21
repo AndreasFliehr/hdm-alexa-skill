@@ -2,7 +2,6 @@ var rewire = require('rewire');
 var lecturer = rewire('../../lib/lecturer');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var sandbox = sinon.sandbox.create();
 
 describe('officeHours', function() {
     'use strict';
@@ -117,7 +116,7 @@ describe('officeHours', function() {
         responseText = 'Es wurden mehrere Treffer zu diesem Namen gefunden: ' +
         'Stefan Kountouris: Do 16:00-17:30, ' +
         'Stefan Scheurer: Do 14:00-16:00. ' +
-        'Für folgende Personen sind keine Zeiten eingetragen: \n' +
+        'Für folgende Personen sind keine Zeiten eingetragen: ' +
         'Stefan Kökert, ' +
         'Stefan Rathgeb, ' +
         'Dr. Silvia Stefanova, ' +

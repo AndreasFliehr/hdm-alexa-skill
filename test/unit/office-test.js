@@ -18,7 +18,7 @@ describe ('office', function() {
         client = { searchDetails: sinon.spy() };
         lecturer.office(client, 'Walter Kriha', function() {});
         expectation = client.searchDetails
-            .calledWithExactly('person', 'Walter Kriha', fnMatcher);
+            .calledWithExactly('person', 'Walter Kriha', {}, fnMatcher);
         expect(expectation).to.equal(true);
     });
 
@@ -41,7 +41,7 @@ describe ('office', function() {
 
     it('should provide error if client throws one', function(done) {
         var client, stub;
-        stub = sinon.stub().callsArgWith(2, new Error('Test Message'), null);
+        stub = sinon.stub().callsArgWith(3, new Error('Test Message'), null);
         client = { searchDetails: stub };
 
         lecturer.office(client, 'Walter Kriha', function(err) {
@@ -55,7 +55,7 @@ function testOfficeResponse(name, expected, lecturerData, done) {
     'use strict';
 
     var client, stub;
-    stub = sinon.stub().callsArgWith(2, null, lecturerData);
+    stub = sinon.stub().callsArgWith(3, null, lecturerData);
     client = { searchDetails: stub };
 
     lecturer.office(client, name, function(err, response) {

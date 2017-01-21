@@ -15,10 +15,10 @@ describe('#onLaunch', function() {
         var welcomeMsg = 'Willkommen an der HdM. Ich kann dir hilfreiche ' +
                          'Informationen geben. Du kannst mich zum Beispiel ' +
                          'fragen, wo deine Vorlesung stattfindet oder was ' +
-                         'es heute an der Hochschule zu essen gibt. Wie kann ' +
+                         'es heute in der Hochschule zu essen gibt. Wie kann ' +
                          'ich dir helfen?';
         var repromtMsg = 'Frag mich zum Beispiel: Was gibt es heute ' +
-                         'an der Hochschule zu essen?';
+                         'in der Hochschule zu essen?';
         var expected = response.ask(welcomeMsg).reprompt(repromtMsg).build();
 
         onLaunch(function(err, response) {
