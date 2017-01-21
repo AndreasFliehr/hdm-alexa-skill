@@ -39,6 +39,12 @@ describe ('office', function() {
         testOfficeResponse('Thomas', expected, dataMultipleLecturers, done);
     });
 
+    it('should return answer if there were no matches', function(done) {
+        var expected = 'Es wurden keine Treffer zu diesem Namen gefunden';
+        data = [];
+        testOfficeResponse('Thomas', expected, data, done);
+    });
+
     it('should provide error if client throws one', function(done) {
         var client, stub;
         stub = sinon.stub().callsArgWith(3, new Error('Test Message'), null);
