@@ -1,0 +1,61 @@
+{
+  "intents":[
+    {
+      "intent": "MenuIntent",
+      "slots": [
+        {
+          "name": "date",
+          "type": "AMAZON.DATE"
+      	},
+      	{
+      	  "name": "location",
+          "type": "LIST_OF_MENSAS"
+    	}
+    ]},
+    {
+      "intent": "OfficeIntent",
+      "slots": [
+        {
+          "name": "query",
+          "type": "LIST_OF_LECTURERS"
+        }
+      ]
+    },
+    {
+      "intent": "OfficeHoursIntent",
+      "slots": [
+        {
+          "name": "query",
+          "type": "LIST_OF_LECTURERS"
+        }
+      ]
+    },
+    {
+      "intent": "LectureDateIntent",
+      "slots": [
+        {
+          "name": "lectureName",
+          "type": "LIST_OF_LECTURES"
+        }
+      ]
+    },
+    {
+      "intent": "LectureRoomIntent",
+      "slots": [
+        {
+          "name": "lectureName",
+          "type": "LIST_OF_LECTURES"
+        }
+      ]
+    },
+    {
+      "intent": "EctsIntent",
+      "slots": [
+        {
+          "name": "lectureName",
+          "type": "LIST_OF_LECTURES"
+        }
+      ]
+    }
+  ]
+}

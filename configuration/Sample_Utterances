@@ -1,0 +1,129 @@
+MenuIntent Was gibt es {date} zu essen
+MenuIntent Was gibt es zu essen
+MenuIntent Was kann ich {date} essen
+MenuIntent Was kann ich essen
+MenuIntent Was gibt es {date} in der {location}
+MenuIntent Was kann ich {date} in der {location} essen
+MenuIntent Welches Essen gibt es {date} in der {location}
+MenuIntent Was gibt es in der {location}
+MenuIntent Was kann ich in der {location} essen
+MenuIntent Welches Essen gibt es in der {location}
+OfficeIntent Wo ist das Büro von {query}
+OfficeIntent Wo ist das Büro von Professor {query}
+OfficeIntent Wo ist das Büro von Herr {query}
+OfficeIntent Wo ist das Büro von Frau {query}
+OfficeIntent Wo ist der Raum von {query}
+OfficeIntent Wo ist der Raum von Professor {query}
+OfficeIntent Wo ist der Raum von Herr {query}
+OfficeIntent Wo ist der Raum von Frau {query}
+OfficeIntent Wo hat {query} sein Büro
+OfficeIntent Wo hat Professor {query} sein Büro
+OfficeIntent Wo hat Herr {query} sein Büro
+OfficeIntent Wo hat Frau {query} ihr Büro
+OfficeIntent Wo hat {query} ihr Büro
+OfficeIntent Wo hat die {query} ihr Büro
+OfficeIntent Wo hat der {query} sein Büro
+OfficeHoursIntent Wann hat {query} Sprechstunde
+OfficeHoursIntent Wann hat Herr {query} Sprechstunde
+OfficeHoursIntent Wann hat Frau {query} Sprechstunde
+OfficeHoursIntent Wann hat Professor {query} Sprechstunde
+OfficeHoursIntent Wann sind die Sprechzeiten von {query}
+OfficeHoursIntent Wann sind die Sprechzeiten von Herrn {query}
+OfficeHoursIntent Wann sind die Sprechzeiten von Frau {query}
+OfficeHoursIntent Wann sind die Sprechzeiten von Professor {query}
+OfficeHoursIntent Wie sind die Bürozeiten von {query}
+OfficeHoursIntent Wie sind die Bürozeiten von Herr {query}
+OfficeHoursIntent Wie sind die Bürozeiten von Frau {query}
+OfficeHoursIntent Wie sind die Bürozeiten von Professor {query}
+OfficeHoursIntent Wann ist {query} im Büro
+OfficeHoursIntent Wann ist Herr {query} in seinem Büro
+OfficeHoursIntent Wann ist Frau {query} in ihrem Büro
+OfficeHoursIntent Wann ist Professor {query} im Büro
+LectureDateIntent Wann findet {lectureName} statt
+LectureDateIntent Wann findet die Vorlesung {lectureName} statt
+LectureDateIntent Wann findet die Veranstaltung {lectureName} statt
+LectureDateIntent Wann findet der Kurs {lectureName} statt
+LectureDateIntent Wann ist {lectureName}
+LectureDateIntent Wann ist die Vorlesung {lectureName}
+LectureDateIntent Wann ist die Veranstaltung {lectureName}
+LectureDateIntent Wann ist der Kurs {lectureName}
+LectureDateIntent Um welche Uhrzeit ist {lectureName}
+LectureDateIntent Um welche Uhrzeit ist die Vorlesung {lectureName}
+LectureDateIntent Um welche Uhrzeit ist die Veranstaltung {lectureName}
+LectureDateIntent Um welche Uhrzeit ist der Kurs {lectureName}
+LectureDateIntent Um welche Uhrzeit findet {lectureName} statt
+LectureDateIntent Um welche Uhrzeit findet die Vorlesung {lectureName} statt
+LectureDateIntent Um welche Uhrzeit findet die Veranstaltung {lectureName} statt
+LectureDateIntent Um welche Uhrzeit findet der Kurs {lectureName} statt
+LectureDateIntent Um welche Zeit ist {lectureName}
+LectureDateIntent Um welche Zeit ist die Vorlesung {lectureName}
+LectureDateIntent Um welche Zeit ist die Veranstaltung {lectureName}
+LectureDateIntent Um welche Zeit ist der Kurs {lectureName}
+LectureDateIntent Um welche Zeit findet {lectureName} statt
+LectureDateIntent Um welche Zeit findet die Vorlesung {lectureName} statt
+LectureDateIntent Um welche Zeit findet die Veranstaltung {lectureName} statt
+LectureDateIntent Um welche Zeit findet der Kurs {lectureName} statt
+LectureDateIntent Zu welcher Zeit ist {lectureName}
+LectureDateIntent Zu welcher Zeit ist die Vorlesung {lectureName}
+LectureDateIntent Zu welcher Zeit ist die Veranstaltung {lectureName}
+LectureDateIntent Zu welcher Zeit ist der Kurs {lectureName}
+LectureDateIntent Zu welcher Zeit findet {lectureName} statt
+LectureDateIntent Zu welcher Zeit findet die Vorlesung {lectureName} statt
+LectureDateIntent Zu welcher Zeit findet die Veranstaltung {lectureName} statt
+LectureDateIntent Zu welcher Zeit findet der Kurs {lectureName} statt
+LectureDateIntent Zu welcher Uhrzeit ist {lectureName}
+LectureDateIntent Zu welcher Uhrzeit ist die Vorlesung {lectureName}
+LectureDateIntent Zu welcher Uhrzeit ist die Veranstaltung {lectureName}
+LectureDateIntent Zu welcher Uhrzeit ist der Kurs {lectureName}
+LectureDateIntent Zu welcher Uhrzeit findet {lectureName} statt
+LectureDateIntent Zu welcher Uhrzeit findet die Vorlesung {lectureName} statt
+LectureDateIntent Zu welcher Uhrzeit findet die Veranstaltung {lectureName} statt
+LectureDateIntent Zu welcher Uhrzeit findet der Kurs {lectureName} statt
+LectureDateIntent Um wieviel Uhr ist {lectureName}
+LectureDateIntent Um wieviel Uhr ist die Vorlesung {lectureName}
+LectureDateIntent Um wieviel Uhr ist die Veranstaltung {lectureName}
+LectureDateIntent Um wieviel Uhr ist der Kurs {lectureName}
+LectureDateIntent Um wieviel Uhr findet {lectureName} statt
+LectureDateIntent Um wieviel Uhr findet die Vorlesung {lectureName} statt
+LectureDateIntent Um wieviel Uhr findet die Veranstaltung {lectureName} statt
+LectureDateIntent Um wieviel Uhr findet der Kurs {lectureName} statt
+LectureDateIntent Von wann bis wann ist {lectureName}
+LectureDateIntent Von wann bis wann ist die Vorlesung {lectureName}
+LectureDateIntent Von wann bis wann ist die Veranstaltung {lectureName}
+LectureDateIntent Von wann bis wann ist der Kurs {lectureName}
+LectureDateIntent Von wann bis wann findet {lectureName} statt
+LectureDateIntent Von wann bis wann findet die Vorlesung {lectureName} statt
+LectureDateIntent Von wann bis wann findet die Veranstaltung {lectureName} statt
+LectureDateIntent Von wann bis wann findet der Kurs {lectureName} statt
+LectureRoomIntent Wo findet {lectureName} statt
+LectureRoomIntent Wo findet die Vorlesung {lectureName} statt
+LectureRoomIntent Wo findet die Veranstaltung {lectureName} statt
+LectureRoomIntent Wo findet der Kurs {lectureName} statt
+LectureRoomIntent Wo ist {lectureName}
+LectureRoomIntent Wo ist die Vorlesung {lectureName}
+LectureRoomIntent Wo ist die Veranstaltung {lectureName}
+LectureRoomIntent Wo ist der Kurs {lectureName}
+LectureRoomIntent In welchem Raum ist {lectureName}
+LectureRoomIntent In welchem Raum ist die Vorlesung {lectureName}
+LectureRoomIntent In welchem Raum ist die Veranstaltung {lectureName}
+LectureRoomIntent In welchem Raum ist der Kurs {lectureName}
+LectureRoomIntent In welchem Raum findet {lectureName} statt
+LectureRoomIntent In welchem Raum findet die Vorlesung {lectureName} statt
+LectureRoomIntent In welchem Raum findet die Veranstaltung {lectureName} statt
+LectureRoomIntent In welchem Raum findet der Kurs {lectureName} statt
+EctsIntent Wieviele ects gibt die Vorlesung {lectureName}
+EctsIntent Wieviele ects gibt die Veranstaltung {lectureName}
+EctsIntent Wieviele ects gibt der Kurs {lectureName}
+EctsIntent Wieviele ects gibt es für die Vorlesung {lectureName}
+EctsIntent Wieviele ects gibt es für die Veranstaltung {lectureName}
+EctsIntent Wieviele ects gibt es für den Kurs {lectureName}
+EctsIntent Wieviele ects bekommt man für die Vorlesung {lectureName}
+EctsIntent Wieviele ects bekommt man für die Veranstaltung {lectureName}
+EctsIntent Wieviele ects bekommt man für den Kurs {lectureName}
+EctsIntent Wieviele ects hat die Vorlesung {lectureName}
+EctsIntent Wieviele ects hat die Veranstaltung {lectureName}
+EctsIntent Wieviele ects hat der Kurs {lectureName}
+EctsIntent Wieviele ects gibt {lectureName}
+EctsIntent Wieviele ects gibt es für {lectureName}
+EctsIntent Wieviele ects bekommt man für {lectureName}
+EctsIntent Wieviele ects hat {lectureName}

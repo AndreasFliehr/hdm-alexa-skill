@@ -44,7 +44,7 @@ If you want to deploy this skill on your own Infrastructure using AWS Lamda and 
 
      Note: We use h. d. m. as our **Invocation Name** since the recognition of point separated abbreviation seems to work a lot better.
 
-4. The **Intent Schema** as well as the **Custom Slot Types** and the **Sample Utterance** can be found in the root directory of the repository.
+4. The **Intent Schema** as well as the **Custom Slot Types** and the **Sample Utterance** can be found in the configuration directory of the repository.
 The final configuration should look like this:
 
      ![dev_interaction.png](https://bitbucket.org/repo/6bxeyX/images/3734629936-dev_interaction.png)
