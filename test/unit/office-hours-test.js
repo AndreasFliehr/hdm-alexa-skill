@@ -10,6 +10,18 @@ describe('officeHours', function() {
         expect(lecturer.officeHours).to.be.a('function');
     });
 
+    it('should throw an error if the client throws one', function(done) {
+        var client, stub;
+        stub = sinon.stub().callsArgWith(3, new Error('Test Message'), null);
+        client = { searchDetails: stub };
+
+        lecturer.officeHours(client, 'Sabine Ghellal', function(err, response) {
+                expect(err.message).to.equal('Test Message');
+                expect(response).to.equal(undefined);
+                done();
+            });
+    });
+
     it('should get a response', function(done) {
         var data = [{
             name: 'Sabiha Ghellal',
