@@ -322,14 +322,13 @@ describe('#onIntent', function() {
         it('should build a response', function(done) {
             var intent = utils.createIntent('HelpIntent', [], []);
 
-            var responseMsg = 'Du kannst mir folgende Fragen stellen: ' +
-                'Was gibt es {Datum} in der {Hochschule oder Mensa} zu ' +
-                'essen? ' +
-                'Wo ist das Büro von Herr oder Frau {Name des Professors}? ' +
-                'Wann hat Professor {Name des Professors} Sprechstunde? ' +
-                'Wo findet die Vorlesung {Name der Vorlesung} statt? ' +
-                'Wann findet die Vorlesung {Name der Vorlesung} statt? ' +
-                'Wie viele E C T S gibt es für den Kurs {Name der Vorlesung}?';
+            var responseMsg = 'Du kannst mich fragen, ' +
+                'was es an einem bestimmten Taag in der Hochschule ' +
+                'oder in der Mensa zu essen gibt, ' +
+                'wo das Büro eines Professors oder einer Professorin ist, ' +
+                'wann ein Professor oder eine Professorin Sprechstunde hat, ' +
+                'wo oder wann eine Vorlesung stattfindet ' +
+                'und wie viele E C T S es für einen Kurs gibt.';
             var expected = response.say(responseMsg).build();
 
             module.__get__('onIntent')(intent, {}, function(err, data) {

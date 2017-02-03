@@ -56,6 +56,12 @@
           "type": "LIST_OF_LECTURES"
         }
       ]
+    },
+    {
+      "intent": "HelpIntent"
+    },
+    {
+      "intent": "StopIntent"
     }
   ]
 }
