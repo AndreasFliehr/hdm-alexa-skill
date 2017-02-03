@@ -37,6 +37,12 @@ function onIntent(intent, attributes, callback) {
         onLectureRoomIntent(intent, callback);
     } else if (intent.name === 'EctsIntent') {
         onEctsIntent(intent, callback);
+    } else if (intent.name === 'HelpIntent') {
+        onHelpIntent(callback);
+    } else if (intent.name === 'StopIntent') {
+        onStopIntent(callback);
+    } else {
+        forwardException(callback);
     }
 }
 
@@ -152,6 +158,33 @@ function onMenuIntent(intent, attributes, callback) {
             .build();
         callback(null, res);
     }
+}
+
+function onHelpIntent(done) {
+    'use strict';
+    var res = response.say('Du kannst mir folgende Fragen stellen: ' +
+        'Was gibt es {Datum} in der {Hochschule oder Mensa} zu essen? ' +
+        'Wo ist das Büro von Herr/Frau {Name des Professors}? ' +
+        'Wann hat Professor {Name des Professors} Sprechstunde? ' +
+        'Wo findet die Vorlesung {Name der Vorlesung} statt? ' +
+        'Wann findet die Vorlesung {Name des Vorlesung} statt? ' +
+        'Wie viele E C T S gibt es für den Kurs {Name der Vorlesung}?')
+        .build();
+    done(null, res);
+}
+
+function onStopIntent(done) {
+    'use strict';
+    var res = response.say('Na gut')
+        .build();
+    done(null, res);
+}
+
+function forwardException(done) {
+    'use strict';
+    var res = response.say('Tut mir Leid, da ist etwas schief gelaufen.')
+        .build();
+    done(null, res);
 }
 
 exports.handler = function(event, context, callback) {

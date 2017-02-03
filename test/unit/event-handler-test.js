@@ -112,6 +112,6 @@ function createRequestSpy(fn) {
 function testLaunchRequest(request, called) {
     'use strict';
     var spy = createRequestSpy('onLaunch');
-    module.handler(request, context);
+    module.handler(request, context, function() {});
     expect(spy.called).to.equal(called);
 }
