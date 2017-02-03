@@ -328,7 +328,7 @@ describe('#onIntent', function() {
                 'wo das Büro eines Professors oder einer Professorin ist, ' +
                 'wann ein Professor oder eine Professorin Sprechstunde hat, ' +
                 'wo oder wann eine Vorlesung stattfindet ' +
-                'und wie viele E C T S es für einen Kurs gibt.';
+                'und wie viele E C T S Punkte es für einen Kurs gibt.';
             var expected = response.say(responseMsg).build();
 
             module.__get__('onIntent')(intent, {}, function(err, data) {
