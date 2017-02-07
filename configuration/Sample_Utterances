@@ -1,3 +1,5 @@
+MenuIntent In der {location}
+MenuIntent {location}
 MenuIntent Was gibt es {date} zu essen
 MenuIntent Was gibt es zu essen
 MenuIntent Was kann ich {date} essen
@@ -157,40 +159,41 @@ LectureRoomIntent In welchem Raum findet {lectureName} statt
 LectureRoomIntent In welchem Raum findet die Vorlesung {lectureName} statt
 LectureRoomIntent In welchem Raum findet die Veranstaltung {lectureName} statt
 LectureRoomIntent In welchem Raum findet der Kurs {lectureName} statt
-EctsIntent Wieviele ects gibt die Vorlesung {lectureName}
-EctsIntent Wieviele ects {lectureName} gibt
-EctsIntent Wieviele ects man für {lectureName} bekommt
-EctsIntent Wieviele ects {lectureName} hat
-EctsIntent Wieviele ects es für {lectureName} gibt
-EctsIntent Wieviele ects es für die Vorlesung {lectureName} gibt
-EctsIntent Wieviele ects es für den Kurs {lectureName} gibt
-EctsIntent Wieviele ects es für die Veranstaltung {lectureName} gibt
-EctsIntent Wieviele ects man für die Veranstaltung {lectureName} bekommt
-EctsIntent Wieviele ects gibt die Veranstaltung {lectureName}
-EctsIntent Wieviele ects gibt der Kurs {lectureName}
-EctsIntent Wieviele ects gibt es für die Vorlesung {lectureName}
-EctsIntent Wieviele ects gibt es für die Veranstaltung {lectureName}
-EctsIntent Wieviele ects gibt es für den Kurs {lectureName}
-EctsIntent Wieviele ects bekommt man für die Vorlesung {lectureName}
-EctsIntent Wieviele ects bekommt man für die Veranstaltung {lectureName}
-EctsIntent Wieviele ects bekommt man für den Kurs {lectureName}
-EctsIntent Wieviele ects hat die Vorlesung {lectureName}
-EctsIntent Wieviele ects hat die Veranstaltung {lectureName}
-EctsIntent Wieviele ects hat der Kurs {lectureName}
-EctsIntent Wieviele ects gibt {lectureName}
-EctsIntent Wieviele ects gibt es für {lectureName}
-EctsIntent Wieviele ects bekommt man für {lectureName}
-EctsIntent Wieviele ects hat {lectureName}
-EctsIntent Wieviele ects {lectureName} bringt
+EctsIntent Wie viele ects Punkte gibt die Vorlesung {lectureName}
+EctsIntent Wie viele ects Punkte {lectureName} gibt
+EctsIntent Wie viele ects Punkte man für {lectureName} bekommt
+EctsIntent Wie viele ects Punkte {lectureName} hat
+EctsIntent Wie viele ects Punkte es für {lectureName} gibt
+EctsIntent Wie viele ects Punkte es für die Vorlesung {lectureName} gibt
+EctsIntent Wie viele ects Punkte es für den Kurs {lectureName} gibt
+EctsIntent Wie viele ects Punkte es für die Veranstaltung {lectureName} gibt
+EctsIntent Wie viele ects Punkte man für die Veranstaltung {lectureName} bekommt
+EctsIntent Wie viele ects Punkte gibt die Veranstaltung {lectureName}
+EctsIntent Wie viele ects Punkte gibt der Kurs {lectureName}
+EctsIntent Wie viele ects Punkte gibt es für die Vorlesung {lectureName}
+EctsIntent Wie viele ects Punkte gibt es für die Veranstaltung {lectureName}
+EctsIntent Wie viele ects Punkte gibt es für den Kurs {lectureName}
+EctsIntent Wie viele ects Punkte bekommt man für die Vorlesung {lectureName}
+EctsIntent Wie viele ects Punkte bekommt man für die Veranstaltung {lectureName}
+EctsIntent Wie viele ects Punkte bekommt man für den Kurs {lectureName}
+EctsIntent Wie viele ects Punkte hat die Vorlesung {lectureName}
+EctsIntent Wie viele ects Punkte hat die Veranstaltung {lectureName}
+EctsIntent Wie viele ects Punkte hat der Kurs {lectureName}
+EctsIntent Wie viele ects Punkte gibt {lectureName}
+EctsIntent Wie viele ects Punkte gibt es für {lectureName}
+EctsIntent Wie viele ects Punkte bekommt man für {lectureName}
+EctsIntent Wie viele ects Punkte hat {lectureName}
+EctsIntent Wie viele ects Punkte {lectureName} bringt
 HelpIntent Hilfe
 HelpIntent Hilf mir
 HelpIntent Was kann ich dich fragen
 HelpIntent Was kann ich fragen
 HelpIntent Was kann man fragen
-HelpIntent Welche Fragen kann man stellen
-StopIntent Stop
-StopIntent Bitte stop
-StopIntent Stop bitte
+StopIntent Stopp
+StopIntent Danke das reicht
+StopIntent Okay danke
+StopIntent Bitte stopp
+StopIntent Stopp bitte
 StopIntent Hör auf
 StopIntent Hör bitte auf
 StopIntent Bitte hör auf
