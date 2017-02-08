@@ -53,6 +53,10 @@ var lectureRoomMultipleDataWithEmptyAndMultipleRooms = [
 describe('lectureRoom', function() {
     'use strict';
 
+    before(function() {
+        process.env.MAX_RESULTS = 324;
+    });
+
     it('should be a function #lectureRoom', function() {
         expect(lecture.room).to.be.a('function');
     });

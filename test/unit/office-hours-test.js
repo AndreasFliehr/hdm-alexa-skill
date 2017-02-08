@@ -6,8 +6,24 @@ var sinon = require('sinon');
 describe('officeHours', function() {
     'use strict';
 
+    before(function() {
+        process.env.MAX_RESULTS = 797;
+    });
+
     it('should be a function #officeHours', function() {
         expect(lecturer.officeHours).to.be.a('function');
+    });
+
+    it('should call client', function() {
+        var client, fnMatcher, expectation, optionMatcher;
+        optionMatcher = sinon.match({ maxResults: process.env.MAX_RESULTS });
+        fnMatcher = sinon.match.typeOf('function');
+        client = { searchDetails: sinon.spy() };
+        expectation = client.searchDetails
+            .calledWithExactly('person', 'Walter', optionMatcher, fnMatcher);
+        lecturer.office(client, 'Walter', function() {
+            expect(expectation).to.equal(true);
+        });
     });
 
     it('should throw an error if the client throws one', function(done) {

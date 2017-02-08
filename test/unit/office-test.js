@@ -8,18 +8,25 @@ var lecturer = require('../../lib/lecturer');
 describe ('office', function() {
     'use strict';
 
+    before(function() {
+        process.env.MAX_RESULTS = 324;
+    });
+
     it('should be a function #office', function() {
         expect(lecturer.office).to.be.a('function');
     });
 
     it('should call client', function() {
-        var client, fnMatcher, expectation;
+        var client, fnMatcher, expectation, optionMatcher;
+        optionMatcher = sinon.match({ maxResults: process.env.MAX_RESULTS });
         fnMatcher = sinon.match.typeOf('function');
         client = { searchDetails: sinon.spy() };
-        lecturer.office(client, 'Walter Kriha', function() {});
         expectation = client.searchDetails
-            .calledWithExactly('person', 'Walter Kriha', {}, fnMatcher);
-        expect(expectation).to.equal(true);
+            .calledWithExactly('person', 'Walter', optionMatcher, fnMatcher);
+        lecturer.office(client, 'Walter', function() {
+            expect(expectation).to.equal(true);
+        });
+
     });
 
     it('should return answer for lecturer', function(done) {

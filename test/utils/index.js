@@ -28,12 +28,13 @@ exports.createIntent = function(name, slots, values) {
 
 exports.testThatFunctionCallsSearchDetails = function(fnUnderTest) {
     'use strict';
-    var client, fnMatcher, expectation;
+    var client, fnMatcher, expectation, optionMatcher;
+    optionMatcher = sinon.match({ maxResults: process.env.MAX_RESULTS });
     fnMatcher = sinon.match.typeOf('function');
     client = { searchDetails: sinon.spy() };
-    fnUnderTest(client, 'Machine-Learning', function() {});
+    fnUnderTest(client, 'ML', function() {});
     expectation = client.searchDetails
-        .calledWithExactly('lecture', 'Machine-Learning', {}, fnMatcher);
+        .calledWithExactly('lecture', 'ML', optionMatcher, fnMatcher);
     expect(expectation).to.equal(true);
 };
 
