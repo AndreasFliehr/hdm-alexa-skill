@@ -6,9 +6,10 @@
   "scripts": {
     "test": "mocha test/unit/",
     "test-coverage": "istanbul cover  node_modules/.bin/_mocha -- -R spec test/unit/",
+    "test-coverage-reports": "istanbul report cobertura",
     "xunit-test": "mocha --recursive -R xunit test/ > test-reports.xml",
-    "lint": "jshint lib test index.js",
-    "jscs": "jscs lib test index.js",
+    "lint": "jshint lib test index.js --reporter=checkstyle > lint-reports.xml",
+    "jscs": "jscs lib test index.js --reporter=checkstyle > jscs-reports.xml",
     "code-check": "npm run lint && npm run jscs && npm test && npm run integration-tests",
     "integration-tests": "mocha test/integration/"
   },
