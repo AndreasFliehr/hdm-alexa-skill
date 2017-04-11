@@ -5,12 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/unit/",
-    "test-coverage": "istanbul cover  node_modules/.bin/_mocha -- -R spec test/unit/",
-    "test-coverage-reports": "istanbul report cobertura",
-    "xunit-test": "mocha --recursive -R xunit test/ > test-reports.xml",
-    "lint": "jshint lib test index.js --reporter=checkstyle > lint-reports.xml",
-    "jscs": "jscs lib test index.js --reporter=checkstyle > jscs-reports.xml",
-    "code-check": "npm run lint && npm run jscs && npm test && npm run integration-tests",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/unit/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "lint": "jshint lib test index.js",
+    "jscs": "jscs lib test index.js",
     "integration-tests": "mocha test/integration/"
   },
   "repository": {
@@ -23,10 +20,12 @@
   "devDependencies": {
     "alexa-skills-kit-client": "0.0.1",
     "chai": "^3.5.0",
+    "coveralls": "^2.13.0",
     "istanbul": "^0.4.5",
     "jscs": "^3.0.7",
     "jshint": "^2.9.4",
     "mocha": "^3.1.2",
+    "mocha-lcov-reporter": "^1.3.0",
     "nock": "^9.0.2",
     "rewire": "^2.5.2",
     "sinon": "^1.17.6"
