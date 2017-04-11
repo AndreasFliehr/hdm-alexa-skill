@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jscheffner/hdm-alexa-skill.svg?branch=master)](https://travis-ci.org/jscheffner/hdm-alexa-skill)
+[![Build Status](https://travis-ci.org/jscheffner/hdm-alexa-skill.svg?branch=master)](https://travis-ci.org/jscheffner/hdm-alexa-skill) [![Coverage Status](https://coveralls.io/repos/github/jscheffner/hdm-alexa-skill/badge.svg?branch=master)](https://coveralls.io/github/jscheffner/hdm-alexa-skill?branch=master)
 # How to deploy the HdM Alexa Skill#
 If you want to deploy this skill on your own Infrastructure using AWS Lamda and the Amazon Developer Console you can do that using the following Instructions
 
