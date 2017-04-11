@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/jscheffner/hdm-alexa-skill.svg?branch=master)](https://travis-ci.org/jscheffner/hdm-alexa-skill) [![Coverage Status](https://coveralls.io/repos/github/jscheffner/hdm-alexa-skill/badge.svg?branch=master)](https://coveralls.io/github/jscheffner/hdm-alexa-skill?branch=master)
-# How to deploy the HdM Alexa Skill#
+# How to deploy the HdM Alexa Skill
 If you want to deploy this skill on your own Infrastructure using AWS Lamda and the Amazon Developer Console you can do that using the following Instructions
 
-## Configure your own Amazon-Web-Service (AWS) Lambda Function ##
+## Configure your own Amazon-Web-Service (AWS) Lambda Function
 1. Choose Ireland as region since the Alexa Skills Kit is not available for Frankfurt at present. Then create a new Lambda Function using the **Create A Lambda function** Button.
 
      ![lambda_create.png](https://bitbucket.org/repo/6bxeyX/images/570576051-lambda_create.png)
@@ -27,7 +27,7 @@ If you want to deploy this skill on your own Infrastructure using AWS Lamda and 
 
 5. Review and confirm the configuration
 
-## Configure your Amazon Development Console ##
+## Configure your Amazon Development Console
 
 1. Open your Developer Console and create a new Alexa Skill using the **Get Started** menu of the **Alexa Skills Kit**
 
@@ -52,5 +52,5 @@ The final configuration should look like this:
 
      ![dev_configuration.png](https://bitbucket.org/repo/6bxeyX/images/1660899815-dev_configuration.png)
 
-## Have Fun with the Skill! ##
+## Have Fun with the Skill!
 You can now test, improve or change the skill to your liking!
