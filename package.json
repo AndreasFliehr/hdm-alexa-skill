@@ -35,5 +35,8 @@
     "hdm-client": "~2.0.2",
     "moment": "^2.15.2",
     "underscore": "^1.8.3"
+  },
+  "engines": {
+    "node": ">=6.10.2"
   }
 }
