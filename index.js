@@ -1,19 +1,20 @@
-var response = require('alexa-response');
-var menu = require('./lib/menu');
-var office = require('./lib/lecturer').office;
-var officeHours = require('./lib/lecturer').officeHours;
-var lectureDate = require('./lib/lecture').date;
-var lectureRoom = require('./lib/lecture').room;
-var ects = require('./lib/lecture').ects;
-var util = require('util');
-var _ = require('underscore');
+'use strict';
 
-var Client = require('hdm-client');
-var client = new Client();
+const response = require('alexa-response');
+let menu = require('./lib/menu');
+let office = require('./lib/lecturer').office;
+let officeHours = require('./lib/lecturer').officeHours;
+let lectureDate = require('./lib/lecture').date;
+let lectureRoom = require('./lib/lecture').room;
+let ects = require('./lib/lecture').ects;
+const util = require('util');
+const _ = require('underscore');
+
+const Client = require('hdm-client');
+const client = new Client();
 
 function onLaunch(done) {
-    'use strict';
-    var res = response.ask('Willkommen an der HdM. Ich kann dir hilfreiche ' +
+    const res = response.ask('Willkommen an der HdM. Ich kann dir hilfreiche ' +
         'Informationen geben. Du kannst mich zum Beispiel fragen, wo deine ' +
         'Vorlesung stattfindet oder was es heute in der Hochschule zu essen ' +
         'gibt. Wie kann ich dir helfen?')
@@ -23,110 +24,99 @@ function onLaunch(done) {
     done(null, res);
 }
 
-function onIntent(intent, attributes, callback) {
-    'use strict';
-    if (intent.name === 'MenuIntent') {
-        onMenuIntent(intent, attributes, callback);
-    } else if (intent.name === 'OfficeIntent') {
-        onOfficeIntent(intent, callback);
-    } else if (intent.name === 'OfficeHoursIntent') {
-        onOfficeHoursIntent(intent, callback);
-    } else if (intent.name === 'LectureDateIntent') {
-        onLectureDateIntent(intent, callback);
-    } else if (intent.name === 'LectureRoomIntent') {
-        onLectureRoomIntent(intent, callback);
-    } else if (intent.name === 'EctsIntent') {
-        onEctsIntent(intent, callback);
-    } else if (intent.name === 'HelpIntent') {
-        onHelpIntent(callback);
-    } else if (intent.name === 'StopIntent') {
-        onStopIntent(callback);
-    } else {
-        forwardException(callback);
+function onIntent(intent, attributes, done) {
+    const handlers = {
+        LectureDateIntent: onLectureDateIntent,
+        LectureRoomIntent: onLectureRoomIntent,
+        OfficeHoursIntent: onOfficeHoursIntent,
+        OfficeIntent: onOfficeIntent,
+        EctsIntent: onEctsIntent,
+        MenuIntent: onMenuIntent,
+        HelpIntent: onHelpIntent,
+        StopIntent: onStopIntent
     }
+
+    const handler = handlers[intent.name] || forwardException;
+    handler(intent, attributes, done);
 }
 
-function onLectureRoomIntent(intent, callback) {
-    'use strict';
-    if (intent.slots.hasOwnProperty('lectureName')) {
-        lectureRoom(client,
-            intent.slots.lectureName.value, function(err, result) {
-            var res;
-            if (err) {
-                callback(err, null);
-                return;
-            }
-            res = response.say(result).build();
-            callback(null, res);
-        });
+function onLectureRoomIntent(intent, attributes, done) {
+    if (!('lectureName' in intent.slots)) {
+        return;
     }
+
+    lectureRoom(client, intent.slots.lectureName.value, function(err, result) {
+        if (err) {
+            return done(err, null);
+        }
+
+        const res = response.say(result).build();
+        done(null, res);
+    });
 }
 
-function onLectureDateIntent(intent, callback) {
-    'use strict';
-    if (intent.slots.hasOwnProperty('lectureName')) {
-        lectureDate(client,
-            intent.slots.lectureName.value, function(err, result) {
-            var res;
-            if (err) {
-                callback(err, null);
-                return;
-            }
-            res = response.say(result).build();
-            callback(null, res);
-        });
+function onLectureDateIntent(intent, attributes, done) {
+    if (!('lectureName' in intent.slots)) {
+        return;
     }
+
+    lectureDate(client,intent.slots.lectureName.value, function(err, result) {
+        if (err) {
+            return done(err, null);
+        }
+
+        const res = response.say(result).build();
+        done(null, res);
+    });
 }
 
-function onEctsIntent(intent, callback) {
-    'use strict';
-    if (intent.slots.hasOwnProperty('lectureName')) {
-        ects(client,
-            intent.slots.lectureName.value, function(err, result) {
-                var res;
-                if (err) {
-                    callback(err, null);
-                    return;
-                }
-                res = response.say(result).build();
-                callback(null, res);
-            });
+function onEctsIntent(intent, attributes, done) {
+    if (!('lectureName' in intent.slots)) {
+        return;
     }
+
+    ects(client, intent.slots.lectureName.value, function(err, result) {
+        if (err) {
+            return done(err, null);
+        }
+
+        const res = response.say(result).build();
+        done(null, res);
+    });
 }
 
-function onOfficeIntent(intent, callback) {
-    'use strict';
-    if (intent.slots.hasOwnProperty('query')) {
-        office(client, intent.slots.query.value, function(err, result) {
-            var res;
-            if (err) {
-                callback(err, null);
-                return;
-            }
-            res = response.say(result).build();
-            callback(null, res);
-        });
+function onOfficeIntent(intent, attributes, done) {
+    if (!('query' in intent.slots)) {
+        return;
     }
+
+    office(client, intent.slots.query.value, function(err, result) {
+        if (err) {
+            return done(err, null);
+        }
+
+        const res = response.say(result).build();
+        done(null, res);
+    });
 }
 
-function onOfficeHoursIntent(intent, callback) {
-    'use strict';
-    if (intent.slots.hasOwnProperty('query')) {
-        officeHours(client, intent.slots.query.value, function(err, result) {
-            var res;
-            if (err) {
-                callback(err, null);
-                return;
-            }
-            res = response.say(result).build();
-            callback(null, res);
-        });
+function onOfficeHoursIntent(intent, attributes, done) {
+    if (!('query' in intent.slots)) {
+        return;
     }
+
+    officeHours(client, intent.slots.query.value, function(err, result) {
+        if (err) {
+            return done(err, null);
+        }
+
+        const res = response.say(result).build();
+        done(null, res);
+    });
 }
 
-function onMenuIntent(intent, attributes, callback) {
-    'use strict';
-    var date, location, res, sbarNames;
+function onMenuIntent(intent, attributes, done) {
+    let date;
 
     if (attributes && attributes.date) {
         date = attributes.date;
@@ -137,32 +127,31 @@ function onMenuIntent(intent, attributes, callback) {
     }
 
     if (intent.slots.location && intent.slots.location.value) {
-        location = intent.slots.location.value;
-        sbarNames = ['essbar', 'hochschule'];
+        let location = intent.slots.location.value;
+        const sbarNames = ['essbar', 'hochschule'];
         if (_.contains(sbarNames, location.toLowerCase())) {
             location = 'S-Bar';
         }
         menu(client, location, date, function(err, result) {
-            var res;
             if (err) {
-                callback(err, null);
+                done(err, null);
                 return;
             }
-            res = response.say(result).build();
-            callback(null, res);
+
+            const res = response.say(result).build();
+            done(null, res);
         });
     } else {
-        res = response
+        const res = response
             .ask('Willst du in der Mensa oder an der Hochschule essen?')
             .attributes({date: date})
             .build();
-        callback(null, res);
+        done(null, res);
     }
 }
 
-function onHelpIntent(done) {
-    'use strict';
-    var res = response.say('Du kannst mich fragen, ' +
+function onHelpIntent(intent, attributes, done) {
+    const res = response.say('Du kannst mich fragen, ' +
         'was es an einem bestimmten Taag in der Hochschule ' +
         'oder in der Mensa zu essen gibt, ' +
         'wo das Büro eines Professors oder einer Professorin ist, ' +
@@ -173,25 +162,21 @@ function onHelpIntent(done) {
     done(null, res);
 }
 
-function onStopIntent(done) {
-    'use strict';
-    var res = response.say('Na gut')
+function onStopIntent(intent, attributes, done) {
+    const res = response.say('Na gut')
         .build();
     done(null, res);
 }
 
-function forwardException(done) {
-    'use strict';
-    var res = response.say('Tut mir Leid, da ist etwas schief gelaufen.')
+function forwardException(intent, attributes, done) {
+    const res = response.say('Tut mir Leid, da ist etwas schief gelaufen.')
         .build();
     done(null, res);
 }
 
 exports.handler = function(event, context, callback) {
-    'use strict';
-    var msg;
     if (!appIdIsValid(event)) {
-        msg = 'The request doesn\'t provide a valid application id';
+        const msg = 'The request doesn\'t provide a valid application id';
         callback(new Error(msg), null);
     } else if (event.request.type === 'LaunchRequest') {
         onLaunch(callback);
@@ -201,8 +186,7 @@ exports.handler = function(event, context, callback) {
 };
 
 function appIdIsValid(event) {
-    'use strict';
-    var reqAppId = event.session.application.applicationId;
-    var actualAppId = process.env.ALEXA_APP_ID;
+    const reqAppId = event.session.application.applicationId;
+    const actualAppId = process.env.ALEXA_APP_ID;
     return reqAppId === actualAppId;
 }
