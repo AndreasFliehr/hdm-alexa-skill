@@ -195,7 +195,7 @@ exports.handler = function(event, context, callback) {
         callback(new Error(msg), null);
     } else if (event.request.type === 'LaunchRequest') {
         onLaunch(callback);
-    } else if (event.request.type === 'IntentRequest') {
+    } else {
         onIntent(event.request.intent, event.session.attributes, callback);
     }
 };

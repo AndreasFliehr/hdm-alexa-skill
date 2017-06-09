@@ -21,7 +21,7 @@ var lectureRoomSingleDataOneRoomAndMultipleDates = [
 
 var lectureRoomSingleDataMultipleRoomsAndMultipleDates = [
     {
-        date: 'Do 14:15-15:45 \nFr 08:15-09:45',
+        date: 'Donnerstag 14:15-15:45 \nFr 08:15-09:45',
         name: 'Ultra Large Scale Systems',
         room: 'U31/U32'
     }
