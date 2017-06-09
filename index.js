@@ -34,7 +34,7 @@ function onIntent(intent, attributes, done) {
         MenuIntent: onMenuIntent,
         HelpIntent: onHelpIntent,
         StopIntent: onStopIntent
-    }
+    };
 
     const handler = handlers[intent.name] || forwardException;
     handler(intent, attributes, done);
