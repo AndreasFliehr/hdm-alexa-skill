@@ -42,10 +42,10 @@ function onIntent(intent, attributes, done) {
 
 function onLectureRoomIntent(intent, attributes, done) {
     if (!('lectureName' in intent.slots)) {
-        return;
+        return forwardException(intent, attributes, done);
     }
 
-    lectureRoom(client, intent.slots.lectureName.value, function(err, result) {
+    lectureRoom(client, intent.slots.lectureName.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -57,10 +57,10 @@ function onLectureRoomIntent(intent, attributes, done) {
 
 function onLectureDateIntent(intent, attributes, done) {
     if (!('lectureName' in intent.slots)) {
-        return;
+        return forwardException(intent, attributes, done);
     }
 
-    lectureDate(client,intent.slots.lectureName.value, function(err, result) {
+    lectureDate(client,intent.slots.lectureName.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -72,10 +72,10 @@ function onLectureDateIntent(intent, attributes, done) {
 
 function onEctsIntent(intent, attributes, done) {
     if (!('lectureName' in intent.slots)) {
-        return;
+        return forwardException(intent, attributes, done);
     }
 
-    ects(client, intent.slots.lectureName.value, function(err, result) {
+    ects(client, intent.slots.lectureName.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -87,10 +87,10 @@ function onEctsIntent(intent, attributes, done) {
 
 function onOfficeIntent(intent, attributes, done) {
     if (!('query' in intent.slots)) {
-        return;
+        return forwardException(intent, attributes, done);
     }
 
-    office(client, intent.slots.query.value, function(err, result) {
+    office(client, intent.slots.query.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -102,10 +102,10 @@ function onOfficeIntent(intent, attributes, done) {
 
 function onOfficeHoursIntent(intent, attributes, done) {
     if (!('query' in intent.slots)) {
-        return;
+        return forwardException(intent, attributes, done);
     }
 
-    officeHours(client, intent.slots.query.value, function(err, result) {
+    officeHours(client, intent.slots.query.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -132,10 +132,10 @@ function onMenuIntent(intent, attributes, done) {
         if (_.contains(sbarNames, location.toLowerCase())) {
             location = 'S-Bar';
         }
-        menu(client, location, date, function(err, result) {
+
+        menu(client, location, date, (err, result) => {
             if (err) {
-                done(err, null);
-                return;
+                return done(err, null);
             }
 
             const res = response.say(result).build();
@@ -174,7 +174,7 @@ function forwardException(intent, attributes, done) {
     done(null, res);
 }
 
-exports.handler = function(event, context, callback) {
+exports.handler = (event, context, callback) => {
     if (!appIdIsValid(event)) {
         const msg = 'The request doesn\'t provide a valid application id';
         callback(new Error(msg), null);
@@ -188,5 +188,6 @@ exports.handler = function(event, context, callback) {
 function appIdIsValid(event) {
     const reqAppId = event.session.application.applicationId;
     const actualAppId = process.env.ALEXA_APP_ID;
+
     return reqAppId === actualAppId;
 }
