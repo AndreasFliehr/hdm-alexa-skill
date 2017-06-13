@@ -3,5 +3,7 @@
   "validateIndentation" : 4,
   "requireTrailingComma": false,
   "requireVarDeclFirst": true,
-  "requireSpaceBeforeKeywords": true
+  "requireSpaceBeforeKeywords": true,
+  "maximumLineLength": 100,
+  "requireEarlyReturn": false
 }
