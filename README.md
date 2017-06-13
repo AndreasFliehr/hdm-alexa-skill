@@ -17,7 +17,7 @@ If you want to deploy this skill on your own Infrastructure using AWS Lamda and 
 
 4. Use the following configurations for the **Configure function** menu:
      1. Define a function name and a description of your choice
-     2. Choose the **Node.js 4.3** runtime
+     2. Choose the **Node.js 6.10** runtime
      3. Choose **Upload a .ZIP file** as the code entry type and upload a zipped version of the repository code. Be shure you installed the required node modules - stated as dependencies in the package.json file - to the repository before zipping and uploading it.
      4. Create the environment variable **ALEXA_APP_ID** with the App ID value which we will create later in the Amazon Developer Console.
      5. You also need to define a permission role in the **Existing Role** field or create a custom role like Lambda_basic_access and then choose it as existing role.
