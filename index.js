@@ -57,7 +57,7 @@ function onLectureRoomIntent(intent, attributes, done) {
 
 function onLectureDateIntent(intent, attributes, done) {
     if (!('lectureName' in intent.slots)) {
-        return forwardException(intent, attributes, done);
+        return forwardException(null, null, done);
     }
 
     lectureDate(client,intent.slots.lectureName.value, (err, result) => {
@@ -70,12 +70,12 @@ function onLectureDateIntent(intent, attributes, done) {
     });
 }
 
-function onEctsIntent(intent, attributes, done) {
-    if (!('lectureName' in intent.slots)) {
-        return forwardException(intent, attributes, done);
+function onEctsIntent({ slots }, attributes, done) {
+    if (!('lectureName' in slots)) {
+        return forwardException(null, null, done);
     }
 
-    ects(client, intent.slots.lectureName.value, (err, result) => {
+    ects(client, slots.lectureName.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -85,12 +85,13 @@ function onEctsIntent(intent, attributes, done) {
     });
 }
 
-function onOfficeIntent(intent, attributes, done) {
-    if (!('query' in intent.slots)) {
-        return forwardException(intent, attributes, done);
+function onOfficeIntent({slots}, ...args) {
+    const done = _.last(args);
+    if (!('query' in slots)) {
+        return forwardException(null, null, done);
     }
 
-    office(client, intent.slots.query.value, (err, result) => {
+    office(client, slots.query.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -100,12 +101,13 @@ function onOfficeIntent(intent, attributes, done) {
     });
 }
 
-function onOfficeHoursIntent(intent, attributes, done) {
-    if (!('query' in intent.slots)) {
-        return forwardException(intent, attributes, done);
+function onOfficeHoursIntent({ slots }, ...args) {
+    const done = _.last(args);
+    if (!('query' in slots)) {
+        return forwardException(null, null, done);
     }
 
-    officeHours(client, intent.slots.query.value, (err, result) => {
+    officeHours(client, slots.query.value, (err, result) => {
         if (err) {
             return done(err, null);
         }
@@ -115,19 +117,19 @@ function onOfficeHoursIntent(intent, attributes, done) {
     });
 }
 
-function onMenuIntent(intent, attributes, done) {
+function onMenuIntent({ slots }, attributes, done) {
     let date;
 
     if (attributes && attributes.date) {
         date = attributes.date;
-    } else if (intent.slots.date && intent.slots.date.value) {
-        date = new Date(intent.slots.date.value);
+    } else if (slots.date && slots.date.value) {
+        date = new Date(slots.date.value);
     } else {
         date = new Date().setHours(0,0,0,0);
     }
 
-    if (intent.slots.location && intent.slots.location.value) {
-        let location = intent.slots.location.value;
+    if (slots.location && slots.location.value) {
+        let location = slots.location.value;
         const sbarNames = ['essbar', 'hochschule'];
         if (_.contains(sbarNames, location.toLowerCase())) {
             location = 'S-Bar';
@@ -150,9 +152,10 @@ function onMenuIntent(intent, attributes, done) {
     }
 }
 
-function onHelpIntent(intent, attributes, done) {
+function onHelpIntent(...args) {
+    const done = _.last(args);
     const res = response.say('Du kannst mich fragen, ' +
-        'was es an einem bestimmten Taag in der Hochschule ' +
+        'was es an einem bestimmten Tag in der Hochschule ' +
         'oder in der Mensa zu essen gibt, ' +
         'wo das Büro eines Professors oder einer Professorin ist, ' +
         'wann ein Professor oder eine Professorin Sprechstunde hat, ' +
@@ -162,16 +165,17 @@ function onHelpIntent(intent, attributes, done) {
     done(null, res);
 }
 
-function onStopIntent(intent, attributes, done) {
+function onStopIntent(...args) {
+    const done = _.last(args);
     const res = response.say('Na gut')
         .build();
     done(null, res);
 }
 
-function forwardException(intent, attributes, done) {
+function forwardException(...args) {
     const res = response.say('Tut mir Leid, da ist etwas schief gelaufen.')
         .build();
-    done(null, res);
+    _.last(args)(null, res);
 }
 
 exports.handler = (event, context, callback) => {

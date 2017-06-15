@@ -323,7 +323,7 @@ describe('#onIntent', function() {
             var intent = utils.createIntent('HelpIntent', [], []);
 
             var responseMsg = 'Du kannst mich fragen, ' +
-                'was es an einem bestimmten Taag in der Hochschule ' +
+                'was es an einem bestimmten Tag in der Hochschule ' +
                 'oder in der Mensa zu essen gibt, ' +
                 'wo das Büro eines Professors oder einer Professorin ist, ' +
                 'wann ein Professor oder eine Professorin Sprechstunde hat, ' +

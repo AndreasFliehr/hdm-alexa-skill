@@ -4,6 +4,5 @@
   "requireTrailingComma": false,
   "requireVarDeclFirst": true,
   "requireSpaceBeforeKeywords": true,
-  "maximumLineLength": 100,
-  "requireEarlyReturn": false
+  "maximumLineLength": 100
 }

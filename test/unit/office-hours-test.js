@@ -89,8 +89,7 @@ describe('officeHours', function() {
             });
     });
 
-    it('should return a response time if theres just ' +
-    'one res but no office hours', function(done) {
+    it('should return a response if theres just one res but no office hours', function(done) {
         var client, stub, data, responseText;
 
         data = [{
@@ -141,7 +140,7 @@ describe('officeHours', function() {
 
         stub = sinon.stub().callsArgWith(3, null, data);
         client = { searchDetails: stub };
-        responseText = 'Es wurden mehrere Treffer zu diesem Namen gefunden: ' +
+        responseText = 'Ich habe 6 Personen gefunden: ' +
         'Stefan Kountouris: Do 16:00-17:30, ' +
         'Stefan Scheurer: Do 14:00-16:00. ' +
         'Für folgende Personen sind keine Zeiten eingetragen: ' +
